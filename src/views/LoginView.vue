@@ -49,7 +49,7 @@
     </div>
 
     <div class="m-login-header">
-      <span>返回首页</span>
+      <span @click="goHome">返回首页</span>
       <img src="../assets/logo3.png" />
     </div>
 
@@ -58,9 +58,16 @@
       <div style="overflow: hidden">
         <div class="verify-outer" :class="status ? 'moveActive' : ''">
           <div class="verify-login">
-            <div class="form-ipt">账号 <input type="text" /></div>
             <div class="form-ipt">
-              密码 <input type="password" class="verify-ipt" />
+              账号 <input type="text" v-model="params.mobile" />
+            </div>
+            <div class="form-ipt">
+              密码
+              <input
+                type="password"
+                class="verify-ipt"
+                v-model="params.password"
+              />
             </div>
           </div>
           <div class="verify-login">
@@ -72,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="form-btn">
+      <div class="form-btn" @click="handleLogin">
         <span>登录/注册</span>
       </div>
       <div class="form-text">
@@ -81,7 +88,7 @@
         </span>
       </div>
       <div class="agree-prot">
-        <input type="checkbox" />
+        <input type="checkbox" v-model="protocol" />
         <span>
           同意<a>《电波谷子用户服务协议》</a>
           <a>《电波谷子居民使用手册》</a>
@@ -93,16 +100,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useLoginStore } from "@/utils/login";
+import { checkMobile, divisionTrim } from "@/utils/common";
+const router = useRouter();
 const protocol = ref<boolean>(true);
 const verifyLogin = ref<boolean>(true);
 const status = ref<boolean>(false);
+const useLogin = useLoginStore();
+interface RuleLogin {
+  mobile: string;
+  password: string;
+}
+const params = reactive<RuleLogin>({
+  mobile: "",
+  password: "",
+});
 const setMove = () => {
   status.value = !status.value;
-  console.log(status.value);
 };
 const setActive = (flag: boolean) => {
   verifyLogin.value = flag;
+};
+const goHome = () => {
+  router.push("/");
+};
+const handleLogin = () => {
+  if (!protocol.value) {
+    alert("请勾选协议");
+    return false;
+  }
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  if (divisionTrim(params.password) === "") {
+    alert("请输入密码");
+    return false;
+  }
+
+  useLogin.login(params).then((res) => {
+    if (res.data.code === "200") {
+      console.log(res);
+    } else {
+      alert(res.data.msg);
+    }
+  });
 };
 </script>
 
@@ -321,6 +366,7 @@ const setActive = (flag: boolean) => {
           flex: 1;
           margin: 0.2rem 0 0.2rem 0.2rem;
           border-radius: 0.08rem;
+          font-size: 0.24rem;
           box-sizing: border-box;
         }
         span {

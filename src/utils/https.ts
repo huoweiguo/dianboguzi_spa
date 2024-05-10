@@ -9,7 +9,7 @@ declare module "axios" {
   export function create(config?: AxiosRequestConfig): AxiosInstance;
 }
 
-const BASE_URL = "/";
+const BASE_URL = "http://dev.dbgz.c8b.com.cn";
 
 const instance = axios.create({
   baseURL: BASE_URL,
