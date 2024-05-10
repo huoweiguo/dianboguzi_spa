@@ -94,7 +94,7 @@
       </div>
 
       <div class="slider-outer">
-        <Swiper />
+        <SwiperComp />
       </div>
 
       <div class="news-list">
@@ -111,7 +111,7 @@
           class="news-content"
           :class="currentType === 'NEW' ? 'showNews' : ''"
         >
-          <div v-for="item in newList" :key="item.id">
+          <div v-for="item in newList" :key="item.id" @click="golinks(item)">
             <span>[{{ item.type }}] {{ item.title }}</span>
             <i>{{ item.date }}</i>
           </div>
@@ -123,7 +123,11 @@
           class="news-content"
           :class="currentType === 'OUTLINE' ? 'showNews' : ''"
         >
-          <div v-for="item in outlineList" :key="item.id">
+          <div
+            v-for="item in outlineList"
+            :key="item.id"
+            @click="golinks(item)"
+          >
             <span>[{{ item.type }}] {{ item.title }}</span>
             <i>{{ item.date }}</i>
           </div>
@@ -135,7 +139,7 @@
           class="news-content"
           :class="currentType === 'ONLINE' ? 'showNews' : ''"
         >
-          <div v-for="item in onlineList" :key="item.id">
+          <div v-for="item in onlineList" :key="item.id" @click="golinks(item)">
             <span>[{{ item.type }}] {{ item.title }}</span>
             <i>{{ item.date }}</i>
           </div>
@@ -148,12 +152,20 @@
           :class="currentType === 'CONTACT' ? 'showNews' : ''"
         >
           <div
+            class="zp"
             v-for="item in contactList"
             :key="item.id"
             @click="golinks(item)"
           >
-            <span>[{{ item.type }}] {{ item.title }}</span>
-            <i>{{ item.date }}</i>
+            <span>
+              {{ item.title }}
+              <label class="jz">急招</label>
+              <!-- <label class="cq">长期</la bel> -->
+            </span>
+            <div class="flex-box">
+              <b>{{ item.type }}</b>
+              <i>{{ item.date }}发布</i>
+            </div>
           </div>
 
           <div class="loading-more">更多...</div>
@@ -167,6 +179,7 @@
 <script setup lang="ts">
 import MenuSlider from "../components/MenuSlider.vue";
 import DHeader from "../components/DHeader.vue";
+import SwiperComp from "../components/SwiperComp.vue";
 import { ref, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
@@ -285,51 +298,27 @@ const onlineList = reactive([
 const contactList = reactive([
   {
     id: 1,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "公告",
-    date: "2024-6-1",
+    title: "二次元运营（线下）",
+    type: "扬州丨运营类丨全职/兼职",
+    date: "2024/04/25 ",
   },
   {
     id: 2,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
+    title: "二次元运营（线下）",
+    type: "扬州丨运营类丨全职/兼职",
+    date: "2024/04/25 ",
   },
   {
     id: 3,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
+    title: "二次元运营（线下）",
+    type: "扬州丨运营类丨全职/兼职",
+    date: "2024/04/25 ",
   },
   {
     id: 4,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 5,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 6,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 7,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 8,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
+    title: "二次元运营（线下）",
+    type: "扬州丨运营类丨全职/兼职",
+    date: "2024/04/25 ",
   },
 ]);
 
@@ -491,7 +480,7 @@ const pushUrl = () => {
       margin-bottom: 0.8rem;
     }
     .slider-outer {
-      margin: 0 0 0.8rem;
+      margin: 0 0 0.2rem;
     }
 
     .news-list {
@@ -547,6 +536,38 @@ const pushUrl = () => {
             font-size: 0.2rem;
             font-style: normal;
             color: #646468;
+          }
+        }
+        .zp {
+          span {
+            label {
+              display: inline-block;
+              color: #fff;
+              font-size: 0.2rem;
+              height: 0.3rem;
+              line-height: 0.3rem;
+              width: 0.7rem;
+              text-align: center;
+              vertical-align: middle;
+              border-radius: 0.15rem;
+              &.jz {
+                background-color: #948ce0;
+              }
+              &.cq {
+                background-color: #5dacf5;
+              }
+            }
+          }
+          .flex-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            b,
+            i {
+              font-weight: 300;
+              color: #484751;
+              font-size: 0.2rem;
+            }
           }
         }
       }

@@ -9,9 +9,7 @@ declare module "axios" {
   export function create(config?: AxiosRequestConfig): AxiosInstance;
 }
 
-const BASE_URL = import.meta.env.DEV
-  ? "/api/terminal"
-  : "http://huihe.yyinhong.cn/api/terminal";
+const BASE_URL = "/";
 
 const instance = axios.create({
   baseURL: BASE_URL,
