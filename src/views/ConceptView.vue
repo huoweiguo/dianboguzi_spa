@@ -30,6 +30,9 @@
         </ul>
       </div>
       <div class="concept-right">
+        <div v-show="type === 1" class="concept-right-bt">
+          <img class="right-bt-img" src="../assets/bt.png" alt="" />
+        </div>
         <div v-show="type === 2" class="concept-right-dzgz">
           <img
             class="right-dzgz-img1"
@@ -71,7 +74,7 @@
 import MenuSlider from "../components/MenuSlider.vue";
 import DHeader from "../components/DHeader.vue";
 import { ref, reactive } from "vue";
-const type = ref<number>(2);
+const type = ref<number>(1);
 const showSlider = ref<boolean>(false);
 
 const mobileMenu = reactive([
@@ -112,7 +115,7 @@ const setType = (num: number) => {
   .concept-left {
     width: 22%;
     box-sizing: border-box;
-    padding-top: 60px;
+    padding-top: 70px;
     .left-item {
       text-align: center;
       font-size: 0.36rem;
@@ -131,16 +134,23 @@ const setType = (num: number) => {
     width: 78%;
     box-sizing: border-box;
   }
+  .concept-right-bt {
+    width: 90%;
+    .right-bt-img {
+      width: 100%;
+      margin-top: -20px;
+    }
+  }
   .concept-right-dzgz {
     width: 100%;
     display: flex;
   }
   .right-dzgz-img1 {
     width: 4rem;
-    max-width: 40%;
+    max-width: 45%;
   }
   .right-dzgz-box {
-    width: 60%;
+    width: 55%;
     margin-left: 0.1rem;
     margin-bottom: 0.3rem;
   }

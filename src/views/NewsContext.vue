@@ -125,7 +125,7 @@ const setType = (num: number) => {
   .news-detail-left {
     width: 22%;
     box-sizing: border-box;
-    padding-top: 60px;
+    padding-top: 70px;
     .left-item {
       text-align: center;
       font-size: 0.36rem;
