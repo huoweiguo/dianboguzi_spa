@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script>
+      var oHtml = document.querySelector('html')
+      function resize() {
+        var clientW = document.documentElement.clientWidth
+        if (clientW > 750) {
+          clientW = 750
+        }
+        oHtml.style.fontSize = (clientW / 750) * 100 + 'px'
+      }
+      resize()
+
+      window.onresize = function () {
+        resize()
+      }
+
+    </script>
   </head>
   <body>
     <noscript>
