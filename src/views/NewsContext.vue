@@ -3,60 +3,62 @@
     <div class="news-outer">
       <div class="concept-bg"></div>
       <DHeader></DHeader>
-      <div class="news-detail-left">
-        <ul>
-          <li
-            @click="setType(1)"
-            class="left-item"
-            :class="{ active: type === 1 }"
-          >
-            最新
-          </li>
-          <li
-            @click="setType(2)"
-            class="left-item"
-            :class="{ active: type === 2 }"
-          >
-            线上活动
-          </li>
-          <li
-            @click="setType(3)"
-            class="left-item"
-            :class="{ active: type === 3 }"
-          >
-            线下活动
-          </li>
-          <li
-            @click="setType(4)"
-            class="left-item"
-            :class="{ active: type === 4 }"
-          >
-            加入我们
-          </li>
-        </ul>
-      </div>
-      <div class="news-detail-right">
-        <div v-if="type === 1" class="news-content">
-          <h3>cp30参展决定！</h3>
-          <p class="news-content-date">2024/01/15</p>
-          <div class="news-content-text">
-            尊敬的电波谷子居民：<br />
-            你好<br />
-            这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
-            这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
-          </div>
+      <div class="news-detail">
+        <div class="news-detail-left">
+          <ul>
+            <li
+              @click="setType(1)"
+              class="left-item"
+              :class="{ active: type === 1 }"
+            >
+              最新
+            </li>
+            <li
+              @click="setType(2)"
+              class="left-item"
+              :class="{ active: type === 2 }"
+            >
+              线上活动
+            </li>
+            <li
+              @click="setType(3)"
+              class="left-item"
+              :class="{ active: type === 3 }"
+            >
+              线下活动
+            </li>
+            <li
+              @click="setType(4)"
+              class="left-item"
+              :class="{ active: type === 4 }"
+            >
+              加入我们
+            </li>
+          </ul>
         </div>
-        <div v-if="type === 4" class="news-content2">
-          <h3>二次元运营（线下）</h3>
-          <p class="news-content-date">
-            扬州丨运营类丨全职/兼职 2024/04/25 发布
-          </p>
-          <h4>职位描述</h4>
-          <div class="news-content-text">
-            尊敬的电波谷子居民：<br />
-            你好<br />
-            这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新
-            请投递至邮箱：
+        <div class="news-detail-right">
+          <div v-if="type === 1" class="news-content">
+            <h3>cp30参展决定！</h3>
+            <p class="news-content-date">2024/01/15</p>
+            <div class="news-content-text">
+              尊敬的电波谷子居民：<br />
+              你好<br />
+              这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
+              这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+            </div>
+          </div>
+          <div v-if="type === 4" class="news-content2">
+            <h3>二次元运营（线下）</h3>
+            <p class="news-content-date">
+              扬州丨运营类丨全职/兼职 2024/04/25 发布
+            </p>
+            <h4>职位描述</h4>
+            <div class="news-content-text">
+              尊敬的电波谷子居民：<br />
+              你好<br />
+              这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新
+              请投递至邮箱：
+            </div>
           </div>
         </div>
       </div>
@@ -115,10 +117,15 @@ const setType = (num: number) => {
     background: url("../assets/concept.png") no-repeat 100% 100%;
     background-size: 100% 100%;
   }
+  .news-detail {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+  }
   .news-detail-left {
-    position: absolute;
-    left: 1.1rem;
-    top: 1.7rem;
+    width: 22%;
+    box-sizing: border-box;
+    padding-top: 70px;
     .left-item {
       text-align: center;
       font-size: 0.36rem;
@@ -135,8 +142,9 @@ const setType = (num: number) => {
   .news-detail-right {
     position: relative;
     width: 78%;
-    margin-left: 22%;
     padding-bottom: 0.5rem;
+    box-sizing: border-box;
+    padding-left: 20px;
   }
   .news-content {
     width: 11rem;
