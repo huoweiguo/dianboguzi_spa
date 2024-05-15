@@ -66,7 +66,7 @@
               <input
                 type="password"
                 class="verify-ipt"
-                v-model="params.password"
+                v-model="params.passWord"
               />
             </div>
           </div>
@@ -111,11 +111,11 @@ const status = ref<boolean>(false);
 const useLogin = useLoginStore();
 interface RuleLogin {
   mobile: string;
-  password: string;
+  passWord: string;
 }
 const params = reactive<RuleLogin>({
   mobile: "",
-  password: "",
+  passWord: "",
 });
 const setMove = () => {
   status.value = !status.value;
@@ -136,14 +136,15 @@ const handleLogin = () => {
     return false;
   }
 
-  if (divisionTrim(params.password) === "") {
+  if (divisionTrim(params.passWord) === "") {
     alert("请输入密码");
     return false;
   }
 
   useLogin.login(params).then((res) => {
-    if (res.data.code === "200") {
-      console.log(res);
+    if (res.data.code === 200) {
+      useLogin.token = res.data.token;
+      router.push("/");
     } else {
       alert(res.data.msg);
     }
@@ -354,6 +355,7 @@ const handleLogin = () => {
       float: left;
       font-size: 0.24rem;
       width: 50%;
+      margin-bottom: 0.2rem;
       .form-ipt {
         display: flex;
         font-size: 0.24rem;
@@ -365,6 +367,7 @@ const handleLogin = () => {
           border: none;
           flex: 1;
           margin: 0.2rem 0 0.2rem 0.2rem;
+          padding: 0 0.1rem;
           border-radius: 0.08rem;
           font-size: 0.24rem;
           box-sizing: border-box;

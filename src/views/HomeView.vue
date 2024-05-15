@@ -1,6 +1,6 @@
 <template>
   <!--PC-->
-  <div class="index-container">
+  <div class="index-container" style="display: none">
     <div class="index-header">
       <ul>
         <li class="active">首页</li>
@@ -26,6 +26,29 @@
     <div class="index-buttons">
       <span>电子谷子</span>
       <span>兑换码</span>
+    </div>
+  </div>
+
+  <div class="index-container logined-index">
+    <DHeader />
+    <img src="../assets/mask-home-text.png" class="mask-text" />
+    <div class="fixed-left">
+      <img src="../assets/logo.png" class="fixed-logo" />
+      <img src="../assets/iphone-download.png" />
+      <img src="../assets/andorid-download.png" />
+      <div class="download-qr">
+        <span></span>
+        扫码下载APP
+      </div>
+    </div>
+    <div class="mask-img">
+      <img src="../assets/person.png" />
+      <img src="../assets/person-mask.png" class="mask-layer" />
+    </div>
+
+    <div class="mask-text-desc">
+      <span>吃电子谷子，</span>
+      <span>享赛博人生。</span>
     </div>
   </div>
 
@@ -56,6 +79,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+import DHeader from "../components/DHeader.vue";
 import MenuSlider from "../components/MenuSlider.vue";
 </script>
 
@@ -65,6 +89,7 @@ import MenuSlider from "../components/MenuSlider.vue";
   min-width: 1400px;
   height: 100vh;
   background: url("../assets/person2.png") no-repeat center center;
+  overflow: hidden;
   .index-header {
     position: fixed;
     width: 100%;
@@ -79,6 +104,7 @@ import MenuSlider from "../components/MenuSlider.vue";
         position: relative;
         list-style: none;
         font-size: 0.28rem;
+        font-weight: 300;
         width: 1.95rem;
         text-align: center;
         height: 0.5rem;
@@ -166,6 +192,81 @@ import MenuSlider from "../components/MenuSlider.vue";
       &:last-child {
         border-radius: 0 0.25rem 0.25rem 0;
       }
+    }
+  }
+}
+
+.logined-index {
+  position: relative;
+  width: 100%;
+  background-image: linear-gradient(90deg, #fff, #ecf0fc, #f5e5f8);
+  .mask-text {
+    position: absolute;
+    height: 190px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .mask-img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 270px;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    img {
+      width: 270px;
+    }
+    .mask-layer {
+      position: absolute;
+      left: 90px;
+      bottom: -50px;
+      width: 480px;
+      transform: translate(-50%, 80px);
+    }
+  }
+  .fixed-left {
+    position: absolute;
+    left: 70px;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 135px;
+    img {
+      width: 135px;
+      display: block;
+      margin-bottom: 20px;
+    }
+    .fixed-logo {
+      width: 95px;
+    }
+    .download-qr {
+      width: 135px;
+      font-size: 12px;
+      text-align: center;
+      span {
+        display: block;
+        width: 135px;
+        height: 135px;
+        background-color: #aaa;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .mask-text-desc {
+    position: absolute;
+    right: 5%;
+    bottom: 10%;
+    font-size: 28px;
+    font-weight: 300;
+    color: #3e4042;
+    span {
+      display: block;
     }
   }
 }

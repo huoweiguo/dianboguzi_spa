@@ -1,9 +1,10 @@
 <template>
   <div class="header-container">
-    <div class="logo-mobile">
+    <!-- <div class="logo-mobile">
       <img src="../assets/logo.png" class="电波谷子" />
       <span>登录/注册</span>
-    </div>
+    </div> -->
+    <div class="header-user">欢迎您! 小小霍</div>
     <ul>
       <li>首页</li>
       <li>概率展示</li>
@@ -24,6 +25,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 70px;
+  .header-user {
+    font-size: 18px;
+    font-weight: 300;
+    height: 78px;
+    line-height: 78px;
+  }
   .logo-mobile {
     display: flex;
     align-items: center;
@@ -45,6 +52,7 @@
       font-size: 18px;
       text-align: center;
       font-weight: 300;
+      margin: 0 20px;
     }
   }
 }
