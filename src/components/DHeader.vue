@@ -75,6 +75,7 @@ const menuActive = (link: string) => {
     font-weight: 300;
     height: 78px;
     line-height: 78px;
+    white-space: nowrap;
   }
   .logo-mobile {
     display: flex;

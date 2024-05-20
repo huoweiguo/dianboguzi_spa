@@ -115,8 +115,8 @@
           :class="currentType === 'NEW' ? 'showNews' : ''"
         >
           <div v-for="item in newList" :key="item.id" @click="golinks(item)">
-            <span>[{{ item.type }}] {{ item.title }}</span>
-            <i>{{ item.date }}</i>
+            <span>[{{ getNewsTitle(item.id) }}] {{ item.title }}</span>
+            <i>{{ item.showDate }}</i>
           </div>
 
           <div class="loading-more">更多...</div>
@@ -131,7 +131,7 @@
             :key="item.id"
             @click="golinks(item)"
           >
-            <span>[{{ item.type }}] {{ item.title }}</span>
+            <span>[{{ getNewsTitle(item.id) }}] {{ item.title }}</span>
             <i>{{ item.date }}</i>
           </div>
 
@@ -143,7 +143,7 @@
           :class="currentType === 'ONLINE' ? 'showNews' : ''"
         >
           <div v-for="item in onlineList" :key="item.id" @click="golinks(item)">
-            <span>[{{ item.type }}] {{ item.title }}</span>
+            <span>[{{ getNewsTitle(item.id) }}] {{ item.title }}</span>
             <i>{{ item.date }}</i>
           </div>
 
@@ -166,8 +166,8 @@
               <!-- <label class="cq">长期</label> -->
             </span>
             <div class="flex-box">
-              <b>{{ item.type }}</b>
-              <i>{{ item.date }}发布</i>
+              <b>{{ item.summary }}</b>
+              <i>{{ item.showDate }}发布</i>
             </div>
           </div>
 
@@ -183,150 +183,55 @@
 import MenuSlider from "../components/MenuSlider.vue";
 import DHeader from "../components/DHeader.vue";
 import SwiperComp from "../components/SwiperComp.vue";
-import { ref, reactive } from "vue";
+import { useNewsStore } from "@/store/news";
+import { ref, reactive, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const show = ref<boolean>(false);
 const type = ref<number>(Number(route.query.type) || 1);
 const currentType = ref<string>("NEW");
+const useNews = useNewsStore();
+const params = reactive({
+  id: 1, // 1: 最新 2: 线上 3: 线下 4: 加入我们
+  pageNum: 1,
+  pageSize: 10,
+});
+
+const onLineParams = reactive({
+  id: 2, // 1: 最新 2: 线上 3: 线下 4: 加入我们
+  pageNum: 1,
+  pageSize: 10,
+});
+
+const outLineParams = reactive({
+  id: 3, // 1: 最新 2: 线上 3: 线下 4: 加入我们
+  pageNum: 1,
+  pageSize: 10,
+});
+
+const contactParams = reactive({
+  id: 4, // 1: 最新 2: 线上 3: 线下 4: 加入我们
+  pageNum: 1,
+  pageSize: 10,
+});
 const newsType = reactive([
-  { type: "NEW", title: "最新" },
-  { type: "OUTLINE", title: "线下活动" },
-  { type: "ONLINE", title: "线上活动" },
-  { type: "CONTACT", title: "联系我们" },
+  { type: "NEW", title: "最新", id: 1 },
+  { type: "OUTLINE", title: "线下活动", id: 2 },
+  { type: "ONLINE", title: "线上活动", id: 3 },
+  { type: "CONTACT", title: "联系我们", id: 4 },
 ]);
-const newList = reactive([
-  {
-    id: 1,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "公告",
-    date: "2024-6-1",
-  },
-  {
-    id: 2,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 3,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-]);
-const outlineList = reactive([
-  {
-    id: 1,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "公告",
-    date: "2024-6-1",
-  },
-  {
-    id: 2,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 3,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 4,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 5,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 6,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 7,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-]);
-const onlineList = reactive([
-  {
-    id: 1,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "公告",
-    date: "2024-6-1",
-  },
-  {
-    id: 2,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "谷美",
-    date: "2024-6-1",
-  },
-  {
-    id: 3,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 4,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 5,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-  {
-    id: 6,
-    title: "电波谷子平台“眼若星辰”系列谷美贩售途径一览",
-    type: "线下活动",
-    date: "2024-6-1",
-  },
-]);
-const contactList = reactive([
-  {
-    id: 1,
-    title: "二次元运营（线下）",
-    type: "扬州丨运营类丨全职/兼职",
-    date: "2024/04/25 ",
-  },
-  {
-    id: 2,
-    title: "二次元运营（线下）",
-    type: "扬州丨运营类丨全职/兼职",
-    date: "2024/04/25 ",
-  },
-  {
-    id: 3,
-    title: "二次元运营（线下）",
-    type: "扬州丨运营类丨全职/兼职",
-    date: "2024/04/25 ",
-  },
-  {
-    id: 4,
-    title: "二次元运营（线下）",
-    type: "扬州丨运营类丨全职/兼职",
-    date: "2024/04/25 ",
-  },
-]);
+const newList = ref([]);
+const outlineList = ref([]);
+const onlineList = ref([]);
+const contactList = ref([]);
 
 const golinks = (obj: any) => {
   router.push(`/news/${obj.id}?type=${currentType.value}`);
+};
+const getNewsTitle = (id: number) => {
+  const arr = newsType.filter((item) => item.id == id);
+  return arr.length ? arr[0].title : "";
 };
 
 const setNewsType = (type: string) => {
@@ -342,6 +247,23 @@ const setType = (num: number) => {
 const pushUrl = () => {
   router.push(`/news/1?type=${type.value}`);
 };
+const getNewsItem = (params, arr) => {
+  useNews.getNewsList(params).then((res) => {
+    if (res.data.code == "200") {
+      arr.value = res.data.rows;
+    }
+  });
+};
+onMounted(() => {
+  // 最新
+  getNewsItem(params, newList);
+  // 线上
+  getNewsItem(onLineParams, onlineList);
+  // 线下
+  getNewsItem(outLineParams, outlineList);
+  // 联系我们
+  getNewsItem(contactParams, contactList);
+});
 </script>
 
 <style lang="scss" scoped>
