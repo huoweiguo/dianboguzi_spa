@@ -3,14 +3,16 @@
     <div class="header-container">
       <div class="logo-mobile">
         <img src="../assets/logo.png" class="电波谷子" />
-        <span>登录/注册</span>
+        <span @click="router.push('/login')">登录/注册</span>
       </div>
       <ul>
-        <li>首页</li>
-        <li>概率展示</li>
-        <li>新闻</li>
-        <li>兑换码</li>
-        <li>联系我们</li>
+        <li
+          v-for="item in mobileMenu"
+          :key="item.intro"
+          @click="router.push(item.link)"
+        >
+          {{ item.title }}
+        </li>
       </ul>
       <span></span>
     </div>
@@ -18,6 +20,18 @@
     <div class="login-form">
       <img src="../assets/logo-image.png" class="logo-image" />
       <div class="login-inner" :class="verifyLogin ? '' : 'login-active'">
+        <div class="account-login">
+          <div class="form-ipt">
+            账号 <input type="text" v-model="params.mobile" />
+          </div>
+          <div class="form-ipt">
+            密码 <input type="password" v-model="params.passWord" />
+          </div>
+          <div class="form-text">
+            <span @click="setActive(false)">验证码登录</span>
+            <span>忘记密码?</span>
+          </div>
+        </div>
         <div class="verify-login">
           <div class="form-ipt">手机号 <input type="text" /></div>
           <div class="form-ipt">
@@ -25,26 +39,18 @@
             <span>发送验证码</span>
           </div>
           <div class="form-text">
-            <span @click="setActive(false)">账号密码登录</span>
-            <span>忘记密码?</span>
-          </div>
-        </div>
-        <div class="account-login">
-          <div class="form-ipt">账号 <input type="text" /></div>
-          <div class="form-ipt">密码 <input type="password" /></div>
-          <div class="form-text">
-            <span @click="setActive(true)">验证码登录</span>
+            <span @click="setActive(true)">账号密码登录</span>
             <span>忘记密码?</span>
           </div>
         </div>
       </div>
       <div class="form-btn">
-        <span>登录/注册</span>
+        <span @click="handleLogin">登录/注册</span>
       </div>
       <div class="protocol-text">
-        <label
-          ><input type="checkbox" v-model="protocol" />同意《xxx》协议</label
-        >
+        <label>
+          <input type="checkbox" v-model="protocol" />同意《xxx》协议
+        </label>
       </div>
     </div>
 
@@ -102,13 +108,35 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { useLoginStore } from "@/utils/login";
+import { useLoginStore } from "@/store/login";
 import { checkMobile, divisionTrim } from "@/utils/common";
 const router = useRouter();
 const protocol = ref<boolean>(true);
 const verifyLogin = ref<boolean>(true);
 const status = ref<boolean>(false);
 const useLogin = useLoginStore();
+const mobileMenu = reactive([
+  { title: "首页", intro: "DIANBO GOODS", desc: "", link: "/" },
+  {
+    title: "概念展示",
+    intro: "CONCEPTS",
+    desc: "谷子、谷模与谷美",
+    link: "/concept",
+  },
+  { title: "新闻", intro: "NEWS", desc: "线上与线下的最新活动", link: "/news" },
+  {
+    title: "兑换码",
+    intro: "TOKENS",
+    desc: "来兑换你最新获得的谷子吧",
+    link: "/code",
+  },
+  {
+    title: "联系我们",
+    intro: "CUSTOMER SERVICE",
+    desc: "让我们听到您的声音",
+    link: "/contactUs",
+  },
+]);
 interface RuleLogin {
   mobile: string;
   passWord: string;
@@ -142,8 +170,9 @@ const handleLogin = () => {
   }
 
   useLogin.login(params).then((res) => {
-    if (res.data.code === 200) {
-      useLogin.token = res.data.token;
+    if (res.data.code == "200") {
+      useLogin.token = res.data.data.token;
+      localStorage.setItem("token", useLogin.token);
       router.push("/");
     } else {
       alert(res.data.msg);
@@ -175,6 +204,7 @@ const handleLogin = () => {
         font-size: 18px;
         text-align: center;
         font-weight: 300;
+        cursor: pointer;
       }
     }
     ul {
@@ -184,6 +214,7 @@ const handleLogin = () => {
         font-size: 18px;
         text-align: center;
         font-weight: 300;
+        cursor: pointer;
       }
     }
   }
@@ -235,6 +266,7 @@ const handleLogin = () => {
         outline: none;
         padding: 0 10px;
         border-radius: 5px;
+        font-size: 14px;
       }
       .verify-ipt {
         width: 140px;
@@ -276,6 +308,7 @@ const handleLogin = () => {
         color: #fff;
         font-weight: 300;
         border-radius: 5px;
+        cursor: pointer;
       }
     }
     .protocol-text {

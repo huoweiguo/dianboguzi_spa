@@ -87,6 +87,7 @@ const subForm = () => {
         outline: none;
         padding: 0 10px;
         border-radius: 5px;
+        font-size: 14px;
       }
       .verify-ipt {
         width: 140px;

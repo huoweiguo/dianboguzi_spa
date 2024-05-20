@@ -43,26 +43,6 @@
       <div class="contactUs-m-email">电子邮箱：business@dianboguzi.com</div>
       <div class="contactUs-m-email">备注信息：</div>
     </div>
-    <!--menu mask-->
-    <div class="menu-mask" :class="showSlider ? 'slider-action' : ''">
-      <div class="menu-close">
-        <img src="../assets/close.png" @click="hideSlider(false)" />
-      </div>
-      <ul class="menu-list">
-        <li v-for="item in mobileMenu" :key="item.intro">
-          <i>{{ item.title }}</i>
-          <span>{{ item.intro }}</span>
-          <div>{{ item.desc }}</div>
-        </li>
-      </ul>
-      <div class="mask-platfrom">
-        <img src="../assets/vector.png" alt="bilibili" />
-        <img src="../assets/xinlang.png" alt="新浪微博" />
-        <img src="../assets/xiaohongshu.png" alt="小红书" />
-        <img src="../assets/wechat.png" alt="微信" />
-        <img src="../assets/douyin.png" alt="抖音" />
-      </div>
-    </div>
   </div>
 </template>
 

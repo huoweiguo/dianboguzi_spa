@@ -1,7 +1,8 @@
 import { createApp } from "vue";
-import App from "./App.vue";
 import router from "./router";
-import "../src/styles/reset.css";
 import store from "./store";
+import "../src/styles/reset.css";
+import App from "./App.vue";
 
-createApp(App).use(store).use(router).mount("#app");
+const app = createApp(App);
+app.use(router).use(store).mount("#app");

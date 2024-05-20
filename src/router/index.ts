@@ -1,6 +1,8 @@
+import * as _ from "lodash";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import store from "@/store/index";
+import { useLoginStore } from "@/store/login";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -48,6 +50,20 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(() => {
+  const useLogin = useLoginStore(store);
+  const userInfo = useLogin.userInfo;
+  const token = useLogin.token;
+  if (!token || _.isEmpty(userInfo)) {
+    useLogin.getUserInfo().then((res) => {
+      if (res.data.code == "200") {
+        useLogin.userInfo = { ...res.data.data };
+        localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+      }
+    });
+  }
 });
 
 export default router;

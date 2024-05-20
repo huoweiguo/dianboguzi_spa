@@ -1,12 +1,16 @@
 <template>
   <!--PC-->
-  <div class="index-container" style="display: none">
+  <div class="index-container" v-if="!userInfo.nickname">
     <div class="index-header">
       <ul>
-        <li class="active">首页</li>
-        <li>新闻</li>
-        <li>联系我们</li>
-        <li>登录/注册</li>
+        <li
+          v-for="item in menuList"
+          :key="item.intro"
+          @click="golinks(item.link)"
+          :class="item.link === '/' ? 'active' : ''"
+        >
+          {{ item.title }}
+        </li>
       </ul>
     </div>
 
@@ -24,12 +28,12 @@
     </div>
 
     <div class="index-buttons">
-      <span>电子谷子</span>
-      <span>兑换码</span>
+      <span @click="router.push('/concept')">电子谷子</span>
+      <span @click="router.push('/code')">兑换码</span>
     </div>
   </div>
 
-  <div class="index-container logined-index">
+  <div class="index-container logined-index" v-else>
     <DHeader />
     <img src="../assets/mask-home-text.png" class="mask-text" />
     <div class="fixed-left">
@@ -78,9 +82,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import DHeader from "../components/DHeader.vue";
 import MenuSlider from "../components/MenuSlider.vue";
+import { useLoginStore } from "@/store/login";
+import { useRouter } from "vue-router";
+const useLogin = useLoginStore();
+const router = useRouter();
+const userInfo = computed(() => useLogin.userInfo);
+const menuList = [
+  { title: "首页", intro: "DIANBO GOODS", desc: "", link: "/" },
+  { title: "新闻", intro: "NEWS", link: "/news" },
+  { title: "联系我们", intro: "CONTACT US", link: "/contactUs" },
+  { title: "注册/登录", intro: "LOGIN", link: "/login" },
+];
+const golinks = (link: string) => {
+  router.push(link);
+};
 </script>
 
 <style lang="scss" scope>
@@ -103,12 +121,11 @@ import MenuSlider from "../components/MenuSlider.vue";
       li {
         position: relative;
         list-style: none;
-        font-size: 0.28rem;
+        font-size: 18px;
         font-weight: 300;
-        width: 1.95rem;
+        width: 110px;
         text-align: center;
-        height: 0.5rem;
-        line-height: 0.5rem;
+        margin: 0 20px;
         cursor: pointer;
         &.active,
         &:hover {
@@ -118,12 +135,12 @@ import MenuSlider from "../components/MenuSlider.vue";
             top: 50%;
             transform: translate(-50%, -50%);
             content: "";
-            width: 90%;
-            height: 0.18rem;
+            width: 100px;
+            height: 10px;
             background-color: #c3b9ea;
             opacity: 0.6;
             z-index: -1;
-            border-radius: 0.09rem;
+            border-radius: 5px;
           }
         }
         &:last-child {
@@ -134,40 +151,40 @@ import MenuSlider from "../components/MenuSlider.vue";
   }
   .index-left {
     position: fixed;
-    left: 0.8rem;
-    top: 0.4rem;
+    left: 40px;
+    top: 40px;
     display: flex;
     flex-direction: column;
     img {
-      width: 1.6rem;
-      margin-bottom: 0.2rem;
+      width: 160px;
+      margin-bottom: 20px;
       &:first-child {
-        margin-bottom: 0.7rem;
+        margin-bottom: 70px;
       }
     }
     .index-qrcode {
-      width: 1.6rem;
-      height: 1.6rem;
+      width: 160px;
+      height: 160px;
       background-color: #aaa;
-      border-radius: 0.1rem;
+      border-radius: 10px;
     }
   }
   .index-texts {
     position: fixed;
-    right: 0.5rem;
-    top: 2rem;
+    right: 50px;
+    top: 150px;
     img {
       display: block;
-      margin: 0.1rem 0;
-      height: 0.5rem;
+      margin: 10px 0;
+      height: 40px;
       &:first-child {
-        margin-left: -0.8rem;
+        margin-left: -80px;
       }
     }
   }
   .index-buttons {
     position: fixed;
-    bottom: 1rem;
+    bottom: 100px;
     left: 0;
     width: 100%;
     min-width: 1400px;
@@ -176,21 +193,21 @@ import MenuSlider from "../components/MenuSlider.vue";
     span {
       display: block;
       color: #71758d;
-      font-size: 0.36rem;
-      height: 0.4rem;
-      line-height: 0.4rem;
-      border: 0.04rem solid rgba(70, 81, 142, 0.4);
+      font-size: 36px;
+      height: 40px;
+      line-height: 40px;
+      border: 4px solid rgba(70, 81, 142, 0.4);
       background-color: rgba(255, 255, 255, 0.65);
-      padding: 0.1rem 0;
-      width: 2rem;
+      padding: 10px 0;
+      width: 200px;
       text-align: center;
-      margin: 0 0.2rem;
+      margin: 0 20px;
       cursor: pointer;
       &:first-child {
-        border-radius: 0.2rem 0 0 0.2rem;
+        border-radius: 20px 0 0 20px;
       }
       &:last-child {
-        border-radius: 0 0.25rem 0.25rem 0;
+        border-radius: 0 25px 25px 0;
       }
     }
   }
@@ -202,7 +219,7 @@ import MenuSlider from "../components/MenuSlider.vue";
   background-image: linear-gradient(90deg, #fff, #ecf0fc, #f5e5f8);
   .mask-text {
     position: absolute;
-    height: 190px;
+    height: 220px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -212,15 +229,15 @@ import MenuSlider from "../components/MenuSlider.vue";
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 270px;
+    width: 340px;
     transform: translate(-50%, -50%);
     z-index: 10;
     img {
-      width: 270px;
+      width: 340px;
     }
     .mask-layer {
       position: absolute;
-      left: 90px;
+      left: 160px;
       bottom: -50px;
       width: 480px;
       transform: translate(-50%, 80px);
@@ -267,6 +284,7 @@ import MenuSlider from "../components/MenuSlider.vue";
     color: #3e4042;
     span {
       display: block;
+      margin: 10px 0;
     }
   }
 }

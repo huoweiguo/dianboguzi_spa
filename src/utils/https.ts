@@ -20,7 +20,7 @@ instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.frontAuthorization = `Front Bearer ${token}`;
     }
     return config;
   },
@@ -31,15 +31,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.data.code === 401) {
-      alert("登录超时，请重新登录");
-      localStorage.removeItem("token");
-      localStorage.removeItem("userInfo");
-      window.location.href = "/login";
-      return response;
-    } else {
-      return response;
-    }
+    return response;
   },
   (error) => {
     return Promise.reject(error);

@@ -7,9 +7,13 @@
         @click="hideSlider(true)"
       />
       <div class="login-m">
-        <span class="logined">欢迎您，夏至空想</span>
-        <span>退出登录</span>
-        <!-- <span>登录 | 注册</span> -->
+        <span v-if="!!_.isEmpty(userInfo)" @click="router.push('/login')"
+          >登录 | 注册
+        </span>
+        <template v-else>
+          <span class="logined">欢迎您，{{ userInfo.nickname }} </span>
+          <span @click="logout">退出登录</span>
+        </template>
       </div>
     </div>
 
@@ -38,8 +42,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
+import * as _ from "lodash";
 import { useRouter } from "vue-router";
+import { useLoginStore } from "@/store/login";
+const useLogin = useLoginStore();
+const userInfo = computed(() => useLogin.userInfo);
 const showSlider = ref<boolean>(false);
 const router = useRouter();
 const mobileMenu = reactive([
@@ -69,6 +77,12 @@ const hideSlider = (flag: boolean) => {
 };
 const goLink = (obj: any) => {
   router.push(obj.link);
+};
+
+const logout = () => {
+  useLogin.removeAccount();
+  localStorage.removeItem("token");
+  localStorage.removeItem("userInfo");
 };
 </script>
 
