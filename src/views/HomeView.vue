@@ -92,6 +92,7 @@ const router = useRouter();
 const userInfo = computed(() => useLogin.userInfo);
 const menuList = [
   { title: "首页", intro: "DIANBO GOODS", desc: "", link: "/" },
+  { title: "概念展示", intro: "CONCEPTS", desc: "", link: "/concept" },
   { title: "新闻", intro: "NEWS", link: "/news" },
   { title: "联系我们", intro: "CONTACT US", link: "/contactUs" },
   { title: "注册/登录", intro: "LOGIN", link: "/login" },

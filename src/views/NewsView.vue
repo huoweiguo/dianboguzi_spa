@@ -370,7 +370,7 @@ const pushUrl = () => {
     padding-top: 70px;
     .left-item {
       text-align: center;
-      font-size: 0.36rem;
+      font-size: 0.22rem;
       margin-bottom: 1rem;
       cursor: pointer;
       &:hover {
@@ -399,7 +399,7 @@ const pushUrl = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.31rem;
+    font-size: 0.21rem;
     background: #fff;
     width: 11rem;
     max-width: 90%;
@@ -418,7 +418,7 @@ const pushUrl = () => {
     max-width: 90%;
     cursor: pointer;
     text-align: center;
-    font-size: 0.22rem;
+    font-size: 0.2rem;
   }
   .latest-list {
     width: 100%;

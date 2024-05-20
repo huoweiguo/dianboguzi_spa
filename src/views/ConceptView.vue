@@ -118,7 +118,7 @@ const setType = (num: number) => {
     padding-top: 70px;
     .left-item {
       text-align: center;
-      font-size: 0.36rem;
+      font-size: 0.22rem;
       margin-bottom: 1rem;
       cursor: pointer;
       &:hover {
