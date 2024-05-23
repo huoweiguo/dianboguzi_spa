@@ -41,6 +41,10 @@ export const useLoginStore = defineStore(
       return http.post(`/api/web/login/getUserInfo`);
     };
 
+    const offlinecode = (data: SendSMS, config: any) => {
+      return http.post(`/api/web/offlinecode/offlinecode`, { ...data }, config);
+    };
+
     const removeAccount = () => {
       token.value = "";
       userInfo = {};
@@ -54,6 +58,7 @@ export const useLoginStore = defineStore(
       sendSMSCode,
       getUserInfo,
       removeAccount,
+      offlinecode,
     };
   },
   { persist: true }

@@ -38,26 +38,20 @@
         </div>
         <div class="news-detail-right">
           <div v-if="type === 1" class="news-content">
-            <h3>cp30参展决定！</h3>
-            <p class="news-content-date">2024/01/15</p>
+            <h3>{{ newInfo.title }}</h3>
+            <p class="news-content-date">{{ newInfo.showDate }}</p>
             <div class="news-content-text">
-              尊敬的电波谷子居民：<br />
-              你好<br />
-              这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
-              这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+              {{ newInfo.content }}
             </div>
           </div>
           <div v-if="type === 4" class="news-content2">
-            <h3>二次元运营（线下）</h3>
+            <h3>{{ newInfo.title }}</h3>
             <p class="news-content-date">
-              扬州丨运营类丨全职/兼职 2024/04/25 发布
+              {{ newInfo.summary }} {{ newInfo.showDate }} 发布
             </p>
             <h4>职位描述</h4>
             <div class="news-content-text">
-              尊敬的电波谷子居民：<br />
-              你好<br />
-              这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新
-              请投递至邮箱：
+              {{ newInfo.content }}
             </div>
           </div>
         </div>
@@ -73,16 +67,14 @@
         :class="route.query.type === 'CONTACT' ? 'contact-context' : ''"
       >
         <h2>
-          [谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览
+          {{ newInfo.title }}
           <!-- <span class="jz">急招</span> -->
-          <span class="cq">长期</span>
+          <!-- <span class="cq">长期</span> -->
         </h2>
-        <div class="news-time">发布时间：2024-6-1</div>
+        <div class="news-time">发布时间：{{ newInfo.showDate }}</div>
         <div class="context-inner">
-          <img src="../assets/news-img.png" />
-          尊敬的电波谷子居民： 你好
-          这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
-          这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+          <!-- <img src="../assets/news-img.png" /> -->
+          {{ newInfo.content }}
         </div>
       </div>
     </div>
@@ -92,14 +84,39 @@
 <script setup lang="ts">
 import MenuSlider from "../components/MenuSlider.vue";
 import DHeader from "../components/DHeader.vue";
-import { ref } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+import { useNewsStore } from "@/store/news";
 const route = useRoute();
 const router = useRouter();
+const params = reactive({
+  id: route.params.id,
+});
+const newInfo = ref({
+  title: "",
+  showDate: "",
+  summary: "",
+  content: "",
+});
+const useNews = useNewsStore();
 const type = ref<number>(Number(route.query.type) || 1);
 const setType = (num: number) => {
   router.push(`/news?type=${num}`);
 };
+const getNewsInfoTask = (params, obj) => {
+  useNews.getNewsInfo(params).then((res) => {
+    if (res.data.code == 200) {
+      console.log(res.data.data);
+      obj.value = res.data.data;
+    }
+  });
+};
+onMounted(() => {
+  console.log(route.query);
+  console.log(route.params.id);
+  getNewsInfoTask(params, newInfo);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -128,7 +145,7 @@ const setType = (num: number) => {
     padding-top: 70px;
     .left-item {
       text-align: center;
-      font-size: 0.36rem;
+      font-size: 0.22rem;
       margin-bottom: 1rem;
       cursor: pointer;
       &:hover {

@@ -4,7 +4,9 @@
       <!-- <img src="../assets/logo.png" class="电波谷子" /> -->
       <span @click="router.push('/login')">登录/注册</span>
     </div>
-    <div class="header-user" v-else>欢迎您! {{ userInfo.nickname }}</div>
+    <div class="header-user" v-else @click="handleLogout">
+      欢迎您! {{ userInfo.nickname }}
+    </div>
     <ul>
       <li
         v-for="item in mobileMenu"
@@ -60,6 +62,10 @@ const menuActive = (link: string) => {
   }
 
   return false;
+};
+
+const handleLogout = () => {
+  localStorage.setItem("token", "");
 };
 </script>
 

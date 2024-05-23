@@ -10,6 +10,8 @@ declare module "axios" {
 }
 
 const BASE_URL = "http://dev.dbgz.c8b.com.cn";
+// const BASE_URL = "http://192.168.31.89:8085";
+//275
 
 const instance = axios.create({
   baseURL: BASE_URL,

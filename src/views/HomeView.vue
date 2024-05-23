@@ -31,6 +31,10 @@
       <span @click="router.push('/concept')">电子谷子</span>
       <span @click="router.push('/code')">兑换码</span>
     </div>
+
+    <div class="copyright">
+      <a href="https://beian.miit.gov.cn/">苏ICP备2023053104号-1</a>
+    </div>
   </div>
 
   <div class="index-container logined-index" v-else>
@@ -53,6 +57,10 @@
     <div class="mask-text-desc">
       <span>吃电子谷子，</span>
       <span>享赛博人生。</span>
+    </div>
+
+    <div class="copyright">
+      <a href="https://beian.miit.gov.cn/">苏ICP备2023053104号-1</a>
     </div>
   </div>
 
@@ -374,5 +382,11 @@ const golinks = (link: string) => {
   .index-m-container {
     display: block;
   }
+}
+
+.copyright {
+  position: absolute;
+  bottom: 1rem;
+  font-size: 16px;
 }
 </style>

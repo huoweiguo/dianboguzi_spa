@@ -4,8 +4,12 @@
     <div class="code-form">
       <p class="code-form-title">线下兑换码</p>
       <div class="verify-login">
-        <div class="form-ipt"><label>谷子编号</label><input type="text" /></div>
-        <div class="form-ipt"><label>兑换码</label><input type="text" /></div>
+        <div class="form-ipt">
+          <label>谷子编号</label><input type="text" v-model="params.code" />
+        </div>
+        <div class="form-ipt">
+          <label>兑换码</label><input type="text" v-model="params.password" />
+        </div>
       </div>
       <div @click="subForm()" class="form-btn">
         <span>兑换</span>
@@ -30,13 +34,40 @@
 <script setup lang="ts">
 import MenuSlider from "../components/MenuSlider.vue";
 import DHeader from "../components/DHeader.vue";
-import { ref, reactive } from "vue";
-const form = reactive({
+import { useLoginStore } from "@/store/login";
+import { checkMobile, divisionTrim } from "@/utils/common";
+import { ref, reactive, computed } from "vue";
+
+const useLogin = useLoginStore();
+const userInfo = computed(() => useLogin.userInfo);
+const params = reactive({
   code: "",
-  number: "",
+  password: "",
 });
 const subForm = () => {
-  console.log(form, "form");
+  console.log(params, "form");
+  console.log(userInfo, "form");
+  if (!userInfo.value.id) {
+    alert("请先登录账号！");
+    return false;
+  }
+  if (divisionTrim(params.code) === "") {
+    alert("请输入兑换码");
+    return false;
+  }
+
+  if (divisionTrim(params.password) === "") {
+    alert("请输入兑换密码");
+    return false;
+  }
+
+  useLogin.offlinecode(params).then((res) => {
+    if (res.data.code == "200") {
+      alert("兑换成功，请打开APP查看！");
+    } else {
+      alert(res.data.msg);
+    }
+  });
 };
 </script>
 

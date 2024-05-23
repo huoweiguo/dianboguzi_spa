@@ -29,18 +29,27 @@
           </div>
           <div class="form-text">
             <span @click="setActive(false)">验证码登录</span>
-            <span>忘记密码?</span>
+            <!-- <span>忘记密码?</span> -->
           </div>
         </div>
         <div class="verify-login">
-          <div class="form-ipt">手机号 <input type="text" /></div>
           <div class="form-ipt">
-            验证码 <input type="password" class="verify-ipt" />
-            <span>发送验证码</span>
+            手机号 <input type="text" v-model="params.mobile" />
+          </div>
+          <div class="form-ipt">
+            验证码
+            <input
+              type="text"
+              class="verify-ipt"
+              v-model="params.verification"
+            />
+            <button :disabled="countdown > 0" @click="handleSms">
+              {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
+            </button>
           </div>
           <div class="form-text">
             <span @click="setActive(true)">账号密码登录</span>
-            <span>忘记密码?</span>
+            <!-- <span>忘记密码?</span> -->
           </div>
         </div>
       </div>
@@ -48,9 +57,13 @@
         <span @click="handleLogin">登录/注册</span>
       </div>
       <div class="protocol-text">
-        <label>
-          <input type="checkbox" v-model="protocol" />同意《xxx》协议
-        </label>
+        <span>
+          <input type="checkbox" v-model="protocol" />同意<a
+            >《电波谷子用户服务协议》</a
+          >
+          <a>《电波谷子居民使用手册》</a>
+          <a>《电波谷子隐私权政策》</a>协议
+        </span>
       </div>
     </div>
 
@@ -77,15 +90,24 @@
             </div>
           </div>
           <div class="verify-login">
-            <div class="form-ipt">手机号 <input type="text" /></div>
             <div class="form-ipt">
-              验证码 <input type="password" class="verify-ipt" />
-              <span>发送验证码</span>
+              手机号 <input type="text" v-model="params.mobile" />
+            </div>
+            <div class="form-ipt">
+              验证码
+              <input
+                type="text"
+                class="verify-ipt"
+                v-model="params.verification"
+              />
+              <button :disabled="countdown > 0" @click="handleSms">
+                {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <div class="form-btn" @click="handleLogin">
+      <div class="form-btn" @click="handleLoginM">
         <span>登录/注册</span>
       </div>
       <div class="form-text">
@@ -106,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useLoginStore } from "@/store/login";
 import { checkMobile, divisionTrim } from "@/utils/common";
@@ -140,10 +162,12 @@ const mobileMenu = reactive([
 interface RuleLogin {
   mobile: string;
   passWord: string;
+  verification: string;
 }
 const params = reactive<RuleLogin>({
   mobile: "",
   passWord: "",
+  verification: "",
 });
 const setMove = () => {
   status.value = !status.value;
@@ -154,7 +178,26 @@ const setActive = (flag: boolean) => {
 const goHome = () => {
   router.push("/");
 };
+
+const handleLoginM = () => {
+  // alert(status.value);
+  if (!status.value) {
+    handleAccountLogin();
+  } else {
+    handleYzmLogin();
+  }
+};
+
 const handleLogin = () => {
+  // alert(verifyLogin.value);
+  if (verifyLogin.value) {
+    handleAccountLogin();
+  } else {
+    handleYzmLogin();
+  }
+};
+
+const handleAccountLogin = () => {
   if (!protocol.value) {
     alert("请勾选协议");
     return false;
@@ -179,6 +222,65 @@ const handleLogin = () => {
     }
   });
 };
+
+const handleSms = () => {
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+  useLogin.sendSMSCode(params).then((res) => {
+    if (res.data.code == "200") {
+      startCountdown();
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
+
+const handleYzmLogin = () => {
+  if (!protocol.value) {
+    alert("请勾选协议");
+    return false;
+  }
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  if (divisionTrim(params.verification) === "") {
+    alert("请输入验证码");
+    return false;
+  }
+
+  useLogin.smsLogin(params).then((res) => {
+    if (res.data.code == "200") {
+      useLogin.token = res.data.data.token;
+      localStorage.setItem("token", useLogin.token);
+      router.push("/");
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
+
+const countdown = ref(0);
+
+const startCountdown = () => {
+  countdown.value = 5; // 假设倒计时60秒
+  const intervalId = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value--;
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+};
+
+watch(countdown, (newValue) => {
+  if (newValue === 0) {
+    // 这里可以添加重新获取验证码的逻辑
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -282,6 +384,18 @@ const handleLogin = () => {
         font-size: 12px;
         cursor: pointer;
       }
+      button {
+        display: block;
+        background-color: #fff;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 5px;
+        text-align: center;
+        width: 100px;
+        font-size: 12px;
+        cursor: pointer;
+        border: none;
+      }
     }
     .form-text {
       display: flex;
@@ -319,6 +433,19 @@ const handleLogin = () => {
         align-items: center;
         justify-content: center;
         color: #666;
+      }
+      span {
+        display: flex;
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        flex-wrap: wrap;
+        margin-left: 10%;
+      }
+
+      span a {
+        color: #6aa1f4;
       }
     }
   }
@@ -418,6 +545,20 @@ const handleLogin = () => {
           box-sizing: border-box;
           width: 2.14rem;
           justify-content: center;
+        }
+        button {
+          display: flex;
+          flex: 2;
+          height: 0.68rem;
+          line-height: 0.68rem;
+          background-color: #fff;
+          border-radius: 0.1rem;
+          border: 1px solid #fff;
+          margin-left: 0.2rem;
+          box-sizing: border-box;
+          width: 2.14rem;
+          justify-content: center;
+          border: none;
         }
       }
     }
