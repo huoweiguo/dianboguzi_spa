@@ -8,7 +8,7 @@
     </ul> -->
 
     <ul class="news-ul-zp">
-      <li>
+      <li @click="showNewsPage('1254')">
         <div class="news-zp-title">
           <div>
             <b class="tag-title"> 二次元运营（线下）</b>
@@ -46,14 +46,19 @@
 <script lang="ts" setup>
 import SwiperNews from './SwiperNews.vue'
 import { ElPagination } from 'element-plus'
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineEmits } from 'vue'
 const props = defineProps({
   total: {
     type: Number,
     default: 1
   }
 })
+const emits = defineEmits(['showNewsInner'])
 const total = computed(() => props.total)
+
+const showNewsPage = (id: number) => {
+  emits('showNewsInner', id)
+}
 console.log(total.value, 'aaaa')
 </script>
 <style lang="scss">

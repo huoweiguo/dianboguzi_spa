@@ -55,7 +55,7 @@
           <div class="conpect-content">
             <div class="conpect-content-inner" id="news-content">
               <div class="news-list">
-                <NewsComp :total=100 />
+                <NewsComp :total=100 @showNewsInner="showNewsInner"/>
               </div>
               <div class="news-list">
                 <NewsComp />
@@ -65,6 +65,24 @@
               </div>
               <div class="news-list">
                 <NewsComp />
+              </div>
+            </div>
+          </div>
+          
+          <!--新闻内容页面-->
+          <div class="news-context" :class="showNews ? 'show-news' : ''">
+            <a class="news-back" @click="closeNews"><img src="../images/back.png" /></a>
+            <div class="news-context-box">
+              <b class="news-title">cp30参展决定！</b>
+              <span class="news-small-text">2024/01/15</span>
+
+              <div class="news-inner-context">
+                <img src="../images/inner-text.png" />
+
+                <p>尊敬的电波谷子居民：</p>
+                <p>你好</p>
+                这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
+                这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
               </div>
             </div>
           </div>
@@ -88,11 +106,11 @@
         <div class="wrapper-conpect">
           <div class="qr-content">
             <div>
-              <img src="" />
+              <img src="../images/qr-code.png" />
               QQ客服
             </div>
             <div>
-              <img src="" />
+              <img src="../images/qr-code.png" />
               微信客服
             </div>
           </div>
@@ -123,7 +141,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import NewsComp from '../components/NewsComp.vue'
 
-const index = ref<number>(4)
+const index = ref<number>(2)
 const isScroll = ref(true)
 const move = ref(false)
 const timer = ref(null)
@@ -133,6 +151,7 @@ let conpectBox = null
 let newsBox = null
 const conpectIndex = ref<number>(0)
 const newsIndex = ref<number>(0)
+const showNews = ref<boolean>(false)
 const newsNav = ref([
   { title: '最新', id: 0 },
   { title: '线上活动', id: 1 },
@@ -161,7 +180,22 @@ const goIndex = () => {
 
 const changePage = (page: number) => {
   index.value = page
+  window.removeEventListener('mousewheel', wheelScroll, false)
+  window.addEventListener('mousewheel', wheelScroll, false)
   goIndex()
+}
+
+const showNewsInner = (id: number) => {
+  showNews.value = true
+
+  window.removeEventListener('mousewheel', wheelScroll, false)
+  clearTimeout(timer.value)
+  console.log(id)
+}
+
+const closeNews = () => {
+  showNews.value = false
+  window.addEventListener('mousewheel', wheelScroll, false)
 }
 
 const wheelScroll = (e: any) => {
@@ -175,7 +209,7 @@ const wheelScroll = (e: any) => {
     // 判断是否在第二页
     if (index.value === 1 && conpectIndex.value > 0) {
       // 先滚动第二页数据
-      setConpectIndex(--conpectIndex.value)
+        setConpectIndex(--conpectIndex.value)
     } else if (index.value === 2 && newsIndex.value > 0) {
       setNewsIndex(--newsIndex.value)
     } else {
@@ -220,6 +254,31 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
+/* 为所有的滚动条设置样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 50%;
+  /* 设置滚动条的宽度 */
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: transparent;
+  /* 设置轨道的背景颜色 */
+}
+
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 168, 168);
+  /* 设置滑块的背景颜色 */
+}
+
+/* 当滑块悬停或活动时的样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 168, 168);
+  /* 设置悬停或活动状态下的滑块颜色 */
+}
+
 .swiper-wrapper-content {
   position: relative;
   width: 100%;
@@ -377,6 +436,73 @@ onUnmounted(() => {
     height: calc(100vh - 126px);
     overflow: hidden;
 
+    .news-context {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      z-index: 200;
+      display: none;
+      justify-content: flex-end;
+      width: 100%;
+      padding-right: 110px;
+      height: calc(100vh - 126px);
+      box-sizing: border-box;
+      background-image: linear-gradient(90deg, #fff, rgb(235, 239, 253), rgb(244, 230, 249));
+
+      .news-back {
+        position: absolute;
+        left: 120px;
+        top: 95px;
+        z-index: 201;
+        cursor: pointer;
+
+        img {
+          width: 84px;
+        }
+      }
+
+      .news-context-box {
+        position: relative;
+        width: 1300px;
+        padding: 0 20px 50px 10px;
+        box-sizing: border-box;
+        overflow-y: scroll;
+
+        b.news-title {
+          display: block;
+          font-size: 50px;
+          text-align: center;
+          color: #484751;
+          margin-bottom: 16px;
+          font-weight: 300;
+        }
+
+        .news-small-text {
+          display: block;
+          color: #484751;
+          font-size: 24px;
+          margin-bottom: 16px;
+          text-align: center;
+          font-weight: 200;
+        }
+
+        .news-inner-context {
+          font-size: 24px;
+          line-height: 32px;
+
+          img {
+            max-width: 100%;
+          }
+        }
+
+
+      }
+
+    }
+    .show-news {
+      display: flex;
+    }
+
     .conpect-leftnav {
       float: left;
       width: 145px;
@@ -507,17 +633,18 @@ onUnmounted(() => {
     .qr-content {
       display: flex;
       justify-content: center;
+      margin-top: 50px;
 
       &>div {
         margin: 0 104px;
-        width: 374px;
+        width: 350px;
         text-align: center;
         font-size: 32px;
         color: #3D3D3D;
         font-weight: 300;
 
         img {
-          width: 374px;
+          width: 350px;
           display: block;
           margin-bottom: 17px;
         }
