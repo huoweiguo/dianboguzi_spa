@@ -71,8 +71,49 @@
         </div>
         <a class="next-page" @click="changePage(++index)"><img src="../images/down-arrow.png" /></a>
       </div>
-      <div class="wrapper-slider">兑换码</div>
-      <div class="wrapper-slider">联系我们</div>
+      <!--兑换码-->
+      <div class="wrapper-slider secondStyle">
+        <div class="wrapper-conpect">
+          <div class="wrapper-change-code">
+            <b class="change-code-title">线下兑换码</b>
+            <div class="change-code-ipt"><label>谷子编号</label><input type="text" /></div>
+            <div class="change-code-ipt"><label>兑换码</label><input type="text" /></div>
+            <div style="text-align: center;"><a><img src="../images/exchange.png" alt="兑换" /></a></div>
+          </div>
+        </div>
+        <a class="next-page" @click="changePage(++index)"><img src="../images/down-arrow.png" /></a>
+      </div>
+      <!--联系我们-->
+      <div class="wrapper-slider secondStyle">
+        <div class="wrapper-conpect">
+          <div class="qr-content">
+            <div>
+              <img src="" />
+              QQ客服
+            </div>
+            <div>
+              <img src="" />
+              微信客服
+            </div>
+          </div>
+
+          <div class="contact-text">
+            <div class="contact-logo">
+              <img src="../images/logo.png" />
+            </div>
+            <div class="context-p">
+              <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号 </p>
+              <p>增值电信业务经营许可证：苏B2-20240128号</p>
+              <p>营业执照</p>
+              <p>运营单位：电波谷子（扬州）科技有限公司 </p>
+              <p>电波谷子（扬州）科技有限公司 版权所有</p>
+              <p>电子邮箱：business@dianboguzi.com</p>
+            </div>
+
+            <span></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,7 +123,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import NewsComp from '../components/NewsComp.vue'
 
-const index = ref<number>(2)
+const index = ref<number>(4)
 const isScroll = ref(true)
 const move = ref(false)
 const timer = ref(null)
@@ -330,6 +371,7 @@ onUnmounted(() => {
   }
 
   .wrapper-conpect {
+    position: relative;
     padding: 160px 115px 0 115px;
     min-width: 1300px;
     height: calc(100vh - 126px);
@@ -383,6 +425,108 @@ onUnmounted(() => {
 
       }
     }
+
+    .wrapper-change-code {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 823px;
+      height: 530px;
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: translate(-50%, -50%);
+      border-radius: 30px;
+      padding: 52px 66px;
+      box-sizing: border-box;
+
+      .change-code-title {
+        display: block;
+        font-size: 40px;
+        color: #424243;
+        text-align: center;
+        margin-bottom: 56px;
+      }
+
+      .change-code-ipt {
+        display: flex;
+        margin-bottom: 34px;
+        align-items: center;
+
+        label {
+          display: block;
+          width: 125px;
+          font-size: 24px;
+        }
+
+        input[type='text'] {
+          width: 495px;
+          height: 68px;
+          background-color: #fff;
+          border: 0;
+          border-radius: 10px;
+          font-size: 24px;
+          padding: 0 10px;
+          box-sizing: border-box;
+          outline: none;
+        }
+      }
+
+      a {
+        cursor: pointer;
+      }
+    }
+
+    .contact-text {
+      position: absolute;
+      left: 0;
+      bottom: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 246px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 42px 111px;
+      box-sizing: border-box;
+      border-top: 1px solid #000;
+
+      .contact-logo {
+        img {
+          height: 120px;
+        }
+      }
+
+      .context-p {
+        p {
+          font-size: 22px;
+          margin: 5px 0;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .qr-content {
+      display: flex;
+      justify-content: center;
+
+      &>div {
+        margin: 0 104px;
+        width: 374px;
+        text-align: center;
+        font-size: 32px;
+        color: #3D3D3D;
+        font-weight: 300;
+
+        img {
+          width: 374px;
+          display: block;
+          margin-bottom: 17px;
+        }
+      }
+    }
   }
+}
+
+.secondStyle {
+  background-image: linear-gradient(90deg, rgb(208, 230, 250) 20%, rgb(190, 218, 250) 30%, rgb(223, 217, 249));
 }
 </style>
