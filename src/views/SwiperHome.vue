@@ -55,7 +55,7 @@
           <div class="conpect-content">
             <div class="conpect-content-inner" id="news-content">
               <div class="news-list">
-                <NewsComp :total=100 @showNewsInner="showNewsInner"/>
+                <NewsComp :total=100 @showNewsInner="showNewsInner" />
               </div>
               <div class="news-list">
                 <NewsComp />
@@ -68,7 +68,7 @@
               </div>
             </div>
           </div>
-          
+
           <!--新闻内容页面-->
           <div class="news-context" :class="showNews ? 'show-news' : ''">
             <a class="news-back" @click="closeNews"><img src="../images/back.png" /></a>
@@ -133,13 +133,31 @@
         </div>
       </div>
     </div>
+
+
+    <!--弹出框-->
+    <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" @hidePopbox="hidePopbox" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import NewsComp from '../components/NewsComp.vue'
+import DBMessage from '../components/DBMessage.vue'
+
+// 弹出框配置
+const popAttr = reactive<RulePopbox>({
+  title: '', // 标题
+  text: '', // 内容
+  visible: false // 显示隐藏
+})
+
+interface RulePopbox {
+  title: string
+  text?: string
+  visible: boolean
+}
 
 const index = ref<number>(2)
 const isScroll = ref(true)
@@ -164,6 +182,22 @@ const conpectNav = ref([
   { title: '痛柜', id: 2 }
 ])
 
+
+const openPopbox = (payload: RulePopbox) => {
+  popAttr.visible = payload.visible
+  popAttr.title = payload.title
+  popAttr.text = payload.text ? payload.text : ''
+}
+
+// 打开弹出框
+openPopbox({ visible: true, title: '兑换成功！', text: '请检查兑换码是否输入错误' })
+
+
+// 关闭弹出框
+const hidePopbox = () => {
+  popAttr.visible = false
+}
+
 const setConpectIndex = (id: number) => {
   conpectIndex.value = id
   conpectBox.style.top = -conpectBox.clientHeight * conpectIndex.value + 'px'
@@ -178,6 +212,8 @@ const goIndex = () => {
   (warpper as HTMLElement).style.top = -index.value * 100 + 'vh'
 }
 
+
+// 滚动到指定的页面
 const changePage = (page: number) => {
   index.value = page
   window.removeEventListener('mousewheel', wheelScroll, false)
@@ -209,7 +245,7 @@ const wheelScroll = (e: any) => {
     // 判断是否在第二页
     if (index.value === 1 && conpectIndex.value > 0) {
       // 先滚动第二页数据
-        setConpectIndex(--conpectIndex.value)
+      setConpectIndex(--conpectIndex.value)
     } else if (index.value === 2 && newsIndex.value > 0) {
       setNewsIndex(--newsIndex.value)
     } else {
@@ -499,6 +535,7 @@ onUnmounted(() => {
       }
 
     }
+
     .show-news {
       display: flex;
     }
