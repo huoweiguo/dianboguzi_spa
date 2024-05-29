@@ -1,6 +1,6 @@
 <template>
   <div class="swiper-wrapper-content">
-    <PCHeader :currentIndex="index" @changePage="changePage" />
+    <PCHeader :currentIndex="index" @changePage="changePage" :isHome="index !== 0" />
     <div class="warpper-container" id="warpper-container">
 
       <!--首页-->
@@ -160,7 +160,7 @@ interface RulePopbox {
   visible: boolean
 }
 
-const index = ref<number>(2)
+const index = ref<number>(0)
 const isScroll = ref(true)
 const move = ref(false)
 const timer = ref(null)
@@ -400,7 +400,7 @@ onUnmounted(() => {
       position: relative;
       width: 100%;
       margin: 0 auto;
-      padding: 160px 280px 0 115px;
+      padding: 180px 280px 0 115px;
       box-sizing: border-box;
       z-index: 10;
     }
@@ -475,7 +475,7 @@ onUnmounted(() => {
 
   .wrapper-conpect {
     position: relative;
-    padding: 160px 115px 0 115px;
+    padding: 180px 115px 0 115px;
     min-width: 1300px;
     height: calc(100vh - 126px);
     overflow: hidden;
