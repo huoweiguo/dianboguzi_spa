@@ -146,6 +146,7 @@ import PCHeader from '../components/PCHeader.vue'
 import NewsComp from '../components/NewsComp.vue'
 import DBMessage from '../components/DBMessage.vue'
 
+
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
   title: '', // 标题
@@ -190,7 +191,7 @@ const openPopbox = (payload: RulePopbox) => {
 }
 
 // 打开弹出框
-openPopbox({ visible: true, title: '兑换成功！', text: '请检查兑换码是否输入错误' })
+openPopbox({ visible: false, title: '兑换成功！', text: '请检查兑换码是否输入错误' })
 
 
 // 关闭弹出框
@@ -272,6 +273,13 @@ onMounted(() => {
   timer.value = setTimeout(() => {
     move.value = true
   }, 300)
+
+  // 跟进当前路由跳转到指定页面
+  const currentIndex = localStorage.getItem('currentIndex')
+  localStorage.removeItem('currentIndex')
+  index.value = currentIndex ? parseInt(currentIndex) : 0
+
+
 
 
   warpper = document.getElementById('warpper-container') as HTMLElement

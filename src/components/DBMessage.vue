@@ -4,13 +4,13 @@
       <a class="popbox-close" @click="close"><img src="../images/close.png" /></a>
       <div class="popbox-title">{{ props.title }}</div>
       <div class="popbox-text" v-if="props.text">{{ props.text }}</div>
-      <a class="popbox-complete" @click="close"><img src="../images/complete.png" /></a>
+      <a class="popbox-complete" @click="complete"><img src="../images/complete.png" /></a>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 const props = defineProps({
   title: {
     default: '',
@@ -26,15 +26,11 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits('hidePopbox')
+const emits = defineEmits(['hidePopbox'])
 
 const close = () => {
   emits('hidePopbox')
 }
-
-onMounted(() => {
-  console.log(props)
-})
 
 </script>
 

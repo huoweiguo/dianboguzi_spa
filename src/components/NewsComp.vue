@@ -59,7 +59,7 @@ const total = computed(() => props.total)
 const showNewsPage = (id: number) => {
   emits('showNewsInner', id)
 }
-console.log(total.value, 'aaaa')
+
 </script>
 <style lang="scss">
 .pagination-box {

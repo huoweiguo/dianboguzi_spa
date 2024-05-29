@@ -1,5 +1,8 @@
 <template>
   <div class="forget-psw">
+
+    <PCHeader :currentIndex="index" @changePage="changePage" />
+
     <div class="forget-box">
       <div style="margin-bottom: 68px;">
         <el-steps :active="active" align-center>
@@ -10,19 +13,26 @@
 
 
       <div class="forget-outer">
-        <div class="forget-inner" :class="active === 1 ? 'forget-active' : ''">
-          <div class="forget-send-verify">
-            <div><label>手机号</label><input type="text" placeholder="请输入手机号" /></div>
-            <div><label>验证码</label><input type="text" class="sms-code" placeholder="请输入验证码" /> <a>发送验证码</a></div>
-            <a class="next-btn" @click="nextStep"><img src="../images/next.png" /></a>
+        <form>
+          <div class="forget-inner" :class="active === 1 ? 'forget-active' : ''">
+            <div class="forget-send-verify">
+              <div><label>手机号</label><input type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
+              <div><label>验证码</label><input type="text" name="verifycode" autocomplete="off" class="sms-code"
+                  placeholder="请输入验证码" />
+                <a>发送验证码</a>
+              </div>
+              <a class="next-btn" @click="nextStep"><img src="../images/next.png" /></a>
+            </div>
+            <div class="forget-modify-psw">
+              <div><label>输入新密码</label><input type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
+              </div>
+              <div class="forget-promt">由大写字母，小写字母和特殊符号组成</div>
+              <div><label>再次输入密码</label><input type="password" name="again" autocomplete="off" placeholder="请输入密码" />
+              </div>
+              <a class="next-btn" @click="updatePsw"><img src="../images/complete.png" /></a>
+            </div>
           </div>
-          <div class="forget-modify-psw">
-            <div><label>输入新密码</label><input type="password" placeholder="请输入密码" /></div>
-            <div class="forget-promt">由大写字母，小写字母和特殊符号组成</div>
-            <div><label>再次输入密码</label><input type="password" placeholder="请输入密码" /></div>
-            <a class="next-btn" @click="updatePsw"><img src="../images/complete.png" /></a>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
@@ -33,10 +43,19 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElSteps, ElStep } from 'element-plus'
 import DBMessage from '../components/DBMessage.vue'
+import PCHeader from '../components/PCHeader.vue'
 const active = ref<number>(0)
-
+const index = ref<number>(-1)
+const router = useRouter()
+let timer = null
+interface RulePopbox {
+  title: string
+  text?: string
+  visible: boolean
+}
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
   title: '', // 标题
@@ -44,19 +63,16 @@ const popAttr = reactive<RulePopbox>({
   visible: false // 显示隐藏
 })
 
-interface RulePopbox {
-  title: string
-  text?: string
-  visible: boolean
-}
-
-
 const openPopbox = (payload: RulePopbox) => {
   popAttr.visible = payload.visible
   popAttr.title = payload.title
   popAttr.text = payload.text ? payload.text : ''
 }
 
+const changePage = (index: number) => {
+  localStorage.setItem('currentIndex', JSON.stringify(index))
+  router.push('/')
+}
 
 // 关闭弹出框
 const hidePopbox = () => {
@@ -68,9 +84,21 @@ const nextStep = () => {
 }
 
 const updatePsw = () => {
+  localStorage.setItem('currentIndex', 1)
   // 打开弹出框
-  openPopbox({ visible: true, title: '修改密码成功', text: '' })
+  openPopbox({
+    visible: true, title: '修改密码成功', text: '即将跳转到首页'
+  })
+
+  timer && clearTimeout(timer)
+
+  timer = setTimeout(() => {
+    hidePopbox()
+    router.push('/')
+  }, 2000)
 }
+
+
 </script>
 
 <style lang="scss">
@@ -137,8 +165,8 @@ const updatePsw = () => {
     width: 970px;
     height: 580px;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 240px;
+    transform: translate(-50%, 0);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     padding: 60px 120px 0;
@@ -202,13 +230,13 @@ const updatePsw = () => {
             }
 
             .sms-code {
-              width: 433px !important;
+              width: 418px !important;
               margin-right: 20px;
             }
 
             a {
               display: block;
-              width: 145px;
+              width: 160px;
               height: 77px;
               background-color: #fff;
               border-radius: 10px;

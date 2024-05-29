@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <PCHeader :currentIndex="index" @changePage="changePage" />
     <div class="login-outer">
       <img src="../images/logo-image.png" class="logo-login" />
       <div class="login-inner" :class="moveLogin ? 'move-verify' : ''">
@@ -27,8 +28,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import PCHeader from '../components/PCHeader.vue'
+import { useRouter } from 'vue-router'
 const agree = ref<boolean>(false)
 const moveLogin = ref<boolean>(false)
+const index = ref<number>(-1)
+const router = useRouter()
+
+const changePage = (index: number) => {
+  localStorage.setItem('currentIndex', JSON.stringify(index))
+  router.push('/')
+}
 </script>
 
 <style lang="scss" scoped>
@@ -42,12 +52,12 @@ const moveLogin = ref<boolean>(false)
     display: flex;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 240px;
     width: 973px;
     height: 656px;
     flex-direction: column;
     align-items: center;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     padding: 52px 0;
