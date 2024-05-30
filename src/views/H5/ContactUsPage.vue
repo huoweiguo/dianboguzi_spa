@@ -17,7 +17,7 @@
       </div>
       <div><img src="@/assets/h5/kf-2.png" alt="" />QQ客服</div>
     </div>
-    <div class="text-box">
+    <div class="text-box stop-swiping">
       <div>电子袖邮箱：business@dianboguzi..com</div>
       <div>网络备案号：苏公安网备32100102010183号</div>
       <div>ICP备案号：<a href="##" target="_blank">苏ICP备2023053104号</a></div>

@@ -26,8 +26,8 @@
   </div>
 
   <!-- next_page_btn -->
-  <div class="next_page_btn" v-if="!isLastPage">
-    <img src="@/assets/h5/icon-next.png" @click="nextPage" />
+  <div class="next_page_btn" v-if="!isLastPage" @click="nextPage">
+    <img src="@/assets/h5/icon-next.png" />
   </div>
 
   <!-- logout_box -->
@@ -290,7 +290,8 @@ const slideTo = (index) => {
   }
 
   &.hide {
-    opacity: 0;
+    // opacity: 0;
+    display: none;
   }
 
   &.center {

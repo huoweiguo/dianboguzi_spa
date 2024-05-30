@@ -1,6 +1,9 @@
 <template>
   <div class="page">
-    <div class="banner">
+    <div class="top-btn" v-if="ismore">
+      <div class="btn" @click="ismore = false">收起<img class="icon-down" src="@/assets/h5/icon-jt.svg" /></div>
+    </div>
+    <div class="banner" v-else>
       <swiper
         :effect="'coverflow'"
         :grabCursor="true"
@@ -32,7 +35,7 @@
     </div>
     <div class="news-list">
       <swiper class="swiper" :style="style" :navigation="true" :modules="[Navigation]" @swiper="setSwiper" @slideChange="onSlideChange">
-        <swiper-slide class="slide">
+        <swiper-slide class="slide stop-swiping">
           <ul class="list">
             <li class="list-item" v-for="i in 10" :key="i">
               <div class="title">1[柄图]电波谷子平台“眼若星辰”系列柄图贩售途径一览</div>
@@ -40,7 +43,7 @@
             </li>
           </ul>
         </swiper-slide>
-        <swiper-slide class="slide">
+        <swiper-slide class="slide stop-swiping">
           <ul class="list">
             <li class="list-item" v-for="i in 10" :key="i">
               <div class="title">2[谷模]电波谷子平台“眼若星辰”系列谷模贩售途径一览</div>
@@ -48,7 +51,7 @@
             </li>
           </ul>
         </swiper-slide>
-        <swiper-slide class="slide">
+        <swiper-slide class="slide stop-swiping">
           <ul class="list">
             <li class="list-item" v-for="i in 10" :key="i">
               <div class="title">3[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
@@ -56,7 +59,7 @@
             </li>
           </ul>
         </swiper-slide>
-        <swiper-slide class="slide">
+        <swiper-slide class="slide stop-swiping">
           <ul class="list">
             <li class="list-item" v-for="i in 10" :key="i">
               <div class="title">4[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
@@ -65,6 +68,9 @@
           </ul>
         </swiper-slide>
       </swiper>
+    </div>
+    <div class="footer-btn" v-if="!ismore">
+      <div class="btn" @click="ismore = true">更多<img src="@/assets/h5/icon-jt.svg" /></div>
     </div>
   </div>
 </template>
@@ -77,6 +83,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
 import 'swiper/css';
 
+const ismore = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);
 const style = reactive({
@@ -115,15 +122,15 @@ const slideTo = (index) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
+  padding: 20px 0;
   .tabs-item {
-    font-size: 14px;
+    font-size: 12px;
     color: #424242;
     transition: all 0.3s;
     margin: 0 10px;
-    padding: 2px 0;
+    padding: 3px 0;
     &.active {
-      padding: 2px 15px;
+      padding: 3px 15px;
       background: #fff;
       border-radius: 10px;
       color: #736bcd;
@@ -144,7 +151,7 @@ const slideTo = (index) => {
   height: 100%;
   .list {
     margin: 0 25px;
-    font-size: 14px;
+    font-size: 12px;
 
     .list-item {
       background: rgba(255, 255, 255, 0.5);
@@ -155,10 +162,37 @@ const slideTo = (index) => {
     .title {
       color: #021236;
       margin-bottom: 5px;
+      height: 16px;
+      line-height: 16px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .time {
       color: #898989;
     }
+  }
+}
+
+.footer-btn,
+.top-btn {
+  margin-top: 9px;
+  .btn {
+    margin: auto;
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    background: #ffffff;
+    border-radius: 10px 10px 10px 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #999999;
+  }
+}
+.top-btn {
+  margin-top: 0;
+  .icon-down {
+    transform: rotate(180deg);
   }
 }
 </style>

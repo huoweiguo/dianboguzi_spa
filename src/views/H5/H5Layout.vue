@@ -6,8 +6,8 @@
     <!-- menu_bar -->
     <MenuBar :swiper="mySwiper" @topage="slideTo" />
 
-    <div class="content">
-      <swiper :direction="'vertical'" class="app-swiper" @swiper="setSwiper">
+    <div class="content" :class="{ 'news-page': currentPage == 2 }">
+      <swiper :direction="'vertical'" class="app-swiper" noSwipingClass="stop-swiping" :spaceBetween="50" @swiper="setSwiper" @slideChange="slideChange">
         <!-- 首页page -->
         <swiper-slide class="slide"><HomePage /></swiper-slide>
 
@@ -47,12 +47,17 @@ const setSwiper = (swiper) => {
   mySwiper.value = swiper;
 };
 
+const slideChange = () => {
+  // mySwiper.value.allowTouchMove = mySwiper.value.activeIndex != 2;
+  currentPage.value = mySwiper.value.activeIndex;
+};
+
 const slideTo = (index) => {
   mySwiper.value.slideTo(index - 1, 300);
 };
 
 onMounted(() => {
-  slideTo(5);
+  slideTo(3);
 });
 </script>
 
@@ -73,12 +78,11 @@ onMounted(() => {
   top: 100px;
   left: 0;
   right: 0;
-  bottom: 40px;
-
-  .slide {
-    height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+  bottom: 0;
+  transition: all 0.3s;
+  &.news-page {
+    top: 70px;
+    bottom: 50px;
   }
 }
 </style>

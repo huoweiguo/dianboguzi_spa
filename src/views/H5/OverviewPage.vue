@@ -1,17 +1,21 @@
 <template>
-  <div class="tabs-bar">
-    <div class="tabs-item" :class="{ active: tabIndex == 0 }" @click="slideTo(0)">柄图</div>
-    <div class="tabs-item" :class="{ active: tabIndex == 1 }" @click="slideTo(1)">谷模</div>
-    <div class="tabs-item" :class="{ active: tabIndex == 2 }" @click="slideTo(2)">谷美</div>
-    <div class="tabs-item" :class="{ active: tabIndex == 3 }" @click="slideTo(3)">痛柜</div>
-  </div>
+  <div class="page">
+    <div class="tabs-bar">
+      <div class="tabs-item" :class="{ active: tabIndex == 0 }" @click="slideTo(0)">柄图</div>
+      <div class="tabs-item" :class="{ active: tabIndex == 1 }" @click="slideTo(1)">谷模</div>
+      <div class="tabs-item" :class="{ active: tabIndex == 2 }" @click="slideTo(2)">谷美</div>
+      <div class="tabs-item" :class="{ active: tabIndex == 3 }" @click="slideTo(3)">痛柜</div>
+    </div>
 
-  <swiper class="swiper" :style="style" :navigation="true" :modules="[Navigation]" @swiper="setSwiper" @slideChange="onSlideChange" :spaceBetween="10">
-    <swiper-slide class="slide"><img src="@/assets/h5/img-1.png" /></swiper-slide>
-    <swiper-slide class="slide"><img src="@/assets/h5/img-2.png" /></swiper-slide>
-    <swiper-slide class="slide"><img src="@/assets/h5/img-3.png" /></swiper-slide>
-    <swiper-slide class="slide"><img src="@/assets/h5/img-4.png" /></swiper-slide>
-  </swiper>
+    <div class="swiper-box">
+      <swiper class="swiper" :style="style" :navigation="true" :modules="[Navigation]" @swiper="setSwiper" @slideChange="onSlideChange" :spaceBetween="10">
+        <swiper-slide class="slide"><img src="@/assets/h5/img-1.png" /></swiper-slide>
+        <swiper-slide class="slide"><img src="@/assets/h5/img-2.png" /></swiper-slide>
+        <swiper-slide class="slide"><img src="@/assets/h5/img-3.png" /></swiper-slide>
+        <swiper-slide class="slide"><img src="@/assets/h5/img-4.png" /></swiper-slide>
+      </swiper>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -43,6 +47,12 @@ const slideTo = (index) => {
 </script>
 
 <style lang="scss" scoped>
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
 .tabs-bar {
   display: flex;
   justify-content: space-evenly;
@@ -73,16 +83,17 @@ const slideTo = (index) => {
     }
   }
 }
+.swiper-box {
+  flex: 1;
+}
 .swiper {
   height: 100%;
 }
 .slide {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   img {
-    display: block;
-    // max-width: 80%;
-    max-height: 90%;
+    max-width: 90%;
+    max-height: 70vh;
   }
 }
 </style>
