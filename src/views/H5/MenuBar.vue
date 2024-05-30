@@ -5,11 +5,11 @@
     </div>
     <div class="menu_bar_pop" @click="isShow = false"></div>
     <div class="menu_bar">
-      <div class="menu_close" @click="isShow = false">
-        <img src="@/assets/h5/icon-x.png" />
+      <div class="menu_close">
+        <img src="@/assets/h5/icon-x.png" @click="isShow = false" />
       </div>
       <div class="menu_list">
-        <div class="menu_item" v-for="(item, index) in menuList" :key="index" @click="emits('topage', item.title)">
+        <div class="menu_item" v-for="(item, index) in menuList" :key="index" @click="slideTo(index)" :class="{ active: index == props.swiper?.activeIndex }">
           <div class="title">{{ item.title }}</div>
           <div class="intro">{{ item.intro }}</div>
           <div class="desc">{{ item.desc }}</div>
@@ -17,32 +17,77 @@
       </div>
       <div class="menu_footer">
         <a href="##" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
+        <a href="##" target="_blank"><img src="@/assets/h5/icon-wb.png" /></a>
+        <a href="##" target="_blank"><img src="@/assets/h5/icon-xhs.png" style="width: 35px" /></a>
+        <a href="##" target="_blank"><img src="@/assets/h5/icon-wx.png" /></a>
+        <a href="##" target="_blank"><img src="@/assets/h5/icon-dy.png" /></a>
       </div>
     </div>
   </div>
 
   <!-- next_page_btn -->
+  <div class="next_page_btn" v-if="!isLastPage">
+    <img src="@/assets/h5/icon-next.png" @click="nextPage" />
+  </div>
 
+  <!-- logout_box -->
+  <div class="logout_box" v-if="islogin">
+    <div class="info">欢迎您，JSON.huo</div>
+    <div class="btn" @click="islogin = false">退出登录</div>
+  </div>
   <!-- login_box -->
+  <div class="login_box" v-else>
+    <div class="btn" @click="islogin = true">登录</div>
+    <i></i>
+    <div class="btn">注册</div>
+  </div>
+
+  <!-- logo -->
+  <div
+    class="logo"
+    :class="{
+      mini: props.swiper?.activeIndex == 1,
+      hide: props.swiper?.activeIndex == 2 || props.swiper?.activeIndex == 4,
+      center: props.swiper?.activeIndex == 3,
+    }"
+  >
+    <img v-if="props.swiper?.activeIndex == 3" src="@/assets/h5/logo-b.png" />
+    <img v-else src="@/assets/h5/logo.png" />
+  </div>
 </template>
 
 <script setup>
-import { ref, reactive, defineProps, defineEmits } from 'vue';
-const props = defineProps(['currentPage']);
+import { ref, reactive, computed, defineProps, defineEmits } from 'vue';
+const props = defineProps(['swiper']);
 const emits = defineEmits(['topage']);
 
 const isShow = ref(false);
+const islogin = ref(false);
 
 const menuList = reactive([
-  { title: '首页', intro: 'DIANBO GOODS', desc: '' },
-  { title: '概念展示', intro: 'CONCEPTS', desc: '谷子、谷模与谷美' },
-  { title: '新闻', intro: 'NEWS', desc: '线上与线下的最新活动' },
-  { title: '兑换码', intro: 'TOKENS', desc: '来兑换你最新获得的谷子吧' },
-  { title: '联系我们', intro: 'CUSTOMER SERVICE', desc: '让我们听到您的声音' },
+  { key: 1, title: '首页', intro: 'DIANBO GOODS', desc: '' },
+  { key: 2, title: '概念展示', intro: 'CONCEPTS', desc: '谷子、谷模与谷美' },
+  { key: 3, title: '新闻', intro: 'NEWS', desc: '线上与线下的最新活动' },
+  { key: 4, title: '兑换码', intro: 'TOKENS', desc: '来兑换你最新获得的谷子吧' },
+  { key: 5, title: '联系我们', intro: 'CUSTOMER SERVICE', desc: '让我们听到您的声音' },
 ]);
+
+const isLastPage = computed(() => {
+  return props.swiper?.activeIndex == props.swiper?.slides.length - 1;
+});
+
+const nextPage = () => {
+  props.swiper.slideNext();
+};
+
+const prevPage = () => {
+  props.swiper.slidePrev();
+};
+
+const slideTo = (index) => {
+  props.swiper.slideTo(index, 300);
+  isShow.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -86,32 +131,45 @@ const menuList = reactive([
     bottom: 0;
     transform: translate(0, 0);
     width: 75%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     box-sizing: border-box;
     transition: all 0.3s;
     transform: translate(-100%, 0);
     .menu_close {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 20px;
-      height: 20px;
+      display: flex;
+      align-items: center;
+      height: 15%;
 
       img {
-        width: 100%;
-        height: 100%;
+        display: inline-block;
+        margin-left: 20px;
+        width: 20px;
+        height: 20px;
       }
     }
     .menu_list {
-      margin-top: 80px;
       flex: 1;
       .menu_item {
         padding: 1em;
         color: #fff;
         line-height: 1.3;
+        &.active {
+          .title {
+            background: #9ab5d4;
+          }
+          .intro,
+          .desc {
+            color: #9ab5d4;
+          }
+        }
         .title {
-          font-size: 20px;
+          display: inline-block;
+          font-size: 16px;
           font-weight: 600;
+          color: #4f5d70;
+          background: #fff;
+          padding: 2px 10px;
+          border-radius: 5px;
         }
         .intro {
           font-size: 14px;
@@ -129,7 +187,7 @@ const menuList = reactive([
       align-items: center;
       background: #000;
       a {
-        padding: 1em;
+        padding: 1.5em 1em;
         img {
           width: 20px;
         }
@@ -147,6 +205,99 @@ const menuList = reactive([
     .menu_bar {
       transform: translate(0, 0);
     }
+  }
+}
+
+.next_page_btn {
+  position: fixed;
+  z-index: 999;
+  bottom: 10px;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.login_box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 998;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3eefd;
+  border-radius: 15px;
+  font-size: 12px;
+  .btn {
+    color: #39404a;
+    padding: 10px;
+  }
+  i {
+    width: 1px;
+    height: 16px;
+    background: #39404a;
+  }
+}
+
+.logout_box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 998;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  .info,
+  .btn {
+    background: #f3eefd;
+    border-radius: 15px;
+    padding: 10px;
+    color: #39404a;
+  }
+
+  .info {
+    margin-right: 10px;
+    color: #707587;
+  }
+}
+
+.logo {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  z-index: 998;
+  transition: all 0.3s;
+  img {
+    height: 70px;
+    transition: all 0.3s;
+  }
+
+  &.mini {
+    top: 50px;
+    left: 10px;
+    img {
+      height: 50px;
+    }
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+
+  &.center {
+    top: 20%;
+    left: 0;
+    right: 0;
+    text-align: center;
   }
 }
 </style>

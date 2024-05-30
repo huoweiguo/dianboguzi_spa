@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/SwiperHome.vue'
-import H5HomeView from '../views/H5/HomePage.vue'
+import H5Layout from '../views/H5/H5Layout.vue'
 import store from '@/store/index'
 import { useLoginStore } from '@/store/login'
 const routes: Array<RouteRecordRaw> = [
@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/h5',
     name: 'h5home',
-    component: H5HomeView
+    component: H5Layout
   },
   {
     path: '/code',
