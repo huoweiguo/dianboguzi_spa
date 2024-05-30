@@ -56,9 +56,9 @@ const slideTo = (index) => {
   mySwiper.value.slideTo(index - 1, 300);
 };
 
-onMounted(() => {
-  slideTo(3);
-});
+// onMounted(() => {
+//   slideTo(3);
+// });
 </script>
 
 <style lang="scss" scoped>
