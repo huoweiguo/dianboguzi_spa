@@ -12,13 +12,13 @@
     </div>
     <div class="ewm-box">
       <div>
-        <img src="@/assets/h5/kf-1.png" alt="" />
+        <img src="@/assets/h5/kf-1.png" class="stop-swiping" />
         <div>微信客服</div>
       </div>
-      <div><img src="@/assets/h5/kf-2.png" alt="" />QQ客服</div>
+      <div><img src="@/assets/h5/kf-2.png" class="stop-swiping" />QQ客服</div>
     </div>
     <div class="text-box stop-swiping">
-      <div>电子袖邮箱：business@dianboguzi..com</div>
+      <div>电子邮箱：business@dianboguzi..com</div>
       <div>网络备案号：苏公安网备32100102010183号</div>
       <div>ICP备案号：<a href="##" target="_blank">苏ICP备2023053104号</a></div>
       <div>增值电信业务经营许可证：苏B2-20240128号</div>
@@ -35,6 +35,10 @@ import { ref, reactive } from 'vue';
 </script>
 
 <style lang="scss" scoped>
+.page {
+  height: 100%;
+  overflow: auto;
+}
 .t-center {
   text-align: center;
 }

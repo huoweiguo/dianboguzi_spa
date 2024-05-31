@@ -1,8 +1,15 @@
 <template>
   <div class="menu_box" :class="{ active: isShow }">
-    <div class="menu_btn" @click="isShow = true">
+    <!-- back -->
+    <div class="menu_back" v-if="showLogin" @click="showLogin = false">
+      <span>返回</span>
+    </div>
+
+    <!-- menu -->
+    <div class="menu_btn" v-else @click="isShow = true">
       <img src="@/assets/h5/icon-menu.png" />
     </div>
+
     <div class="menu_bar_pop" @click="isShow = false"></div>
     <div class="menu_bar">
       <div class="menu_close">
@@ -30,17 +37,24 @@
     <img src="@/assets/h5/icon-next.png" />
   </div>
 
-  <!-- logout_box -->
-  <div class="logout_box" v-if="islogin">
-    <div class="info">欢迎您，JSON.huo</div>
-    <div class="btn" @click="islogin = false">退出登录</div>
-  </div>
-  <!-- login_box -->
-  <div class="login_box" v-else>
-    <div class="btn" @click="islogin = true">登录</div>
-    <i></i>
-    <div class="btn">注册</div>
-  </div>
+  <template v-if="!showLogin">
+    <!-- logout_box -->
+    <div class="logout_box" v-if="islogin">
+      <div class="info">欢迎您，JSON.huo</div>
+      <div class="btn" @click="islogin = false">退出登录</div>
+    </div>
+
+    <!-- login_box -->
+    <div class="login_box" v-else>
+      <div class="btn" @click="islogin = true">登录</div>
+      <i></i>
+      <div class="btn" @click="showLogin = true">注册</div>
+    </div>
+  </template>
+  <template v-else>
+    <!-- 登录页 -->
+    <LoginPage />
+  </template>
 
   <!-- logo -->
   <div
@@ -49,20 +63,22 @@
       mini: props.swiper?.activeIndex == 1,
       hide: props.swiper?.activeIndex == 2 || props.swiper?.activeIndex == 4,
       center: props.swiper?.activeIndex == 3,
+      login: showLogin,
     }"
   >
-    <img v-if="props.swiper?.activeIndex == 3" src="@/assets/h5/logo-b.png" />
-    <img v-else src="@/assets/h5/logo.png" />
+    <div class="imglogo" :class="{ black: props.swiper?.activeIndex == 3 || showLogin }"></div>
   </div>
 </template>
 
 <script setup>
+import LoginPage from './LoginPage.vue';
 import { ref, reactive, computed, defineProps, defineEmits } from 'vue';
 const props = defineProps(['swiper']);
 const emits = defineEmits(['topage']);
 
 const isShow = ref(false);
 const islogin = ref(false);
+const showLogin = ref(false);
 
 const menuList = reactive([
   { key: 1, title: '首页', intro: 'DIANBO GOODS', desc: '' },
@@ -96,6 +112,21 @@ const slideTo = (index) => {
   top: 0;
   left: 0;
   z-index: 999;
+  .menu_back {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    span {
+      display: inline-block;
+      width: 61px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.34);
+      border-radius: 13px 13px 13px 13px;
+      font-size: 12px;
+    }
+  }
   .menu_btn {
     position: absolute;
     top: 10px;
@@ -210,7 +241,7 @@ const slideTo = (index) => {
 
 .next_page_btn {
   position: fixed;
-  z-index: 999;
+  z-index: 10;
   bottom: 10px;
   right: 0;
   left: 0;
@@ -276,15 +307,23 @@ const slideTo = (index) => {
   left: 20px;
   z-index: 998;
   transition: all 0.3s;
-  img {
+  .imglogo {
+    display: inline-block;
     height: 70px;
+    width: calc(70px * 2.714);
+    background: url('@/assets/h5/logo.png') no-repeat center center;
+    background-size: contain;
     transition: all 0.3s;
+
+    &.black {
+      background-image: url('@/assets/h5/logo-b.png');
+    }
   }
 
   &.mini {
     top: 50px;
     left: 10px;
-    img {
+    .imglogo {
       height: 50px;
     }
   }
@@ -299,6 +338,17 @@ const slideTo = (index) => {
     left: 0;
     right: 0;
     text-align: center;
+  }
+
+  &.login {
+    display: block !important;
+    top: 30px;
+    left: auto;
+    right: 30px;
+    .imglogo {
+      height: 40px;
+      width: calc(40px * 2.714);
+    }
   }
 }
 </style>
