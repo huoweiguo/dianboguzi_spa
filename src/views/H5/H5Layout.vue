@@ -15,7 +15,7 @@
         <swiper-slide class="slide"><OverviewPage /></swiper-slide>
 
         <!-- 新闻page -->
-        <swiper-slide class="slide"><NewsPage /></swiper-slide>
+        <swiper-slide class="slide"><NewsPage @showDetail="showDetail" /></swiper-slide>
 
         <!-- 兑换码page -->
         <swiper-slide class="slide"><ExchangeCodePage /></swiper-slide>
@@ -24,12 +24,16 @@
         <swiper-slide class="slide"><ContactUsPage /></swiper-slide>
       </swiper>
     </div>
+
+    <!-- 新闻详情 -->
+    <NewsDetail v-model:visible="visible" :id="newsid" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import LoadingPop from './LoadingPop.vue';
+import NewsDetail from './NewsDetail.vue';
 import MenuBar from './MenuBar.vue';
 
 import HomePage from './HomePage.vue';
@@ -40,6 +44,9 @@ import ContactUsPage from './ContactUsPage.vue';
 
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
+
+const visible = ref(false);
+const newsid = ref(0);
 
 const currentPage = ref(1);
 const mySwiper = ref(null);
@@ -54,6 +61,11 @@ const slideChange = () => {
 
 const slideTo = (index) => {
   mySwiper.value.slideTo(index - 1, 300);
+};
+
+const showDetail = (id) => {
+  visible.value = true;
+  newsid.value = id;
 };
 
 // onMounted(() => {

@@ -37,7 +37,7 @@
       <swiper class="swiper" :style="style" :navigation="true" :modules="[Navigation]" @swiper="setSwiper" @slideChange="onSlideChange">
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i">
+            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
               <div class="title">1[柄图]电波谷子平台“眼若星辰”系列柄图贩售途径一览</div>
               <div class="time">2024-11-12</div>
             </li>
@@ -45,7 +45,7 @@
         </swiper-slide>
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i">
+            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
               <div class="title">2[谷模]电波谷子平台“眼若星辰”系列谷模贩售途径一览</div>
               <div class="time">2024-11-12</div>
             </li>
@@ -53,7 +53,7 @@
         </swiper-slide>
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i">
+            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
               <div class="title">3[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
               <div class="time">2024-11-12</div>
             </li>
@@ -61,7 +61,7 @@
         </swiper-slide>
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i">
+            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
               <div class="title">4[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
               <div class="time">2024-11-12</div>
             </li>
@@ -76,13 +76,14 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, defineEmits } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
 import 'swiper/css';
 
+const emits = defineEmits(['showDetail']);
 const ismore = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);
@@ -102,6 +103,10 @@ const onSlideChange = () => {
 const slideTo = (index) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
+};
+
+const showDetail = (id) => {
+  emits('showDetail', id);
 };
 </script>
 
