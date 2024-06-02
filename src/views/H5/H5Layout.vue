@@ -31,6 +31,9 @@
 </template>
 
 <script setup>
+import isMobile from '@/utils/isMobile';
+isMobile();
+
 import { ref, onMounted } from 'vue';
 import LoadingPop from './LoadingPop.vue';
 import NewsDetail from './NewsDetail.vue';

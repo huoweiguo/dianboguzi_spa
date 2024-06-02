@@ -2,7 +2,6 @@
   <div class="swiper-wrapper-content">
     <PCHeader :currentIndex="index" @changePage="changePage" :isHome="index !== 0" />
     <div class="warpper-container" id="warpper-container">
-
       <!--首页-->
       <div class="wrapper-slider wrapper-home">
         <img src="../images/home-bg.png" class="wrapper-content-flower" :class="move ? 'flower-move' : ''" />
@@ -27,9 +26,9 @@
         <div class="wrapper-conpect">
           <div class="conpect-leftnav">
             <ul>
-              <li v-for="item in conpectNav" :key="item.id" :class="item.id === conpectIndex ? 'active' : ''"
-                @click="setConpectIndex(item.id)">{{
-      item.title }}</li>
+              <li v-for="item in conpectNav" :key="item.id" :class="item.id === conpectIndex ? 'active' : ''" @click="setConpectIndex(item.id)">
+                {{ item.title }}
+              </li>
             </ul>
           </div>
           <div class="conpect-content">
@@ -47,15 +46,13 @@
         <div class="wrapper-conpect">
           <div class="conpect-leftnav">
             <ul>
-              <li v-for="item in newsNav" :key="item.id" :class="item.id === newsIndex ? 'active' : ''"
-                @click="setNewsIndex(item.id)">{{
-      item.title }}</li>
+              <li v-for="item in newsNav" :key="item.id" :class="item.id === newsIndex ? 'active' : ''" @click="setNewsIndex(item.id)">{{ item.title }}</li>
             </ul>
           </div>
           <div class="conpect-content">
             <div class="conpect-content-inner" id="news-content">
               <div class="news-list">
-                <NewsComp :total=100 @showNewsInner="showNewsInner" />
+                <NewsComp :total="100" @showNewsInner="showNewsInner" />
               </div>
               <div class="news-list">
                 <NewsComp />
@@ -120,10 +117,10 @@
             <img src="../images/logo.png" />
           </div>
           <div class="context-p">
-            <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号 </p>
+            <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号</p>
             <p>增值电信业务经营许可证：苏B2-20240128号</p>
             <p>营业执照</p>
-            <p>运营单位：电波谷子（扬州）科技有限公司 </p>
+            <p>运营单位：电波谷子（扬州）科技有限公司</p>
             <p>电波谷子（扬州）科技有限公司 版权所有</p>
             <p>电子邮箱：business@dianboguzi.com</p>
           </div>
@@ -139,175 +136,168 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import PCHeader from '../components/PCHeader.vue'
-import NewsComp from '../components/NewsComp.vue'
-import DBMessage from '../components/DBMessage.vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import PCHeader from '../components/PCHeader.vue';
+import NewsComp from '../components/NewsComp.vue';
+import DBMessage from '../components/DBMessage.vue';
+
+import isMobile from '@/utils/isMobile';
+isMobile();
 
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
   title: '', // 标题
   text: '', // 内容
-  visible: false // 显示隐藏
-})
+  visible: false, // 显示隐藏
+});
 
 interface RulePopbox {
-  title: string
-  text?: string
-  visible: boolean
+  title: string;
+  text?: string;
+  visible: boolean;
 }
 
-const index = ref<number>(0)
-const isScroll = ref(true)
-const move = ref(false)
-const timer = ref(null)
-let warpper = null
-let sliderWapper = null
-let conpectBox = null
-let newsBox = null
-const conpectIndex = ref<number>(0)
-const newsIndex = ref<number>(0)
-const showNews = ref<boolean>(false)
+const index = ref<number>(0);
+const isScroll = ref(true);
+const move = ref(false);
+const timer = ref(null);
+let warpper = null;
+let sliderWapper = null;
+let conpectBox = null;
+let newsBox = null;
+const conpectIndex = ref<number>(0);
+const newsIndex = ref<number>(0);
+const showNews = ref<boolean>(false);
 const newsNav = ref([
   { title: '最新', id: 0 },
   { title: '线上活动', id: 1 },
   { title: '线下活动', id: 2 },
-  { title: '加入我们', id: 3 }
-])
+  { title: '加入我们', id: 3 },
+]);
 const conpectNav = ref([
   { title: '柄图', id: 0 },
   { title: '电子谷子', id: 1 },
-  { title: '痛柜', id: 2 }
-])
-
+  { title: '痛柜', id: 2 },
+]);
 
 const resetScreen = () => {
-  var oHtml = document.querySelector('html')
-  var clientW = document.documentElement.clientWidth
+  var oHtml = document.querySelector('html');
+  var clientW = document.documentElement.clientWidth;
   if (clientW > 750) {
     let screenWidth = (clientW / 750) * 100 < 200 ? (clientW / 750) * 100 : 200;
-    oHtml.style.fontSize = screenWidth + 'px'
+    oHtml.style.fontSize = screenWidth + 'px';
   }
-}
-
+};
 
 const openPopbox = (payload: RulePopbox) => {
-  popAttr.visible = payload.visible
-  popAttr.title = payload.title
-  popAttr.text = payload.text ? payload.text : ''
-}
+  popAttr.visible = payload.visible;
+  popAttr.title = payload.title;
+  popAttr.text = payload.text ? payload.text : '';
+};
 
 // 打开弹出框
-openPopbox({ visible: false, title: '兑换成功！', text: '请检查兑换码是否输入错误' })
-
+openPopbox({ visible: false, title: '兑换成功！', text: '请检查兑换码是否输入错误' });
 
 // 关闭弹出框
 const hidePopbox = () => {
-  popAttr.visible = false
-}
+  popAttr.visible = false;
+};
 
 const setConpectIndex = (id: number) => {
-  conpectIndex.value = id
-  conpectBox.style.top = -conpectBox.clientHeight * conpectIndex.value + 'px'
-}
+  conpectIndex.value = id;
+  conpectBox.style.top = -conpectBox.clientHeight * conpectIndex.value + 'px';
+};
 
 const setNewsIndex = (id: number) => {
-  newsIndex.value = id
-  newsBox.style.top = -newsBox.clientHeight * newsIndex.value + 'px'
-}
+  newsIndex.value = id;
+  newsBox.style.top = -newsBox.clientHeight * newsIndex.value + 'px';
+};
 
 const goIndex = () => {
-  (warpper as HTMLElement).style.top = -index.value * 100 + 'vh'
-}
-
+  (warpper as HTMLElement).style.top = -index.value * 100 + 'vh';
+};
 
 // 滚动到指定的页面
 const changePage = (page: number) => {
-  index.value = page
-  window.removeEventListener('mousewheel', wheelScroll, false)
-  window.addEventListener('mousewheel', wheelScroll, false)
-  goIndex()
-}
+  index.value = page;
+  window.removeEventListener('mousewheel', wheelScroll, false);
+  window.addEventListener('mousewheel', wheelScroll, false);
+  goIndex();
+};
 
 const showNewsInner = (id: number) => {
-  showNews.value = true
+  showNews.value = true;
 
-  window.removeEventListener('mousewheel', wheelScroll, false)
-  clearTimeout(timer.value)
-  console.log(id)
-}
+  window.removeEventListener('mousewheel', wheelScroll, false);
+  clearTimeout(timer.value);
+  console.log(id);
+};
 
 const closeNews = () => {
-  showNews.value = false
-  window.addEventListener('mousewheel', wheelScroll, false)
-}
+  showNews.value = false;
+  window.addEventListener('mousewheel', wheelScroll, false);
+};
 
 const wheelScroll = (e: any) => {
   if (!isScroll.value) {
-    return false
+    return false;
   }
 
-  isScroll.value = false
+  isScroll.value = false;
   if (e.wheelDelta > 0) {
-
     // 判断是否在第二页
     if (index.value === 1 && conpectIndex.value > 0) {
       // 先滚动第二页数据
-      setConpectIndex(--conpectIndex.value)
+      setConpectIndex(--conpectIndex.value);
     } else if (index.value === 2 && newsIndex.value > 0) {
-      setNewsIndex(--newsIndex.value)
+      setNewsIndex(--newsIndex.value);
     } else {
-      index.value === 0 ? 0 : index.value--
+      index.value === 0 ? 0 : index.value--;
     }
   } else {
     // 判断是否在第二页
     if (index.value === 1 && conpectIndex.value < 2) {
       // 先滚动第二页数据
-      setConpectIndex(++conpectIndex.value)
+      setConpectIndex(++conpectIndex.value);
     } else if (index.value === 2 && newsIndex.value < 3) {
-      setNewsIndex(++newsIndex.value)
+      setNewsIndex(++newsIndex.value);
     } else {
-      index.value >= sliderWapper.length - 1 ? sliderWapper.length : index.value++
+      index.value >= sliderWapper.length - 1 ? sliderWapper.length : index.value++;
     }
   }
-  goIndex()
+  goIndex();
   setTimeout(() => {
-    isScroll.value = true
-  }, 300)
-}
+    isScroll.value = true;
+  }, 300);
+};
 
 onMounted(() => {
   timer.value = setTimeout(() => {
-    move.value = true
-  }, 300)
+    move.value = true;
+  }, 300);
 
   // 跟进当前路由跳转到指定页面
-  const currentIndex = localStorage.getItem('currentIndex')
-  localStorage.removeItem('currentIndex')
-  index.value = currentIndex ? parseInt(currentIndex) : 0
+  const currentIndex = localStorage.getItem('currentIndex');
+  localStorage.removeItem('currentIndex');
+  index.value = currentIndex ? parseInt(currentIndex) : 0;
 
-
-
-
-  warpper = document.getElementById('warpper-container') as HTMLElement
-  conpectBox = document.getElementById('conpect-content') as HTMLElement
-  newsBox = document.getElementById('news-content') as HTMLElement
-  sliderWapper = document.querySelectorAll('.wrapper-slider')
-  window.addEventListener('mousewheel', wheelScroll, false)
-  goIndex()
-
+  warpper = document.getElementById('warpper-container') as HTMLElement;
+  conpectBox = document.getElementById('conpect-content') as HTMLElement;
+  newsBox = document.getElementById('news-content') as HTMLElement;
+  sliderWapper = document.querySelectorAll('.wrapper-slider');
+  window.addEventListener('mousewheel', wheelScroll, false);
+  goIndex();
 
   // 设置html字体
-  resetScreen()
-  window.addEventListener('resize', resetScreen, false)
-})
+  resetScreen();
+  window.addEventListener('resize', resetScreen, false);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('mousewheel', wheelScroll, false)
-  clearTimeout(timer.value)
-  window.removeEventListener('resize', resetScreen, false)
-})
-
+  window.removeEventListener('mousewheel', wheelScroll, false);
+  clearTimeout(timer.value);
+  window.removeEventListener('resize', resetScreen, false);
+});
 </script>
 
 <style lang="scss">
@@ -367,7 +357,7 @@ onUnmounted(() => {
             justify-content: space-between;
             align-items: center;
             height: 1.2rem;
-            border: 1px solid #837BAD;
+            border: 1px solid #837bad;
             font-size: 0.3rem;
             color: #484751;
             line-height: 1.2rem;
@@ -442,13 +432,13 @@ onUnmounted(() => {
         .qr-block {
           width: 0.8rem;
           height: 0.8rem;
-          background-color: #AAAAAA;
+          background-color: #aaaaaa;
           border-radius: 0.05rem;
           margin-bottom: 0.05rem;
         }
 
         span {
-          color: #3D3D3D;
+          color: #3d3d3d;
           font-size: 0.08rem;
           display: block;
           font-weight: 300;
@@ -558,10 +548,7 @@ onUnmounted(() => {
             max-width: 100%;
           }
         }
-
-
       }
-
     }
 
     .show-news {
@@ -584,7 +571,7 @@ onUnmounted(() => {
           cursor: pointer;
 
           &.active {
-            color: #7465AD;
+            color: #7465ad;
           }
         }
       }
@@ -606,7 +593,7 @@ onUnmounted(() => {
         max-width: 5.5rem;
         transition: 0.5s;
 
-        &>div {
+        & > div {
           height: 100%;
 
           .conpect-img {
@@ -614,7 +601,6 @@ onUnmounted(() => {
             max-height: calc(100vh - 0.68rem);
           }
         }
-
       }
     }
 
@@ -673,7 +659,6 @@ onUnmounted(() => {
           width: 1.2rem;
         }
       }
-
     }
 
     .qr-content {
@@ -683,12 +668,12 @@ onUnmounted(() => {
       top: 50%;
       transform: translate(-50%, calc(-50% - 0.5rem));
 
-      &>div {
+      & > div {
         margin: 0 0.52rem;
         width: 1.5rem;
         text-align: center;
         font-size: 0.14rem;
-        color: #3D3D3D;
+        color: #3d3d3d;
         font-weight: 300;
 
         img {
