@@ -72,7 +72,7 @@ const showNewsPage = (id: number) => {
 
   .el-pager {
     background-color: #fff;
-    padding: 0.05rem;
+    padding: 0.03rem;
     border-radius: 0.13rem;
   }
 
@@ -114,11 +114,11 @@ const showNewsPage = (id: number) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 0.6rem;
+    height: 0.55rem;
     border: 1px solid #837BAD;
-    font-size: 0.15rem;
+    font-size: 0.14rem;
     color: #484751;
-    line-height: 0.6rem;
+    line-height: 0.55rem;
     margin-bottom: 0.1rem;
     padding: 0 0.15rem;
     box-sizing: border-box;
@@ -126,8 +126,8 @@ const showNewsPage = (id: number) => {
 
     .news-zp-title {
       flex: 1;
-      height: 0.6rem;
-      padding: 0.1rem 0;
+      height: 0.55rem;
+      padding: 0.08rem 0;
       box-sizing: border-box;
       line-height: 0.15rem;
       overflow: hidden;
@@ -137,7 +137,7 @@ const showNewsPage = (id: number) => {
         align-items: center;
         height: auto;
         line-height: 0.15rem;
-        font-size: 0.15rem;
+        font-size: 0.14rem;
         margin-bottom: 0.05rem;
 
         b {

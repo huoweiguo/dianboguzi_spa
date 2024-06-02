@@ -26,7 +26,8 @@
         <div class="wrapper-conpect">
           <div class="conpect-leftnav">
             <ul>
-              <li v-for="item in conpectNav" :key="item.id" :class="item.id === conpectIndex ? 'active' : ''" @click="setConpectIndex(item.id)">
+              <li v-for="item in conpectNav" :key="item.id" :class="item.id === conpectIndex ? 'active' : ''"
+                @click="setConpectIndex(item.id)">
                 {{ item.title }}
               </li>
             </ul>
@@ -46,7 +47,8 @@
         <div class="wrapper-conpect">
           <div class="conpect-leftnav">
             <ul>
-              <li v-for="item in newsNav" :key="item.id" :class="item.id === newsIndex ? 'active' : ''" @click="setNewsIndex(item.id)">{{ item.title }}</li>
+              <li v-for="item in newsNav" :key="item.id" :class="item.id === newsIndex ? 'active' : ''"
+                @click="setNewsIndex(item.id)">{{ item.title }}</li>
             </ul>
           </div>
           <div class="conpect-content">
@@ -564,7 +566,7 @@ onUnmounted(() => {
         flex: 1;
 
         li {
-          font-size: 0.18rem;
+          font-size: 0.17rem;
           font-weight: 300;
           text-align: center;
           margin-bottom: 0.3rem;
@@ -593,12 +595,12 @@ onUnmounted(() => {
         max-width: 5.5rem;
         transition: 0.5s;
 
-        & > div {
+        &>div {
           height: 100%;
 
           .conpect-img {
             max-width: 5.5rem;
-            max-height: calc(100vh - 0.68rem);
+            max-height: calc(100vh - 1.23rem);
           }
         }
       }
@@ -668,7 +670,7 @@ onUnmounted(() => {
       top: 50%;
       transform: translate(-50%, calc(-50% - 0.5rem));
 
-      & > div {
+      &>div {
         margin: 0 0.52rem;
         width: 1.5rem;
         text-align: center;
