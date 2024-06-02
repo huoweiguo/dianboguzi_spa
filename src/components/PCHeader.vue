@@ -52,13 +52,13 @@ const menuList = reactive([
 .db-header {
   position: fixed;
   left: 50%;
-  top: 60px;
+  top: 0.3rem;
   display: flex;
   z-index: 100;
-  width: 100%;
-  height: 120px;
-  font-size: 28px;
-  padding: 0 115px;
+  width: 7.5rem;
+  height: 0.3rem;
+  font-size: 0.14rem;
+  padding: 0 0.2rem;
   justify-content: space-between;
   align-items: center;
   transform: translate(-50%, 0);
@@ -67,16 +67,16 @@ const menuList = reactive([
   .header-unlogin {
     display: flex;
     align-items: center;
-    height: 120px;
+    height: 0.6rem;
 
     .header-logo {
-      height: 120px;
-      margin-right: 50px;
+      height: 0.6rem;
+      margin-right: 0.2rem;
     }
 
     a {
       white-space: nowrap;
-      font-size: 28px;
+      font-size: 0.14rem;
       cursor: pointer;
     }
   }
@@ -88,8 +88,8 @@ const menuList = reactive([
 
     span {
       display: block;
-      max-width: 300px;
-      font-size: 28px;
+      max-width: 1.5rem;
+      font-size: 0.14rem;
       white-space: nowrap;
       font-weight: 300;
       color: #379DDC;
@@ -99,16 +99,16 @@ const menuList = reactive([
 
     a {
       display: block;
-      height: 36px;
-      width: 70px;
-      line-height: 36px;
-      font-size: 28px;
+      height: 0.18rem;
+      width: 0.35rem;
+      line-height: 0.18rem;
+      font-size: 0.14rem;
       background-color: #379DDC;
       color: #fff;
       text-align: center;
-      border-radius: 18px;
+      border-radius: 0.09rem;
       font-weight: 200;
-      margin-left: 10px;
+      margin-left: 0.05rem;
       cursor: pointer;
     }
   }
@@ -118,11 +118,11 @@ const menuList = reactive([
 
     li {
       position: relative;
-      height: 36px;
-      font-size: 30px;
-      width: 195px;
+      height: 0.18rem;
+      font-size: 0.15rem;
+      width: 0.9rem;
       text-align: center;
-      line-height: 36px;
+      line-height: 0.18rem;
       cursor: pointer;
 
       &.active {
@@ -134,10 +134,10 @@ const menuList = reactive([
           display: block;
           transform: translate(0, -50%);
           width: 100%;
-          height: 18px;
+          height: 0.09rem;
           background-color: #C3B9EA;
           opacity: 0.6;
-          border-radius: 9px;
+          border-radius: 0.05rem;
           z-index: -1;
         }
       }

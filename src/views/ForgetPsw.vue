@@ -4,7 +4,7 @@
     <PCHeader :currentIndex="index" @changePage="changePage" />
 
     <div class="forget-box">
-      <div style="margin-bottom: 68px;">
+      <div style="margin-bottom: 0.34rem;">
         <el-steps :active="active" align-center>
           <el-step title="确认账号" />
           <el-step title="重置密码" />
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElSteps, ElStep } from 'element-plus'
 import DBMessage from '../components/DBMessage.vue'
@@ -83,6 +83,16 @@ const nextStep = () => {
   active.value++
 }
 
+const resetScreen = () => {
+  var oHtml = document.querySelector('html')
+  var clientW = document.documentElement.clientWidth
+  if (clientW > 750) {
+    let screenWidth = (clientW / 750) * 100 < 200 ? (clientW / 750) * 100 : 200;
+    oHtml.style.fontSize = screenWidth + 'px'
+  }
+}
+
+
 const updatePsw = () => {
   localStorage.setItem('currentIndex', 1)
   // 打开弹出框
@@ -90,25 +100,39 @@ const updatePsw = () => {
     visible: true, title: '修改密码成功', text: '即将跳转到首页'
   })
 
-  timer && clearTimeout(timer)
+  // timer && clearTimeout(timer)
 
-  timer = setTimeout(() => {
-    hidePopbox()
-    router.push('/')
-  }, 2000)
+  // timer = setTimeout(() => {
+  //   hidePopbox()
+  //   router.push('/')
+  // }, 2000)
 }
 
+
+
+onMounted(() => {
+  // 设置html字体
+  resetScreen()
+  window.addEventListener('resize', resetScreen, false)
+})
+
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resetScreen, false)
+})
 
 </script>
 
 <style lang="scss">
 .forget-box {
   .el-step__icon {
-    width: 60px !important;
-    height: 60px !important;
+    width: 0.3rem !important;
+    height: 0.3rem !important;
     background-color: rgba(0, 158, 255, 0.25);
     border: 0;
-    font-size: 30px;
+    font-size: 0.15rem;
+    display: flex;
+    margin: 0 auto;
   }
 
   .is-wait {
@@ -131,15 +155,15 @@ const updatePsw = () => {
   }
 
   .el-step.is-horizontal .el-step__line {
-    height: 6px;
+    height: 0.03rem;
     background-color: #fff;
-    border-radius: 3px;
-    top: 27px;
+    border-radius: 0.02rem;
+    top: 0.14rem;
   }
 
   .el-step__title {
     color: #000;
-    font-size: 20px;
+    font-size: 0.1rem;
   }
 
   .el-step__title.is-wait {
@@ -162,14 +186,14 @@ const updatePsw = () => {
 
   .forget-box {
     position: absolute;
-    width: 970px;
-    height: 580px;
+    width: 4.75rem;
+    height: 2.9rem;
     left: 50%;
-    top: 240px;
-    transform: translate(-50%, 0);
+    top: 50%;
+    transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    padding: 60px 120px 0;
+    border-radius: 0.1rem;
+    padding: 0.1rem 0.6rem 0;
     box-sizing: border-box;
 
     .forget-outer {
@@ -190,11 +214,12 @@ const updatePsw = () => {
           .next-btn {
             cursor: pointer;
             display: block;
-            width: 277px;
-            margin: 58px auto 0;
+            width: 1.38rem;
+            margin: 0.29rem auto 0;
 
             img {
-              height: 80px;
+              height: 0.4rem;
+              display: block;
             }
           }
 
@@ -202,24 +227,24 @@ const updatePsw = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 0.12rem;
 
             label {
-              font-size: 28px;
+              font-size: 0.14rem;
               display: block;
-              width: 100px;
+              width: 0.5rem;
               font-weight: 300;
               text-align: right;
-              margin-right: 17px;
+              margin-right: 0.09rem;
             }
 
             input {
-              width: 600px;
-              height: 77px;
+              width: 3rem;
+              height: 0.39rem;
               border: 0;
-              border-radius: 10px;
-              padding: 0 30px;
-              font-size: 28px;
+              border-radius: 0.05rem;
+              padding: 0 0.15rem;
+              font-size: 0.14rem;
               outline: none;
               color: #acacac;
               font-weight: 300;
@@ -230,45 +255,45 @@ const updatePsw = () => {
             }
 
             .sms-code {
-              width: 418px !important;
-              margin-right: 20px;
+              width: 2.1rem !important;
+              margin-right: 0.1rem;
             }
 
             a {
               display: block;
-              width: 160px;
-              height: 77px;
+              width: 0.8rem;
+              height: 0.39rem;
               background-color: #fff;
-              border-radius: 10px;
+              border-radius: 0.05rem;
               text-align: center;
-              line-height: 77px;
+              line-height: 0.39rem;
               cursor: pointer;
               color: #acacac;
-              font-size: 24px;
+              font-size: 0.112rem;
             }
           }
         }
 
         .forget-promt {
           display: block;
-          padding-left: 200px;
-          margin-top: -15px;
+          padding-left: 1rem;
+          margin-top: -0.08rem;
           color: #7A7A7A;
-          font-size: 20px;
+          font-size: 0.1rem;
           font-size: 300;
         }
 
         .forget-modify-psw {
           label {
-            width: 190px !important;
+            width: 0.95rem !important;
           }
 
           input {
-            width: 516px !important;
+            width: 2.58rem !important;
           }
 
           .next-btn {
-            margin-top: 47px;
+            margin-top: 0.24rem;
           }
         }
       }

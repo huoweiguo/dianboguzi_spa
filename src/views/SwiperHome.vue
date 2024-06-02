@@ -5,6 +5,8 @@
 
       <!--首页-->
       <div class="wrapper-slider wrapper-home">
+        <img src="../images/home-bg.png" class="wrapper-content-flower" :class="move ? 'flower-move' : ''" />
+
         <div class="wrapper-home-content">
           <div class="wrapper-box">
             <div class="wrapper-dl-content">
@@ -17,8 +19,6 @@
               </div>
             </div>
           </div>
-
-          <img src="../images/home-bg.png" class="wrapper-content-flower" :class="move ? 'flower-move' : ''" />
           <img src="../images/dbgz-text1.png" class="home-title-text" :class="move ? 'text-move' : ''" />
         </div>
       </div>
@@ -96,7 +96,7 @@
             <b class="change-code-title">线下兑换码</b>
             <div class="change-code-ipt"><label>谷子编号</label><input type="text" /></div>
             <div class="change-code-ipt"><label>兑换码</label><input type="text" /></div>
-            <div style="text-align: center;"><a><img src="../images/exchange.png" alt="兑换" /></a></div>
+            <a><img src="../images/exchange.png" alt="兑换" /></a>
           </div>
         </div>
         <a class="next-page" @click="changePage(++index)"><img src="../images/down-arrow.png" /></a>
@@ -114,26 +114,24 @@
               微信客服
             </div>
           </div>
-
-          <div class="contact-text">
-            <div class="contact-logo">
-              <img src="../images/logo.png" />
-            </div>
-            <div class="context-p">
-              <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号 </p>
-              <p>增值电信业务经营许可证：苏B2-20240128号</p>
-              <p>营业执照</p>
-              <p>运营单位：电波谷子（扬州）科技有限公司 </p>
-              <p>电波谷子（扬州）科技有限公司 版权所有</p>
-              <p>电子邮箱：business@dianboguzi.com</p>
-            </div>
-
-            <span></span>
+        </div>
+        <div class="contact-text">
+          <div class="contact-logo">
+            <img src="../images/logo.png" />
           </div>
+          <div class="context-p">
+            <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号 </p>
+            <p>增值电信业务经营许可证：苏B2-20240128号</p>
+            <p>营业执照</p>
+            <p>运营单位：电波谷子（扬州）科技有限公司 </p>
+            <p>电波谷子（扬州）科技有限公司 版权所有</p>
+            <p>电子邮箱：business@dianboguzi.com</p>
+          </div>
+
+          <span></span>
         </div>
       </div>
     </div>
-
 
     <!--弹出框-->
     <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" @hidePopbox="hidePopbox" />
@@ -145,7 +143,6 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import NewsComp from '../components/NewsComp.vue'
 import DBMessage from '../components/DBMessage.vue'
-
 
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
@@ -175,13 +172,23 @@ const newsNav = ref([
   { title: '最新', id: 0 },
   { title: '线上活动', id: 1 },
   { title: '线下活动', id: 2 },
-  { title: '联系我们', id: 3 }
+  { title: '加入我们', id: 3 }
 ])
 const conpectNav = ref([
   { title: '柄图', id: 0 },
   { title: '电子谷子', id: 1 },
   { title: '痛柜', id: 2 }
 ])
+
+
+const resetScreen = () => {
+  var oHtml = document.querySelector('html')
+  var clientW = document.documentElement.clientWidth
+  if (clientW > 750) {
+    let screenWidth = (clientW / 750) * 100 < 200 ? (clientW / 750) * 100 : 200;
+    oHtml.style.fontSize = screenWidth + 'px'
+  }
+}
 
 
 const openPopbox = (payload: RulePopbox) => {
@@ -288,11 +295,17 @@ onMounted(() => {
   sliderWapper = document.querySelectorAll('.wrapper-slider')
   window.addEventListener('mousewheel', wheelScroll, false)
   goIndex()
+
+
+  // 设置html字体
+  resetScreen()
+  window.addEventListener('resize', resetScreen, false)
 })
 
 onUnmounted(() => {
   window.removeEventListener('mousewheel', wheelScroll, false)
   clearTimeout(timer.value)
+  window.removeEventListener('resize', resetScreen, false)
 })
 
 </script>
@@ -346,20 +359,20 @@ onUnmounted(() => {
       overflow: hidden;
 
       .news-list {
-        width: 1100px;
+        width: 5.5rem;
 
         .news-ul {
           li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 120px;
+            height: 1.2rem;
             border: 1px solid #837BAD;
-            font-size: 30px;
+            font-size: 0.3rem;
             color: #484751;
-            line-height: 120px;
-            margin-bottom: 20px;
-            padding: 0 30px;
+            line-height: 1.2rem;
+            margin-bottom: 0.2rem;
+            padding: 0 0.3rem;
             box-sizing: border-box;
             cursor: pointer;
 
@@ -371,10 +384,10 @@ onUnmounted(() => {
             }
 
             i {
-              font-size: 22px;
+              font-size: 0.22rem;
               color: #484751;
-              width: 200px;
-              margin-left: 20px;
+              width: 2rem;
+              margin-left: 0.2rem;
             }
           }
         }
@@ -383,14 +396,14 @@ onUnmounted(() => {
       .next-page {
         position: absolute;
         left: 50%;
-        bottom: 10px;
-        width: 40px;
-        height: 38px;
+        bottom: 0.1rem;
+        width: 0.18rem;
+        height: 0.18rem;
         transform: translate(-50%, 0);
         cursor: pointer;
 
         img {
-          width: 40px;
+          width: 0.18rem;
           display: block;
         }
       }
@@ -398,9 +411,9 @@ onUnmounted(() => {
 
     .wrapper-box {
       position: relative;
-      width: 100%;
-      margin: 0 auto;
-      padding: 180px 280px 0 115px;
+      max-width: 7.5rem;
+      margin: 0.9rem auto 0;
+      padding: 0 0.2rem;
       box-sizing: border-box;
       z-index: 10;
     }
@@ -411,26 +424,32 @@ onUnmounted(() => {
     width: 100%;
     height: 100vh;
 
+    .wrapper-home-content {
+      position: relative;
+      max-width: 7.5rem;
+      margin: 0 auto;
+    }
+
     .wrapper-dl-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 190px;
+      width: 0.8rem;
 
       .home-qr {
         text-align: center;
 
         .qr-block {
-          width: 190px;
-          height: 190px;
+          width: 0.8rem;
+          height: 0.8rem;
           background-color: #AAAAAA;
-          border-radius: 10px;
-          margin-bottom: 10px;
+          border-radius: 0.05rem;
+          margin-bottom: 0.05rem;
         }
 
         span {
           color: #3D3D3D;
-          font-size: 16px;
+          font-size: 0.08rem;
           display: block;
           font-weight: 300;
         }
@@ -438,12 +457,12 @@ onUnmounted(() => {
 
       img {
         display: block;
-        width: 190px;
-        margin-bottom: 20px;
+        width: 0.8rem;
+        margin-bottom: 0.1rem;
       }
 
       .logo-img {
-        width: 160px;
+        width: 0.7rem;
       }
     }
 
@@ -451,7 +470,7 @@ onUnmounted(() => {
       position: absolute;
       right: 0;
       top: 100vh;
-      height: 100vh;
+      height: 100%;
       transition: 0.5s;
     }
 
@@ -461,23 +480,23 @@ onUnmounted(() => {
 
     .home-title-text {
       position: absolute;
-      right: 35%;
-      top: -50vh;
-      height: 160px;
-      transform: translate(-50%, -50%);
+      left: 2.06rem;
+      top: -3rem;
+      height: 0.8rem;
       transition: 0.5s;
     }
 
     .text-move {
-      top: 50vh;
+      top: 0.92rem;
     }
   }
 
   .wrapper-conpect {
     position: relative;
-    padding: 180px 115px 0 115px;
-    min-width: 1300px;
-    height: calc(100vh - 126px);
+    max-width: 7.5rem;
+    margin: 0 auto;
+    height: calc(100vh - 0.63rem);
+    padding: 0.9rem 0.2rem 0;
     overflow: hidden;
 
     .news-context {
@@ -488,51 +507,52 @@ onUnmounted(() => {
       display: none;
       justify-content: flex-end;
       width: 100%;
-      padding-right: 110px;
-      height: calc(100vh - 126px);
+      height: calc(100vh - 0.63rem);
       box-sizing: border-box;
       background-image: linear-gradient(90deg, #fff, rgb(235, 239, 253), rgb(244, 230, 249));
 
       .news-back {
         position: absolute;
-        left: 120px;
-        top: 95px;
+        left: 0.2rem;
+        top: 0.1rem;
         z-index: 201;
         cursor: pointer;
+        display: block;
 
         img {
-          width: 84px;
+          display: block;
+          width: 0.42rem;
         }
       }
 
       .news-context-box {
         position: relative;
-        width: 1300px;
-        padding: 0 20px 50px 10px;
+        width: 6.5rem;
+        padding: 0 0.1rem 0.5rem 0.05rem;
         box-sizing: border-box;
         overflow-y: scroll;
 
         b.news-title {
           display: block;
-          font-size: 50px;
+          font-size: 0.25rem;
           text-align: center;
           color: #484751;
-          margin-bottom: 16px;
+          margin-bottom: 0.08rem;
           font-weight: 300;
         }
 
         .news-small-text {
           display: block;
           color: #484751;
-          font-size: 24px;
-          margin-bottom: 16px;
+          font-size: 0.12rem;
+          margin-bottom: 0.08rem;
           text-align: center;
           font-weight: 200;
         }
 
         .news-inner-context {
-          font-size: 24px;
-          line-height: 32px;
+          font-size: 0.12rem;
+          line-height: 0.16rem;
 
           img {
             max-width: 100%;
@@ -550,17 +570,17 @@ onUnmounted(() => {
 
     .conpect-leftnav {
       float: left;
-      width: 145px;
-      margin-top: 80px;
+      width: 0.77rem;
+      margin-top: 0.4rem;
 
       ul {
         flex: 1;
 
         li {
-          font-size: 35px;
+          font-size: 0.18rem;
           font-weight: 300;
           text-align: center;
-          margin-bottom: 60px;
+          margin-bottom: 0.3rem;
           cursor: pointer;
 
           &.active {
@@ -574,7 +594,8 @@ onUnmounted(() => {
       position: relative;
       float: right;
       height: 100%;
-      width: 1100px;
+      max-width: 5.5rem;
+      width: 100%;
       overflow: hidden;
 
       .conpect-content-inner {
@@ -582,15 +603,15 @@ onUnmounted(() => {
         left: 0;
         top: 0;
         height: 100%;
-        width: 1100px;
+        max-width: 5.5rem;
         transition: 0.5s;
 
         &>div {
           height: 100%;
 
           .conpect-img {
-            max-width: 1100px;
-            max-height: calc(100vh - 126px);
+            max-width: 5.5rem;
+            max-height: calc(100vh - 0.68rem);
           }
         }
 
@@ -601,98 +622,109 @@ onUnmounted(() => {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 823px;
-      height: 530px;
+      width: 4.11rem;
+      height: 2.65rem;
       background-color: rgba(255, 255, 255, 0.5);
       transform: translate(-50%, -50%);
-      border-radius: 30px;
-      padding: 52px 66px;
+      border-radius: 0.15rem;
+      padding: 0.26rem 0.33rem;
       box-sizing: border-box;
 
       .change-code-title {
         display: block;
-        font-size: 40px;
+        font-size: 0.2rem;
         color: #424243;
         text-align: center;
-        margin-bottom: 56px;
+        margin-bottom: 0.28rem;
       }
 
       .change-code-ipt {
         display: flex;
-        margin-bottom: 34px;
+        margin-bottom: 0.17rem;
         align-items: center;
 
         label {
           display: block;
-          width: 125px;
-          font-size: 24px;
+          width: 0.62rem;
+          font-size: 0.12rem;
         }
 
         input[type='text'] {
-          width: 495px;
-          height: 68px;
+          width: 2.48rem;
+          height: 0.34rem;
           background-color: #fff;
           border: 0;
-          border-radius: 10px;
-          font-size: 24px;
-          padding: 0 10px;
+          border-radius: 0.05rem;
+          font-size: 0.12rem;
+          padding: 0 0.05rem;
           box-sizing: border-box;
           outline: none;
         }
       }
 
       a {
+        display: block;
+        width: 1.2rem;
+        margin: 0.28rem auto 0;
         cursor: pointer;
-      }
-    }
 
-    .contact-text {
-      position: absolute;
-      left: 0;
-      bottom: 34px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      height: 246px;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 42px 111px;
-      box-sizing: border-box;
-      border-top: 1px solid #000;
-
-      .contact-logo {
         img {
-          height: 120px;
+          display: block;
+          width: 1.2rem;
         }
       }
 
-      .context-p {
-        p {
-          font-size: 22px;
-          margin: 5px 0;
-          font-weight: 500;
-        }
-      }
     }
 
     .qr-content {
       display: flex;
-      justify-content: center;
-      margin-top: 50px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, calc(-50% - 0.5rem));
 
       &>div {
-        margin: 0 104px;
-        width: 350px;
+        margin: 0 0.52rem;
+        width: 1.5rem;
         text-align: center;
-        font-size: 32px;
+        font-size: 0.14rem;
         color: #3D3D3D;
         font-weight: 300;
 
         img {
-          width: 350px;
+          width: 1.5rem;
           display: block;
-          margin-bottom: 17px;
+          margin-bottom: 0.09rem;
         }
+      }
+    }
+  }
+
+  .contact-text {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 1.23rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.21rem 0.55rem;
+    box-sizing: border-box;
+    border-top: 1px solid #000;
+
+    .contact-logo {
+      img {
+        height: 0.6rem;
+      }
+    }
+
+    .context-p {
+      p {
+        font-size: 0.11rem;
+        margin: 0.03rem 0;
+        font-weight: 500;
       }
     }
   }

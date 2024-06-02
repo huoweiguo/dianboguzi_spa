@@ -25,9 +25,9 @@ const silderList = ref([
 
 <style lang="scss">
 .swiper-pagination-bullet-active {
-  width: 34px !important;
+  width: 0.17rem !important;
   background-color: #b5a8e5 !important;
-  border-radius: 5px !important;
+  border-radius: 0.03rem !important;
 }
 
 .swiper-warp {
@@ -42,21 +42,21 @@ const silderList = ref([
   .swiper-pagination-bullets.swiper-pagination-horizontal {
     width: auto;
     left: auto;
-    right: 28px;
+    right: 0.14rem;
   }
 }
 </style>
 
 <style lang="scss" scoped>
 .swiper-warp {
-  height: 223px !important;
-  margin-bottom: 20px;
+  height: 1.12rem !important;
+  margin-bottom: 0.1rem;
 
   .slider-img-outer {
 
 
     .slider-img {
-      height: 223px;
+      height: 1.12rem;
     }
   }
 }

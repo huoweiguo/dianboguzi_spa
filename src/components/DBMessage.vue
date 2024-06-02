@@ -36,14 +36,14 @@ const close = () => {
 
 <style lang="scss" scoped>
 .db-popbox {
-  width: 630px;
-  height: 470px;
+  width: 3.15rem;
+  height: 2.35rem;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 0.1rem;
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -51,36 +51,38 @@ const close = () => {
 
   .popbox-close {
     position: absolute;
-    left: 30px;
-    top: 30px;
+    left: 0.15rem;
+    top: 0.15rem;
     cursor: pointer;
 
     img {
-      width: 17px;
+      display: block;
+      width: 0.09rem;
     }
   }
 
   .popbox-title {
-    font-size: 36px;
+    font-size: 0.18rem;
     text-align: center;
-    margin: 0 50px 20px;
+    margin: 0 0.25rem 0.1rem;
   }
 
   .popbox-text {
-    font-size: 36px;
+    font-size: 0.18rem;
     text-align: center;
-    margin: 0 50px 20px;
-    line-height: 43px
+    margin: 0 0.25rem 0.1rem;
+    line-height: 0.22rem;
   }
 
   .popbox-complete {
     cursor: pointer;
     display: block;
-    width: 285px;
-    margin: 50px auto 0;
+    width: 1.42rem;
+    margin: 0.25rem auto 0;
 
     img {
-      height: 80x;
+      height: 0.4rem;
+      display: block;
     }
   }
 }
