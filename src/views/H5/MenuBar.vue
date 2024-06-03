@@ -23,11 +23,13 @@
         </div>
       </div>
       <div class="menu_footer">
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-wb.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-xhs.png" style="width: 35px" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-wx.png" /></a>
-        <a href="##" target="_blank"><img src="@/assets/h5/icon-dy.png" /></a>
+        <a href="https://space.bilibili.com/3546565146839763" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
+        <a href="https://weibo.com/u/7878529698" target="_blank"><img src="@/assets/h5/icon-wb.png" /></a>
+        <a href="https://www.xiaohongshu.com/user/profile/607283d9000000000100ad8b?m_source=baofeng" target="_blank"
+          ><img src="@/assets/h5/icon-xhs.png" style="width: 35px"
+        /></a>
+        <a href="https://work.weixin.qq.com/kfid/kfc85565933a9cf0071" target="_blank"><img src="@/assets/h5/icon-wx.png" /></a>
+        <a href="https://www.douyin.com/user/MS4wLjABAAAANv-Xl5ptPJsSvu4nFfqheXAGRFMpiL3EwUULuxzgtcE" target="_blank"><img src="@/assets/h5/icon-dy.png" /></a>
       </div>
     </div>
   </div>
