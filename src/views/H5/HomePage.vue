@@ -14,7 +14,7 @@ import { ref, reactive } from 'vue';
 
 <style lang="scss" scoped>
 .page {
-  background: url('@/assets/h5/img9.png') no-repeat right 100px;
+  background: url('@/assets/h5/img9.png') no-repeat right bottom;
   height: 100%;
   background-size: 70% auto;
 }
@@ -31,7 +31,12 @@ import { ref, reactive } from 'vue';
 }
 
 .img {
+  position: absolute;
   height: 60px;
-  margin: 70% 0 0 10%;
+  left: 10%;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  margin: auto;
 }
 </style>

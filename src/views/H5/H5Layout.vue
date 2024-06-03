@@ -6,10 +6,10 @@
     <!-- menu_bar -->
     <MenuBar :swiper="mySwiper" @topage="slideTo" />
 
-    <div class="content" :class="{ 'news-page': currentPage == 2 }">
+    <div class="content" :class="{ 'home-page': currentPage == 0, 'news-page': currentPage == 2 }">
       <swiper :direction="'vertical'" class="app-swiper" noSwipingClass="stop-swiping" :spaceBetween="50" @swiper="setSwiper" @slideChange="slideChange">
         <!-- 首页page -->
-        <swiper-slide class="slide"><HomePage /></swiper-slide>
+        <swiper-slide class="slide home-bg"><HomePage /></swiper-slide>
 
         <!-- 概览展示page -->
         <swiper-slide class="slide"><OverviewPage /></swiper-slide>
@@ -51,7 +51,7 @@ import 'swiper/css';
 const visible = ref(false);
 const newsid = ref(0);
 
-const currentPage = ref(1);
+const currentPage = ref(0);
 const mySwiper = ref(null);
 const setSwiper = (swiper) => {
   mySwiper.value = swiper;
@@ -87,6 +87,11 @@ const showDetail = (id) => {
   height: 100%;
 }
 
+.home-bg {
+  background: url('@/assets/h5/cbg.png') no-repeat left top;
+  background-size: auto 100%;
+}
+
 .content {
   position: absolute;
   z-index: 1;
@@ -95,6 +100,10 @@ const showDetail = (id) => {
   right: 0;
   bottom: 0;
   transition: all 0.3s;
+  &.home-page {
+    top: 0;
+    bottom: 0;
+  }
   &.news-page {
     top: 70px;
     bottom: 50px;

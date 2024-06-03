@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="t-center">
-      <img src="@/assets/h5/loading-img.png" height="200px" />
+      <img src="@/assets/h5/loading-img.png" width="40%" style="max-width: 200px" />
     </div>
     <div class="btn-box">
       <div class="btn">关注B站</div>
@@ -22,8 +22,7 @@
       <div>网络备案号：苏公安网备32100102010183号</div>
       <div>ICP备案号：<a href="##" target="_blank">苏ICP备2023053104号</a></div>
       <div>增值电信业务经营许可证：苏B2-20240128号</div>
-      <div>运营单位：电波谷子（扬州）</div>
-      <div>科技有限公司</div>
+      <div>运营单位：电波谷子（扬州）科技有限公司</div>
       <div><a href="##" target="_blank">营业执照</a></div>
       <div>电波谷子（扬州）科技有限公司版权所有</div>
     </div>
@@ -75,10 +74,14 @@ import { ref, reactive } from 'vue';
 .text-box {
   margin: 30px;
   font-size: 14px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.75);
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px;
   line-height: 1.5;
+
+  a {
+    color: #0f79f5;
+  }
 }
 </style>

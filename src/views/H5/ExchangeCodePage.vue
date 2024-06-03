@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="code-form stop-swiping">
+    <div class="code-form">
       <p class="code-form-title">线下兑换码</p>
       <div class="verify-login">
         <div class="form-ipt"><label>谷子编号</label><input type="text" /></div>
