@@ -105,11 +105,11 @@
         <div class="wrapper-conpect">
           <div class="qr-content">
             <div>
-              <img src="../images/qr-code.png" />
+              <img src="../images/kf-2.png" />
               QQ客服
             </div>
             <div>
-              <img src="../images/qr-code.png" />
+              <img src="../images/kf-1.png" />
               微信客服
             </div>
           </div>
@@ -119,7 +119,9 @@
             <img src="../images/logo.png" />
           </div>
           <div class="context-p">
-            <p>ICP备案号：苏ICP备2023053104号|网络备案号：苏公安网备32100102010183号</p>
+            <p>ICP备案号：<a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备2023053104号</a> |
+              网络备案号：<a href="https://beian.mps.gov.cn/#/query/webSearch" target="_blank">苏公安网备32100102010183号</a>
+            </p>
             <p>增值电信业务经营许可证：苏B2-20240128号</p>
             <p>营业执照</p>
             <p>运营单位：电波谷子（扬州）科技有限公司</p>
@@ -712,6 +714,16 @@ onUnmounted(() => {
         font-size: 0.11rem;
         margin: 0.03rem 0;
         font-weight: 500;
+        line-height: 0.12rem;
+
+        a {
+          color: #000;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
