@@ -10,7 +10,7 @@
           <div class="wrapper-box">
             <div class="wrapper-dl-content">
               <img src="../images/logo.png" class="logo-img" />
-              <img @click="toUrl('https://www.bilibili.com/read/cv35069952/?spm_id_from=333.999.0.0&jump_opus=1')" src="../images/ios-dl.png" />
+              <img @click="toUrl('https://www.bilibili.com/read/cv35161616/?jump_opus=1')" src="../images/ios-dl.png" />
               <img @click="toUrl('https://down.ez6.com.cn/app.php/86')" src="../images/android-dl.png" />
               <div class="home-qr">
                 <div class="qr-block"></div>

@@ -1,9 +1,9 @@
 <template>
   <div class="page">
-    <img class="img" src="@/assets/h5/text.png" alt="" />
+    <img class="img" src="@/assets/h5/text2.png" alt="" />
     <div class="btn-link">
-      <a href="##" target="_blank"><img src="@/assets/h5/btn-i.png" alt="" /></a>
-      <a href="##" target="_blank"><img src="@/assets/h5/btn-a.png" alt="" /></a>
+      <a href="https://www.bilibili.com/read/cv35161616/?jump_opus=1" target="_blank"><img src="@/assets/h5/btn-i.png" alt="" /></a>
+      <a href="https://down.ez6.com.cn/app.php/86" target="_blank"><img src="@/assets/h5/btn-a.png" alt="" /></a>
     </div>
   </div>
 </template>
