@@ -10,11 +10,11 @@
           <div class="wrapper-box">
             <div class="wrapper-dl-content">
               <img src="../images/logo.png" class="logo-img" />
-              <img src="../images/ios-dl.png" />
-              <img src="../images/android-dl.png" />
+              <img @click="toUrl('https://www.bilibili.com/read/cv35069952/?spm_id_from=333.999.0.0&jump_opus=1')" src="../images/ios-dl.png" />
+              <img @click="toUrl('https://down.ez6.com.cn/app.php/86')" src="../images/android-dl.png" />
               <div class="home-qr">
                 <div class="qr-block"></div>
-                <span>扫码下载APP</span>
+                <span>扫码加入内测群</span>
               </div>
             </div>
           </div>
@@ -184,6 +184,9 @@ const conpectNav = ref([
   { title: '痛柜', id: 2 },
 ]);
 
+const toUrl = (url:string) => {
+  window.open(url, '_blank');
+};
 const resetScreen = () => {
   var oHtml = document.querySelector('html');
   var clientW = document.documentElement.clientWidth;
@@ -429,6 +432,7 @@ onUnmounted(() => {
       flex-direction: column;
       align-items: center;
       width: 0.8rem;
+      cursor: pointer;
 
       .home-qr {
         text-align: center;
@@ -436,9 +440,10 @@ onUnmounted(() => {
         .qr-block {
           width: 0.8rem;
           height: 0.8rem;
-          background-color: #aaaaaa;
           border-radius: 0.05rem;
           margin-bottom: 0.05rem;
+          background: url("../assets/WeChat.jpg") no-repeat 100% 100%;
+          background-size: 100% 100%;
         }
 
         span {
