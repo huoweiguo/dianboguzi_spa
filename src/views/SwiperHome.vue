@@ -144,6 +144,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import PCHeader from '../components/PCHeader.vue';
 import NewsComp from '../components/NewsComp.vue';
 import DBMessage from '../components/DBMessage.vue';
+import { useLoginStore } from "@/store/login";
 
 import isMobile from '@/utils/isMobile';
 isMobile();
@@ -160,7 +161,7 @@ interface RulePopbox {
   text?: string;
   visible: boolean;
 }
-
+const useLogin = useLoginStore();
 const index = ref<number>(0);
 const isScroll = ref(true);
 const move = ref(false);
@@ -279,6 +280,9 @@ const wheelScroll = (e: any) => {
 };
 
 onMounted(() => {
+  useLogin.getUserInfo().then((res)=>{
+    console.log(res)
+  });
   timer.value = setTimeout(() => {
     move.value = true;
   }, 300);

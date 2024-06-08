@@ -13,26 +13,29 @@
 
 
       <div class="forget-outer">
-        <form>
+        <div>
           <div class="forget-inner" :class="active === 1 ? 'forget-active' : ''">
             <div class="forget-send-verify">
-              <div><label>手机号</label><input type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
-              <div><label>验证码</label><input type="text" name="verifycode" autocomplete="off" class="sms-code"
+              <div><label>手机号</label><input v-model="params.mobile" type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
+              <div><label>验证码</label><input v-model="params.verification" type="text" name="verifycode" autocomplete="off" class="sms-code"
                   placeholder="请输入验证码" />
-                <a>发送验证码</a>
+                <!-- <a>发送验证码</a> -->
+                <button :disabled="countdown > 0" @click="handleSms">
+                  {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
+                </button>
               </div>
               <a class="next-btn" @click="nextStep"><img src="../images/next.png" /></a>
             </div>
             <div class="forget-modify-psw">
-              <div><label>输入新密码</label><input type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
+              <div><label>输入新密码</label><input v-model="params.passWord" type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
               </div>
               <div class="forget-promt">由大写字母，小写字母和特殊符号组成</div>
-              <div><label>再次输入密码</label><input type="password" name="again" autocomplete="off" placeholder="请输入密码" />
+              <div><label>再次输入密码</label><input v-model="params.newPassWord" type="password" name="again" autocomplete="off" placeholder="请输入密码" />
               </div>
               <a class="next-btn" @click="updatePsw"><img src="../images/complete.png" /></a>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
 
@@ -47,10 +50,25 @@ import { useRouter } from 'vue-router'
 import { ElSteps, ElStep } from 'element-plus'
 import DBMessage from '../components/DBMessage.vue'
 import PCHeader from '../components/PCHeader.vue'
+import { checkMobile, divisionTrim,validatePassword} from "@/utils/common";
+import { useLoginStore } from "@/store/login";
 const active = ref<number>(0)
 const index = ref<number>(-1)
 const router = useRouter()
-let timer = null
+interface RuleLogin {
+  mobile: string;
+  passWord: string;
+  verification: string;
+  newPassWord: string;
+}
+const useLogin = useLoginStore();
+const params = reactive<RuleLogin>({
+  mobile: "",
+  passWord: "",
+  verification: "",
+  newPassWord:""
+});
+let timer:any = null
 interface RulePopbox {
   title: string
   text?: string
@@ -80,6 +98,15 @@ const hidePopbox = () => {
 }
 
 const nextStep = () => {
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  if (divisionTrim(params.verification) === "") {
+    alert("请输入验证码");
+    return false;
+  }
   active.value++
 }
 
@@ -94,19 +121,71 @@ const resetScreen = () => {
 
 
 const updatePsw = () => {
-  localStorage.setItem('currentIndex', 1)
-  // 打开弹出框
-  openPopbox({
-    visible: true, title: '修改密码成功', text: '即将跳转到首页'
-  })
-
-  // timer && clearTimeout(timer)
-
-  // timer = setTimeout(() => {
-  //   hidePopbox()
-  //   router.push('/')
-  // }, 2000)
+  if (!validatePassword(params.passWord)) {
+    alert("请输入正确的密码");
+    return false;
+  }
+  if (params.newPassWord.length === 0) {
+    alert("再次输入密码不能为空");
+    return false;
+  }
+  if (params.passWord !== params.newPassWord) {
+    alert("两次输入密码不一致");
+    return false;
+  }
+  let obj ={
+    mobile:params.mobile,
+    passWord: params.passWord,
+    verification: params.verification
+  }
+  useLogin.findpass(obj).then((res) => {
+    if (res.data.code == "200") {
+      localStorage.setItem('currentIndex', 1)
+      // 打开弹出框
+      openPopbox({
+        visible: true, title: '修改密码成功', text: '即将跳转到首页'
+      })
+      timer && clearTimeout(timer)
+      timer = setTimeout(() => {
+        hidePopbox()
+        router.push('/')
+      }, 2000)
+    } else {
+      alert(res.data.msg);
+    }
+  });
 }
+
+const countdown = ref(0);
+
+const startCountdown = () => {
+  countdown.value = 60; // 假设倒计时60秒
+  const intervalId = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value--;
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+};
+
+const handleSms = () => {
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  let obj = {
+    mobile:params.mobile,
+  }
+  useLogin.sendPWCode(obj).then((res) => {
+    if (res.data.code == "200") {
+      startCountdown();
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
 
 
 
@@ -270,6 +349,20 @@ onUnmounted(() => {
               cursor: pointer;
               color: #acacac;
               font-size: 0.112rem;
+            }
+
+            button {
+              display: block;
+              background-color: #fff;
+              width: 0.8rem;
+              height: 0.39rem;
+              line-height: 34px;
+              border-radius: 5px;
+              text-align: center;
+              cursor: pointer;
+              color: #acacac;
+              font-size: 0.112rem;
+              border: none;
             }
           }
         }

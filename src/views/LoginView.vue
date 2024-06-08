@@ -6,13 +6,19 @@
       <div class="login-inner" :class="moveLogin ? 'move-verify' : ''">
         <!--账号密码登录-->
         <div class="account-login">
-          <div><label>账号</label><input type="text" /></div>
-          <div><label>密码</label><input type="text" /></div>
+          <div><label>账号</label><input type="text" v-model="params.mobile"/></div>
+          <div><label>密码</label><input type="password" v-model="params.passWord"/></div>
         </div>
         <!--验证码登录-->
         <div class="verify-login">
-          <div><label>手机号</label><input type="text" /></div>
-          <div class="sms-code"><label>验证码</label><input type="text" /> <span>发送验证码</span></div>
+          <div><label>手机号</label><input type="text" v-model="params.mobile"/></div>
+          <div class="sms-code">
+            <label>验证码</label>
+            <input type="text" v-model="params.verification"/> 
+            <button :disabled="countdown > 0" @click="handleSms">
+              {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -20,7 +26,8 @@
         <a @click="moveLogin = !moveLogin">{{ moveLogin ? '账号登录' : '验证码登录' }}</a>
         <a @click="router.push('/forget')">忘记密码?</a>
       </div>
-      <div class="login-account"><a><img src="../images/login-btn.png"></a>
+      <div class="login-account" @click="handleLoginM">
+        <a><img src="../images/login-btn.png"></a>
       </div>
       <div class="account-agree"><input type="checkbox" v-model="agree" />同意<a>《用户协议》</a>和<a>《隐私协议》</a></div>
     </div>
@@ -28,13 +35,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, onMounted } from 'vue'
+import { ref, onUnmounted, onMounted,reactive } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import { useRouter } from 'vue-router'
+import { useLoginStore } from "@/store/login";
+import { checkMobile, divisionTrim } from "@/utils/common";
 const agree = ref<boolean>(false)
 const moveLogin = ref<boolean>(false)
 const index = ref<number>(-1)
 const router = useRouter()
+const useLogin = useLoginStore();
+
+interface RuleLogin {
+  mobile: string;
+  passWord: string;
+  verification: string;
+}
+const params = reactive<RuleLogin>({
+  mobile: "",
+  passWord: "",
+  verification: "",
+});
 
 const changePage = (index: number) => {
   localStorage.setItem('currentIndex', JSON.stringify(index))
@@ -42,13 +63,99 @@ const changePage = (index: number) => {
 }
 
 const resetScreen = () => {
-  var oHtml = document.querySelector('html')
+  var oHtml = document.querySelector('html') as any
   var clientW = document.documentElement.clientWidth
   if (clientW > 750) {
     let screenWidth = (clientW / 750) * 100 < 200 ? (clientW / 750) * 100 : 200;
     oHtml.style.fontSize = screenWidth + 'px'
   }
 }
+
+const handleLoginM = () => {
+  if (!moveLogin.value) {
+    handleAccountLogin();
+  } else {
+    handleYzmLogin();
+  }
+};
+
+const handleAccountLogin = () => {
+  if (!agree.value) {
+    alert("请勾选协议");
+    return false;
+  }
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  if (divisionTrim(params.passWord) === "") {
+    alert("请输入密码");
+    return false;
+  }
+  useLogin.login(params).then((res) => {
+    if (res.data.code == "200") {
+      useLogin.token = res.data.data.token;
+      localStorage.setItem("token", useLogin.token);
+      router.push("/");
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
+
+const handleYzmLogin = () => {
+  if (!agree.value) {
+    alert("请勾选协议");
+    return false;
+  }
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+
+  if (divisionTrim(params.verification) === "") {
+    alert("请输入验证码");
+    return false;
+  }
+  useLogin.smsLogin(params).then((res) => {
+    if (res.data.code == "200") {
+      useLogin.token = res.data.data.token;
+      localStorage.setItem("token", useLogin.token);
+      router.push("/");
+    } else {
+      alert(res.data.msg);
+    }
+  });
+
+};
+
+const handleSms = () => {
+  if (!checkMobile(params.mobile)) {
+    alert("请输入正确的手机号");
+    return false;
+  }
+  useLogin.sendSMSCode(params).then((res) => {
+    if (res.data.code == "200") {
+      startCountdown();
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
+
+const countdown = ref(0);
+
+const startCountdown = () => {
+  countdown.value = 60; // 假设倒计时60秒
+  const intervalId = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value--;
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+};
 
 onMounted(() => {
   // 设置html字体
@@ -127,23 +234,35 @@ onUnmounted(() => {
             font-size: 0.14rem;
           }
 
+          input[type='password'] {
+            width: 2.6rem;
+            height: 0.34rem;
+            background-color: #fff;
+            border-radius: 0.05rem;
+            padding: 0 0.05rem;
+            box-sizing: border-box;
+            border: 0;
+            outline: none;
+            font-size: 0.14rem;
+          }
+
           &.sms-code {
             input[type='text'] {
               width: 1.7rem;
               margin-right: 0.1rem;
             }
 
-            span {
+            button {
               display: block;
-              width: 0.8rem;
-              height: 0.34rem;
-              text-align: center;
-              line-height: 0.34rem;
               background-color: #fff;
-              border-radius: 0.05rem;
-              color: #898989;
-              font-size: 0.09rem;
+              height: 0.34rem;
+              line-height: 34px;
+              border-radius: 5px;
+              text-align: center;
+              width: 0.8rem;
+              font-size: 12px;
               cursor: pointer;
+              border: none;
             }
           }
         }
