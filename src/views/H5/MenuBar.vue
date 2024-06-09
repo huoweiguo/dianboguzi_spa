@@ -16,20 +16,40 @@
         <img src="@/assets/h5/icon-x.png" @click="isShow = false" />
       </div>
       <div class="menu_list">
-        <div class="menu_item" v-for="(item, index) in menuList" :key="index" @click="slideTo(index)" :class="{ active: index == props.swiper?.activeIndex }">
+        <div
+          class="menu_item"
+          v-for="(item, index) in menuList"
+          :key="index"
+          @click="slideTo(index)"
+          :class="{ active: index == props.swiper?.activeIndex }"
+        >
           <div class="title">{{ item.title }}</div>
           <div class="intro">{{ item.intro }}</div>
           <div class="desc">{{ item.desc }}</div>
         </div>
       </div>
       <div class="menu_footer">
-        <a href="https://space.bilibili.com/3546565146839763" target="_blank"><img src="@/assets/h5/icon-bilibili.png" /></a>
-        <a href="https://weibo.com/u/7878529698" target="_blank"><img src="@/assets/h5/icon-wb.png" /></a>
-        <a href="https://www.xiaohongshu.com/user/profile/607283d9000000000100ad8b?m_source=baofeng" target="_blank"
+        <a href="https://space.bilibili.com/3546565146839763" target="_blank"
+          ><img src="@/assets/h5/icon-bilibili.png"
+        /></a>
+        <a href="https://weibo.com/u/7878529698" target="_blank"
+          ><img src="@/assets/h5/icon-wb.png"
+        /></a>
+        <a
+          href="https://www.xiaohongshu.com/user/profile/607283d9000000000100ad8b?m_source=baofeng"
+          target="_blank"
           ><img src="@/assets/h5/icon-xhs.png" style="width: 35px"
         /></a>
-        <a href="https://work.weixin.qq.com/kfid/kfc85565933a9cf0071" target="_blank"><img src="@/assets/h5/icon-wx.png" /></a>
-        <a href="https://www.douyin.com/user/MS4wLjABAAAANv-Xl5ptPJsSvu4nFfqheXAGRFMpiL3EwUULuxzgtcE" target="_blank"><img src="@/assets/h5/icon-dy.png" /></a>
+        <a
+          href="https://work.weixin.qq.com/kfid/kfc85565933a9cf0071"
+          target="_blank"
+          ><img src="@/assets/h5/icon-wx.png"
+        /></a>
+        <a
+          href="https://www.douyin.com/user/MS4wLjABAAAANv-Xl5ptPJsSvu4nFfqheXAGRFMpiL3EwUULuxzgtcE"
+          target="_blank"
+          ><img src="@/assets/h5/icon-dy.png"
+        /></a>
       </div>
     </div>
   </div>
@@ -43,19 +63,19 @@
     <!-- logout_box -->
     <div class="logout_box" v-if="islogin">
       <div class="info">欢迎您，JSON.huo</div>
-      <div class="btn" @click="islogin = false">退出登录</div>
+      <div class="btn" @click="logout">退出登录</div>
     </div>
 
     <!-- login_box -->
     <div class="login_box" v-else>
-      <div class="btn" @click="islogin = true">登录</div>
+      <div class="btn" @click="goLogin">登录</div>
       <i></i>
       <div class="btn" @click="showLogin = true">注册</div>
     </div>
   </template>
   <template v-else>
     <!-- 登录页 -->
-    <LoginPage />
+    <LoginPage :show-login="changeLogin" />
   </template>
 
   <!-- logo -->
@@ -68,26 +88,39 @@
       login: showLogin,
     }"
   >
-    <div class="imglogo" :class="{ black: props.swiper?.activeIndex == 3 || showLogin }"></div>
+    <div
+      class="imglogo"
+      :class="{ black: props.swiper?.activeIndex == 3 || showLogin }"
+    ></div>
   </div>
 </template>
 
-<script setup>
-import LoginPage from './LoginPage.vue';
-import { ref, reactive, computed, defineProps, defineEmits } from 'vue';
-const props = defineProps(['swiper']);
-const emits = defineEmits(['topage']);
+<script setup lang="ts">
+import LoginPage from "./LoginPage.vue";
+import { ref, reactive, computed, defineProps, defineEmits } from "vue";
+const props = defineProps(["swiper"]);
+const emits = defineEmits(["topage"]);
 
 const isShow = ref(false);
 const islogin = ref(false);
 const showLogin = ref(false);
 
 const menuList = reactive([
-  { key: 1, title: '首页', intro: 'DIANBO GOODS', desc: '' },
-  { key: 2, title: '概念展示', intro: 'CONCEPTS', desc: '谷子、谷模与谷美' },
-  { key: 3, title: '新闻', intro: 'NEWS', desc: '线上与线下的最新活动' },
-  { key: 4, title: '兑换码', intro: 'TOKENS', desc: '来兑换你最新获得的谷子吧' },
-  { key: 5, title: '联系我们', intro: 'CUSTOMER SERVICE', desc: '让我们听到您的声音' },
+  { key: 1, title: "首页", intro: "DIANBO GOODS", desc: "" },
+  { key: 2, title: "概念展示", intro: "CONCEPTS", desc: "谷子、谷模与谷美" },
+  { key: 3, title: "新闻", intro: "NEWS", desc: "线上与线下的最新活动" },
+  {
+    key: 4,
+    title: "兑换码",
+    intro: "TOKENS",
+    desc: "来兑换你最新获得的谷子吧",
+  },
+  {
+    key: 5,
+    title: "联系我们",
+    intro: "CUSTOMER SERVICE",
+    desc: "让我们听到您的声音",
+  },
 ]);
 
 const isLastPage = computed(() => {
@@ -102,9 +135,21 @@ const prevPage = () => {
   props.swiper.slidePrev();
 };
 
-const slideTo = (index) => {
+const slideTo = (index: any) => {
   props.swiper.slideTo(index, 300);
   isShow.value = false;
+};
+const goLogin = () => {
+  // islogin.value = true;
+  showLogin.value = !showLogin.value;
+};
+const logout = () => {
+  islogin.value = false;
+  localStorage.removeItem("token");
+};
+const changeLogin = () => {
+  islogin.value = true;
+  showLogin.value = !showLogin.value;
 };
 </script>
 
@@ -313,12 +358,12 @@ const slideTo = (index) => {
     display: inline-block;
     height: 70px;
     width: calc(70px * 2.714);
-    background: url('@/assets/h5/logo.png') no-repeat center center;
+    background: url("@/assets/h5/logo.png") no-repeat center center;
     background-size: contain;
     transition: all 0.3s;
 
     &.black {
-      background-image: url('@/assets/h5/logo-b.png');
+      background-image: url("@/assets/h5/logo-b.png");
     }
   }
 

@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <div class="top-btn" v-if="ismore">
-      <div class="btn" @click="ismore = false">收起<img class="icon-down" src="@/assets/h5/icon-jt.svg" /></div>
+      <div class="btn" @click="ismore = false">
+        收起<img class="icon-down" src="@/assets/h5/icon-jt.svg" />
+      </div>
     </div>
     <div class="banner" v-else>
       <swiper
@@ -21,76 +23,167 @@
         }"
         :modules="[EffectCoverflow, Pagination]"
       >
-        <swiper-slide class="slide"><img src="@/assets/h5/banner-1.png" width="80%" /></swiper-slide>
-        <swiper-slide class="slide"><img src="@/assets/h5/banner-2.png" width="80%" /></swiper-slide>
-        <swiper-slide class="slide"><img src="@/assets/h5/banner-1.png" width="80%" /></swiper-slide>
-        <swiper-slide class="slide"><img src="@/assets/h5/banner-2.png" width="80%" /></swiper-slide>
+        <swiper-slide class="slide"
+          ><img src="@/assets/h5/banner-1.png" width="80%"
+        /></swiper-slide>
+        <swiper-slide class="slide"
+          ><img src="@/assets/h5/banner-2.png" width="80%"
+        /></swiper-slide>
+        <swiper-slide class="slide"
+          ><img src="@/assets/h5/banner-1.png" width="80%"
+        /></swiper-slide>
+        <swiper-slide class="slide"
+          ><img src="@/assets/h5/banner-2.png" width="80%"
+        /></swiper-slide>
       </swiper>
     </div>
     <div class="tabs-bar">
-      <div class="tabs-item" :class="{ active: tabIndex == 0 }" @click="slideTo(0)">最新</div>
-      <div class="tabs-item" :class="{ active: tabIndex == 1 }" @click="slideTo(1)">线下活动</div>
-      <div class="tabs-item" :class="{ active: tabIndex == 2 }" @click="slideTo(2)">线上活动</div>
-      <div class="tabs-item" :class="{ active: tabIndex == 3 }" @click="slideTo(3)">加入我们</div>
+      <div
+        class="tabs-item"
+        :class="{ active: tabIndex == 0 }"
+        @click="slideTo(0)"
+      >
+        最新
+      </div>
+      <div
+        class="tabs-item"
+        :class="{ active: tabIndex == 1 }"
+        @click="slideTo(1)"
+      >
+        线下活动
+      </div>
+      <div
+        class="tabs-item"
+        :class="{ active: tabIndex == 2 }"
+        @click="slideTo(2)"
+      >
+        线上活动
+      </div>
+      <div
+        class="tabs-item"
+        :class="{ active: tabIndex == 3 }"
+        @click="slideTo(3)"
+      >
+        加入我们
+      </div>
     </div>
     <div class="news-list">
-      <swiper class="swiper" :style="style" :navigation="true" :modules="[Navigation]" @swiper="setSwiper" @slideChange="onSlideChange">
+      <swiper
+        class="swiper"
+        :style="style"
+        :navigation="true"
+        :modules="[Navigation]"
+        @swiper="setSwiper"
+        @slideChange="onSlideChange"
+      >
+        <!-- 最新 -->
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
-              <div class="title">1[柄图]电波谷子平台“眼若星辰”系列柄图贩售途径一览</div>
-              <div class="time">2024-11-12</div>
+            <li
+              class="list-item"
+              v-for="i in recentList"
+              :key="i.id"
+              @click="showDetail(i.id)"
+            >
+              <div class="title">{{ i.title }}</div>
+              <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
         </swiper-slide>
+        <!-- 线下 -->
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
-              <div class="title">2[谷模]电波谷子平台“眼若星辰”系列谷模贩售途径一览</div>
-              <div class="time">2024-11-12</div>
+            <li
+              class="list-item"
+              v-for="i in offlineList"
+              :key="i.id"
+              @click="showDetail(i.id)"
+            >
+              <div class="title">{{ i.title }}</div>
+              <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
         </swiper-slide>
+        <!-- 线上文章 -->
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
-              <div class="title">3[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
-              <div class="time">2024-11-12</div>
+            <li
+              class="list-item"
+              v-for="i in onlineList"
+              :key="i.id"
+              @click="showDetail(i.id)"
+            >
+              <div class="title">{{ i.title }}</div>
+              <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
         </swiper-slide>
+        <!-- 招聘 -->
         <swiper-slide class="slide stop-swiping">
           <ul class="list">
-            <li class="list-item" v-for="i in 10" :key="i" @click="showDetail(i)">
-              <div class="title">4[谷美]电波谷子平台“眼若星辰”系列谷美贩售途径一览</div>
-              <div class="time">2024-11-12</div>
+            <li
+              class="list-item"
+              v-for="i in zhaopinList"
+              :key="i.id"
+              @click="showDetail(i.id)"
+            >
+              <div class="title">{{ i.title }}</div>
+              <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
         </swiper-slide>
       </swiper>
     </div>
     <div class="footer-btn" v-if="!ismore">
-      <div class="btn" @click="ismore = true">更多<img src="@/assets/h5/icon-jt.svg" /></div>
+      <div class="btn" @click="ismore = true">
+        更多<img src="@/assets/h5/icon-jt.svg" />
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { reactive, ref, watch, defineEmits } from 'vue';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/navigation';
-import 'swiper/css';
+<script setup lang="ts">
+import { reactive, ref, watch, defineEmits } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css";
+import { useNewsStore } from "@/store/news";
+const useNews = useNewsStore();
 
-const emits = defineEmits(['showDetail']);
+interface PageType {
+  pageNum: number;
+  pageSize: number;
+}
+const recentPage = reactive<PageType>({
+  pageNum: 1,
+  pageSize: 6,
+});
+const recentList = ref<any>([]);
+const offlinePage = reactive<PageType>({
+  pageNum: 1,
+  pageSize: 6,
+});
+const offlineList = ref<any>([]);
+const onlinePage = reactive<PageType>({
+  pageNum: 1,
+  pageSize: 6,
+});
+const onlineList = ref<any>([]);
+const zhaopinPage = reactive<PageType>({
+  pageNum: 1,
+  pageSize: 6,
+});
+const zhaopinList = ref<any>([]);
+const emits = defineEmits(["showDetail"]);
 const ismore = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);
 const style = reactive({
-  '--swiper-navigation-color': '#fff',
-  '--swiper-pagination-color': '#fff',
-  '--swiper-navigation-size': '20px',
+  "--swiper-navigation-color": "#fff",
+  "--swiper-pagination-color": "#fff",
+  "--swiper-navigation-size": "20px",
 });
 const setSwiper = (swiper) => {
   mySwiper.value = swiper;
@@ -103,10 +196,57 @@ const onSlideChange = () => {
 const slideTo = (index) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
+  switch (index) {
+    case 0:
+      useNews.getRecentNewsList(recentPage).then((res) => {
+        if (res.data.code == "200") {
+          // 最新文章
+          recentList.value = res.data.rows;
+        } else {
+          alert(res.data.msg);
+        }
+      });
+      break;
+    case 1:
+      useNews.getOfflineNewsList(offlinePage).then((res) => {
+        if (res.data.code == "200") {
+          // 线下文章
+          offlineList.value = res.data.rows;
+        } else {
+          alert(res.data.msg);
+        }
+      });
+      break;
+
+    case 2:
+      useNews.getOnlineNewsList(onlinePage).then((res) => {
+        if (res.data.code == "200") {
+          // 线上文章
+          onlineList.value = res.data.rows;
+        } else {
+          alert(res.data.msg);
+        }
+      });
+      break;
+
+    case 3:
+      useNews.getZhaoPinList(zhaopinPage).then((res) => {
+        if (res.data.code == "200") {
+          // 招聘文章
+          zhaopinList.value = res.data.rows;
+        } else {
+          alert(res.data.msg);
+        }
+      });
+      break;
+
+    default:
+      break;
+  }
 };
 
 const showDetail = (id) => {
-  emits('showDetail', id);
+  emits("showDetail", id);
 };
 </script>
 

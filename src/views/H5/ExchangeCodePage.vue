@@ -3,10 +3,14 @@
     <div class="code-form">
       <p class="code-form-title">线下兑换码</p>
       <div class="verify-login">
-        <div class="form-ipt"><label>谷子编号</label><input type="text" /></div>
-        <div class="form-ipt"><label>兑换码</label><input type="text" /></div>
+        <div class="form-ipt">
+          <label>谷子编号</label><input type="text" v-model="params.code" />
+        </div>
+        <div class="form-ipt">
+          <label>兑换码</label><input type="text" v-model="params.password" />
+        </div>
       </div>
-      <div class="form-btn">
+      <div class="form-btn" @click="handleClick">
         <span>兑换</span>
       </div>
     </div>
@@ -18,8 +22,39 @@
   </div>
 </template>
 
-<script setup>
-import { ref, reactive } from 'vue';
+<script setup lang="ts">
+import { ref, reactive } from "vue";
+import { useLoginStore } from "@/store/login";
+import { divisionTrim } from "@/utils/common";
+const useLogin = useLoginStore();
+interface RuleType {
+  code: string;
+  password: string;
+}
+const params = reactive<RuleType>({
+  code: "",
+  password: "",
+});
+const handleClick = () => {
+  if (divisionTrim(params.code) === "") {
+    alert("请输入谷子编号");
+    return false;
+  }
+  if (divisionTrim(params.password) === "") {
+    alert("请输入兑换码");
+    return false;
+  }
+  useLogin.offlinecode(params, {}).then((res) => {
+    if (res.data.code == "200") {
+      params.data = {
+        code: "",
+        password: "",
+      };
+    } else {
+      alert(res.data.msg);
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>

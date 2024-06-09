@@ -6,8 +6,18 @@
     <!-- menu_bar -->
     <MenuBar :swiper="mySwiper" @topage="slideTo" />
 
-    <div class="content" :class="{ 'home-page': currentPage == 0, 'news-page': currentPage == 2 }">
-      <swiper :direction="'vertical'" class="app-swiper" noSwipingClass="stop-swiping" :spaceBetween="50" @swiper="setSwiper" @slideChange="slideChange">
+    <div
+      class="content"
+      :class="{ 'home-page': currentPage == 0, 'news-page': currentPage == 2 }"
+    >
+      <swiper
+        :direction="'vertical'"
+        class="app-swiper"
+        noSwipingClass="stop-swiping"
+        :spaceBetween="50"
+        @swiper="setSwiper"
+        @slideChange="slideChange"
+      >
         <!-- 首页page -->
         <swiper-slide class="slide home-bg"><HomePage /></swiper-slide>
 
@@ -15,7 +25,9 @@
         <swiper-slide class="slide"><OverviewPage /></swiper-slide>
 
         <!-- 新闻page -->
-        <swiper-slide class="slide"><NewsPage @showDetail="showDetail" /></swiper-slide>
+        <swiper-slide class="slide"
+          ><NewsPage @showDetail="showDetail"
+        /></swiper-slide>
 
         <!-- 兑换码page -->
         <swiper-slide class="slide"><ExchangeCodePage /></swiper-slide>
@@ -31,22 +43,22 @@
 </template>
 
 <script setup>
-import isMobile from '@/utils/isMobile';
+import isMobile from "@/utils/isMobile";
 isMobile();
 
-import { ref, onMounted } from 'vue';
-import LoadingPop from './LoadingPop.vue';
-import NewsDetail from './NewsDetail.vue';
-import MenuBar from './MenuBar.vue';
+import { ref, onMounted } from "vue";
+import LoadingPop from "./LoadingPop.vue";
+import NewsDetail from "./NewsDetail.vue";
+import MenuBar from "./MenuBar.vue";
 
-import HomePage from './HomePage.vue';
-import OverviewPage from './OverviewPage.vue';
-import NewsPage from './NewsPage.vue';
-import ExchangeCodePage from './ExchangeCodePage.vue';
-import ContactUsPage from './ContactUsPage.vue';
+import HomePage from "./HomePage.vue";
+import OverviewPage from "./OverviewPage.vue";
+import NewsPage from "./NewsPage.vue";
+import ExchangeCodePage from "./ExchangeCodePage.vue";
+import ContactUsPage from "./ContactUsPage.vue";
 
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
 
 const visible = ref(false);
 const newsid = ref(0);
@@ -88,7 +100,7 @@ const showDetail = (id) => {
 }
 
 .home-bg {
-  background: url('@/assets/h5/cbg.png') no-repeat left top;
+  background: url("@/assets/h5/cbg.png") no-repeat left top;
   background-size: auto 100%;
 }
 
