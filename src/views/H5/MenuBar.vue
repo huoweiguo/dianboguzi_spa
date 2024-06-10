@@ -62,7 +62,7 @@
   <template v-if="!showLogin">
     <!-- logout_box -->
     <div class="logout_box" v-if="islogin">
-      <div class="info">欢迎您，JSON.huo</div>
+      <div class="info">欢迎您，{{ userInfo.nickname }}</div>
       <div class="btn" @click="logout">退出登录</div>
     </div>
 
@@ -98,12 +98,16 @@
 <script setup lang="ts">
 import LoginPage from "./LoginPage.vue";
 import { ref, reactive, computed, defineProps, defineEmits } from "vue";
+import { useLoginStore } from "@/store/login";
+
+const useLogin = useLoginStore();
 const props = defineProps(["swiper"]);
 const emits = defineEmits(["topage"]);
 
 const isShow = ref(false);
 const islogin = ref(false);
 const showLogin = ref(false);
+const userInfo = computed(() => useLogin.userInfo);
 
 const menuList = reactive([
   { key: 1, title: "首页", intro: "DIANBO GOODS", desc: "" },
