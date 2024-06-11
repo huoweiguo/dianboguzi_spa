@@ -138,7 +138,7 @@
       </swiper>
     </div>
     <div class="footer-btn" v-if="!ismore">
-      <div class="btn" @click="ismore = true">
+      <div class="btn" @click="hasMore">
         更多<img src="@/assets/h5/icon-jt.svg" />
       </div>
     </div>
@@ -189,7 +189,8 @@ const style = reactive({
   "--swiper-pagination-color": "#fff",
   "--swiper-navigation-size": "20px",
 });
-const setSwiper = (swiper) => {
+const active = ref<number>(0);
+const setSwiper = (swiper: null) => {
   mySwiper.value = swiper;
 };
 
@@ -197,15 +198,21 @@ const onSlideChange = () => {
   tabIndex.value = mySwiper.value.activeIndex;
 };
 
-const slideTo = (index) => {
+const slideTo = (index: number) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
+  active.value = index;
   switch (index) {
     case 0:
       useNews.getRecentNewsList(recentPage).then((res) => {
         if (res.data.code == "200") {
           // 最新文章
-          recentList.value = res.data.rows;
+          recentList.value.push(res.data.rows);
+          if (recentList.value.length >= res.data.total) {
+            ismore.value = false;
+          } else {
+            ismore.value = true;
+          }
         } else {
           Toast(res.data.msg);
         }
@@ -215,7 +222,12 @@ const slideTo = (index) => {
       useNews.getOfflineNewsList(offlinePage).then((res) => {
         if (res.data.code == "200") {
           // 线下文章
-          offlineList.value = res.data.rows;
+          offlineList.value.push(res.data.rows);
+          if (offlineList.value.length >= res.data.total) {
+            ismore.value = false;
+          } else {
+            ismore.value = true;
+          }
         } else {
           Toast(res.data.msg);
         }
@@ -226,7 +238,12 @@ const slideTo = (index) => {
       useNews.getOnlineNewsList(onlinePage).then((res) => {
         if (res.data.code == "200") {
           // 线上文章
-          onlineList.value = res.data.rows;
+          onlineList.value.push(res.data.rows);
+          if (onlineList.value.length >= res.data.total) {
+            ismore.value = false;
+          } else {
+            ismore.value = true;
+          }
         } else {
           Toast(res.data.msg);
         }
@@ -237,7 +254,12 @@ const slideTo = (index) => {
       useNews.getZhaoPinList(zhaopinPage).then((res) => {
         if (res.data.code == "200") {
           // 招聘文章
-          zhaopinList.value = res.data.rows;
+          zhaopinList.value.push(res.data.rows);
+          if (zhaopinList.value.length >= res.data.total) {
+            ismore.value = false;
+          } else {
+            ismore.value = true;
+          }
         } else {
           Toast(res.data.msg);
         }
@@ -248,9 +270,29 @@ const slideTo = (index) => {
       break;
   }
 };
+const hasMore = () => {
+  switch (active.value) {
+    case 0:
+      recentPage.pageNum++;
+      break;
+    case 1:
+      offlinePage.pageNum++;
+      break;
+    case 2:
+      onlinePage.pageNum++;
+      break;
+    case 3:
+      zhaopinPage.pageNum++;
+      break;
 
+    default:
+      break;
+  }
+  slideTo(active.value);
+  ismore.value = true;
+};
 const showDetail = (id) => {
-  emits("showDetail", id);
+  emits("showDetail", id, active.value);
 };
 const slideList = ref([]);
 

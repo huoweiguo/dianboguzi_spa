@@ -9,38 +9,6 @@
       <div class="content">
         <img src="@/assets/h5/banner-1.png" alt="" />
         <p>{{ newsDetail.content }}</p>
-        <!-- <p>你好</p>
-        <p>
-          电波谷子即将进入删档内测阶段，在此期间，各位居民的充值将会在公测阶段按照如下方式返利：
-        </p>
-        <p>
-          1.向钱包内充值，无论是否已经消费，将会在公测后按照1：1返还至钱包余额。
-        </p>
-        <p>
-          3.购买电波谷子会员（米米猫粮配送协议）的，每购买一次，在公测后赠送30天电波谷子会员配送协议，并在开服时一次性赠送7*冻干与7*罐头。若您在内测时购买了多次电波谷子会员配送协议，则会多次获得赠送7*冻干与7*罐头的一次性赠礼。
-        </p>
-        <p>
-          4.内测期间，钱包内金额暂不可提现，在公测开始后可立即提现。为您造成的不便，在此深表歉意，请您谅解。
-        </p>
-        <p></p>
-        <p>电波谷子运营团队</p>
-        <p>2024年5月24日</p>
-        <p></p>
-        <p>
-          1.向钱包内充值，无论是否已经消费，将会在公测后按照1：1返还至钱包余额。
-        </p>
-        <p>
-          3.购买电波谷子会员（米米猫粮配送协议）的，每购买一次，在公测后赠送30天电波谷子会员配送协议，并在开服时一次性赠送7*冻干与7*罐头。若您在内测时购买了多次电波谷子会员配送协议，则会多次获得赠送7*冻干与7*罐头的一次性赠礼。
-        </p>
-        <p>
-          4.内测期间，钱包内金额暂不可提现，在公测开始后可立即提现。为您造成的不便，在此深表歉意，请您谅解。1.向钱包内充值，无论是否已经消费，将会在公测后按照1：1返还至钱包余额。
-        </p>
-        <p>
-          3.购买电波谷子会员（米米猫粮配送协议）的，每购买一次，在公测后赠送30天电波谷子会员配送协议，并在开服时一次性赠送7*冻干与7*罐头。若您在内测时购买了多次电波谷子会员配送协议，则会多次获得赠送7*冻干与7*罐头的一次性赠礼。
-        </p>
-        <p>
-          4.内测期间，钱包内金额暂不可提现，在公测开始后可立即提现。为您造成的不便，在此深表歉意，请您谅解。
-        </p> -->
       </div>
     </div>
   </div>
@@ -57,7 +25,7 @@ import {
   computed,
 } from "vue";
 import Toast from "@/utils/Toast";
-const props = defineProps(["visible", "id"]);
+const props = defineProps(["visible", "id", "active"]);
 const emits = defineEmits(["update:visible"]);
 interface NewsType {
   title: string;
@@ -81,19 +49,37 @@ onUpdated(() => {
   }
   if (props.visible === true && once.value === false) {
     once.value = true;
-    useNews.getNewsInfo({ id: props.id }, {}).then((res) => {
-      if (res.data.code == "200") {
-        // 文章详情
-        newsDetail.value = res.data?.data || {
-          title: "",
-          showDate: "",
-          summary: "",
-          content: "",
-        };
-      } else {
-        Toast(res.data.msg);
-      }
-    });
+    if (props.active === 3) {
+      useNews.getZhaoPinInfo({ id: props.id }, {}).then((res) => {
+        if (res.data.code == "200") {
+          // 招聘详情
+          const { title, summary, content } = res.data.data;
+          const showDate = res.data.data.createTime;
+          newsDetail.value = {
+            title,
+            showDate,
+            summary,
+            content,
+          };
+        } else {
+          Toast(res.data.msg);
+        }
+      });
+    } else {
+      useNews.getNewsInfo({ id: props.id }, {}).then((res) => {
+        if (res.data.code == "200") {
+          // 文章详情
+          newsDetail.value = res.data?.data || {
+            title: "",
+            showDate: "",
+            summary: "",
+            content: "",
+          };
+        } else {
+          Toast(res.data.msg);
+        }
+      });
+    }
   }
 });
 // 关闭

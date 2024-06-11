@@ -38,7 +38,7 @@
     </div>
 
     <!-- 新闻详情 -->
-    <NewsDetail v-model:visible="visible" :id="newsid" />
+    <NewsDetail v-model:visible="visible" :id="newsid" :active="type" />
   </div>
 </template>
 
@@ -63,6 +63,8 @@ import "swiper/css";
 const visible = ref(false);
 const newsid = ref(0);
 
+const type = ref(0);
+
 const currentPage = ref(0);
 const mySwiper = ref(null);
 const setSwiper = (swiper) => {
@@ -78,9 +80,10 @@ const slideTo = (index) => {
   mySwiper.value.slideTo(index - 1, 300);
 };
 
-const showDetail = (id) => {
+const showDetail = (id, active) => {
   visible.value = true;
   newsid.value = id;
+  type.value = active;
 };
 
 // onMounted(() => {
