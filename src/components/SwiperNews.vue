@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-warp">
+  <div v-if="list.length !== 0" class="swiper-warp">
     <Swiper :modules="[Autoplay, Pagination]" :slides-per-view="1" :autoplay="{
       delay: 3000,
     }" :pagination="{ clickable: true }">

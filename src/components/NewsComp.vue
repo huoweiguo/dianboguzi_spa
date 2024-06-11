@@ -12,7 +12,7 @@
         <div class="news-zp-title2">
           <div>
             <b class="tag-title"> {{ item.title }}</b>
-            <span class="tag-jz">急招</span>
+            <!-- <span class="tag-jz">急招</span> -->
           </div>
           <!-- <span>扬州丨运营类丨全职/兼职</span> -->
         </div>
@@ -24,7 +24,8 @@
         <div class="news-zp-title">
           <div>
             <b class="tag-title"> {{ item.title }}</b>
-            <span class="tag-jz">急招</span>
+            <span v-if="item.tag == 'NewsZhaoPin_jizhao'" class="tag-jz">急招</span>
+            <span v-if="item.tag == 'NewsZhaoPin_changqi'" class="tag-cq">长期</span>
           </div>
           <span>{{item.subTitle}}</span>
         </div>

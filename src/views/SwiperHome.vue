@@ -75,7 +75,7 @@
               <b class="news-title">{{newsDetail.title}}</b>
               <span class="news-small-text">{{newsDetail.createTime}}</span>
 
-              <div v-html="newsDetail.content" class="news-inner-context">
+              <div v-html="newsDetail.content" style="white-space:pre-wrap" class="news-inner-context">
               </div>
             </div>
           </div>

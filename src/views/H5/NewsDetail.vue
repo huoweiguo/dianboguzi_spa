@@ -8,7 +8,7 @@
       <div class="time">发布时间：{{ newsDetail.showDate }}</div>
       <div class="content">
         <img src="@/assets/h5/banner-1.png" alt="" />
-        <p v-html="newsDetail.content"></p>
+        <p v-html="newsDetail.content" style="white-space:pre-wrap"></p>
       </div>
     </div>
   </div>
