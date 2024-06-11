@@ -137,7 +137,7 @@
         </swiper-slide>
       </swiper>
     </div>
-    <div class="footer-btn" v-if="!ismore">
+    <div class="footer-btn" v-if="ismore">
       <div class="btn" @click="hasMore">
         更多<img src="@/assets/h5/icon-jt.svg" />
       </div>
@@ -202,12 +202,15 @@ const slideTo = (index: number) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
   active.value = index;
+};
+const getList = (index: number) => {
   switch (index) {
     case 0:
       useNews.getRecentNewsList(recentPage).then((res) => {
         if (res.data.code == "200") {
           // 最新文章
-          recentList.value.push(res.data.rows);
+          recentList.value.push(...res.data.rows);
+          console.log(recentList);
           if (recentList.value.length >= res.data.total) {
             ismore.value = false;
           } else {
@@ -222,7 +225,7 @@ const slideTo = (index: number) => {
       useNews.getOfflineNewsList(offlinePage).then((res) => {
         if (res.data.code == "200") {
           // 线下文章
-          offlineList.value.push(res.data.rows);
+          offlineList.value.push(...res.data.rows);
           if (offlineList.value.length >= res.data.total) {
             ismore.value = false;
           } else {
@@ -238,7 +241,7 @@ const slideTo = (index: number) => {
       useNews.getOnlineNewsList(onlinePage).then((res) => {
         if (res.data.code == "200") {
           // 线上文章
-          onlineList.value.push(res.data.rows);
+          onlineList.value.push(...res.data.rows);
           if (onlineList.value.length >= res.data.total) {
             ismore.value = false;
           } else {
@@ -254,7 +257,7 @@ const slideTo = (index: number) => {
       useNews.getZhaoPinList(zhaopinPage).then((res) => {
         if (res.data.code == "200") {
           // 招聘文章
-          zhaopinList.value.push(res.data.rows);
+          zhaopinList.value.push(...res.data.rows);
           if (zhaopinList.value.length >= res.data.total) {
             ismore.value = false;
           } else {
@@ -288,7 +291,7 @@ const hasMore = () => {
     default:
       break;
   }
-  slideTo(active.value);
+  getList(active.value);
   ismore.value = true;
 };
 const showDetail = (id) => {
@@ -305,7 +308,10 @@ onMounted(() => {
       Toast(res.data.msg);
     }
   });
-  slideTo(0);
+  getList(0);
+  getList(1);
+  getList(2);
+  getList(3);
 });
 </script>
 
