@@ -23,9 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useLoginStore } from "@/store/login";
 import { divisionTrim } from "@/utils/common";
+import Toast from "@/utils/Toast";
 const useLogin = useLoginStore();
 interface RuleType {
   code: string;
@@ -35,13 +36,18 @@ const params = reactive<RuleType>({
   code: "",
   password: "",
 });
+const userInfo = computed(() => useLogin.userInfo);
 const handleClick = () => {
+  if (!userInfo.value.id) {
+    Toast("请先登录账号！");
+    return false;
+  }
   if (divisionTrim(params.code) === "") {
-    alert("请输入谷子编号");
+    Toast("请输入谷子编号");
     return false;
   }
   if (divisionTrim(params.password) === "") {
-    alert("请输入兑换码");
+    Toast("请输入兑换码");
     return false;
   }
   useLogin.offlinecode(params, {}).then((res) => {
@@ -51,7 +57,7 @@ const handleClick = () => {
         password: "",
       };
     } else {
-      alert(res.data.msg);
+      Toast(res.data.msg);
     }
   });
 };

@@ -42,20 +42,13 @@
       </div>
     </div>
   </div>
-  <!-- 弹窗 -->
-  <DBMessage
-    :title="popAttr.title"
-    :text="popAttr.text"
-    :visible="popAttr.visible"
-    @hidePopbox="hidePopbox"
-  />
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, defineProps } from "vue";
 import { useLoginStore } from "@/store/login";
 import { checkMobile, divisionTrim } from "@/utils/common";
-import DBMessage from "@/components/DBMessage.vue";
+import Toast from "@/utils/Toast";
 const props = defineProps({ showLogin: Function });
 const useLogin = useLoginStore();
 const countdown = ref<number>(0);
@@ -72,22 +65,11 @@ const params = reactive<RuleLogin>({
   passWord: "",
   verification: "",
 });
-// 弹出框配置
-const popAttr = reactive({
-  title: "", // 标题
-  text: "", // 内容
-  visible: false, // 显示隐藏
-  type: false,
-});
-// 关闭弹出框
-const hidePopbox = () => {
-  popAttr.visible = false;
-};
+
 // 登录/注册
 const handleLoginM = () => {
   if (!agreeProtocol.value) {
-    popAttr.title = "请勾选协议";
-    popAttr.visible = true;
+    Toast("请勾选协议");
   } else {
     if (status.value) {
       handleYzmLogin();
@@ -99,14 +81,12 @@ const handleLoginM = () => {
 // 账号密码登录
 const handleAccountLogin = () => {
   if (!checkMobile(params.mobile)) {
-    popAttr.title = "请输入正确的手机号";
-    popAttr.visible = true;
+    Toast("请输入正确的手机号");
     return false;
   }
 
   if (divisionTrim(params.passWord) === "") {
-    popAttr.title = "请输入密码";
-    popAttr.visible = true;
+    Toast("请输入密码");
     return false;
   }
 
@@ -122,8 +102,7 @@ const handleAccountLogin = () => {
       });
       props.showLogin && props.showLogin();
     } else {
-      popAttr.title = res.data.msg;
-      popAttr.visible = true;
+      Toast(res.data.msg);
     }
   });
 };
@@ -141,30 +120,26 @@ const startCountdown = () => {
 // 获取验证码
 const handleSms = () => {
   if (!checkMobile(params.mobile)) {
-    popAttr.title = "请输入正确的手机号";
-    popAttr.visible = true;
+    Toast("请输入正确的手机号");
     return false;
   }
   useLogin.sendSMSCode(params, {}).then((res) => {
     if (res.data.code == "200") {
       startCountdown();
     } else {
-      popAttr.title = res.data.msg;
-      popAttr.visible = true;
+      Toast(res.data.msg);
     }
   });
 };
 // 验证码登录
 const handleYzmLogin = () => {
   if (!checkMobile(params.mobile)) {
-    popAttr.title = "请输入正确的手机号";
-    popAttr.visible = true;
+    Toast("请输入正确的手机号");
     return false;
   }
 
   if (divisionTrim(params.verification) === "") {
-    popAttr.title = "请输入验证码";
-    popAttr.visible = true;
+    Toast("请输入验证码");
     return false;
   }
 
@@ -174,8 +149,7 @@ const handleYzmLogin = () => {
       localStorage.setItem("token", useLogin.token);
       props.showLogin && props.showLogin();
     } else {
-      popAttr.title = res.data.msg;
-      popAttr.visible = true;
+      Toast(res.data.msg);
     }
   });
 };

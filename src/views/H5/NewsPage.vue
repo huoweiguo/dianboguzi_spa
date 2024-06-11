@@ -153,6 +153,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css";
 import { useNewsStore } from "@/store/news";
+import Toast from "@/utils/Toast";
 const useNews = useNewsStore();
 
 interface PageType {
@@ -206,7 +207,7 @@ const slideTo = (index) => {
           // 最新文章
           recentList.value = res.data.rows;
         } else {
-          alert(res.data.msg);
+          Toast(res.data.msg);
         }
       });
       break;
@@ -216,7 +217,7 @@ const slideTo = (index) => {
           // 线下文章
           offlineList.value = res.data.rows;
         } else {
-          alert(res.data.msg);
+          Toast(res.data.msg);
         }
       });
       break;
@@ -227,7 +228,7 @@ const slideTo = (index) => {
           // 线上文章
           onlineList.value = res.data.rows;
         } else {
-          alert(res.data.msg);
+          Toast(res.data.msg);
         }
       });
       break;
@@ -238,7 +239,7 @@ const slideTo = (index) => {
           // 招聘文章
           zhaopinList.value = res.data.rows;
         } else {
-          alert(res.data.msg);
+          Toast(res.data.msg);
         }
       });
       break;
@@ -259,7 +260,7 @@ onMounted(() => {
       console.log(res.data);
       slideList.value = res.data.data;
     } else {
-      alert(res.data.msg);
+      Toast(res.data.msg);
     }
   });
   slideTo(0);

@@ -56,6 +56,7 @@ import {
   watch,
   computed,
 } from "vue";
+import Toast from "@/utils/Toast";
 const props = defineProps(["visible", "id"]);
 const emits = defineEmits(["update:visible"]);
 interface NewsType {
@@ -90,7 +91,7 @@ onUpdated(() => {
           content: "",
         };
       } else {
-        alert(res.data.msg);
+        Toast(res.data.msg);
       }
     });
   }
