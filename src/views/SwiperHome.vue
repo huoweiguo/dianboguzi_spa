@@ -75,9 +75,7 @@
               <b class="news-title">{{newsDetail.title}}</b>
               <span class="news-small-text">{{newsDetail.createTime}}</span>
 
-              <div class="news-inner-context">
-                <img src="../images/inner-text.png" />
-                {{newsDetail.content}}
+              <div v-html="newsDetail.content" class="news-inner-context">
               </div>
             </div>
           </div>

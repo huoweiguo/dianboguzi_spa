@@ -4,7 +4,7 @@
       <a class="popbox-close" @click="close"><img src="../images/close.png" /></a>
       <div class="popbox-title">{{ props.title }}</div>
       <div class="popbox-text" v-if="props.text">{{ props.text }}</div>
-      <a class="popbox-complete" @click="close"><img src="../images/complete.png" /></a>
+      <a class="popbox-complete" v-if="type" @click="close"><img src="../images/complete.png" /></a>
     </div>
   </div>
 </template>
@@ -21,6 +21,10 @@ const props = defineProps({
     type: String
   },
   visible: {
+    default: false,
+    type: Boolean
+  },
+  type:{
     default: false,
     type: Boolean
   }

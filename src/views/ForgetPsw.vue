@@ -40,7 +40,7 @@
     </div>
 
     <!--弹出框-->
-    <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" @hidePopbox="hidePopbox" />
+    <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" :type="popAttr.type" @hidePopbox="hidePopbox" />
   </div>
 </template>
 
@@ -72,19 +72,22 @@ let timer:any = null
 interface RulePopbox {
   title: string
   text?: string
-  visible: boolean
+  visible: boolean,
+  type?:boolean
 }
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
   title: '', // 标题
   text: '', // 内容
-  visible: false // 显示隐藏
+  visible: false, // 显示隐藏
+  type:false
 })
 
 const openPopbox = (payload: RulePopbox) => {
   popAttr.visible = payload.visible
   popAttr.title = payload.title
   popAttr.text = payload.text ? payload.text : ''
+  popAttr.type = payload.type
 }
 
 const changePage = (index: number) => {
@@ -99,12 +102,16 @@ const hidePopbox = () => {
 
 const nextStep = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    openPopbox({
+      visible: true, title: '请输入正确的手机号'
+    })
     return false;
   }
 
   if (divisionTrim(params.verification) === "") {
-    alert("请输入验证码");
+    openPopbox({
+      visible: true, title: '请输入验证码'
+    })
     return false;
   }
   active.value++
@@ -122,15 +129,21 @@ const resetScreen = () => {
 
 const updatePsw = () => {
   if (!validatePassword(params.passWord)) {
-    alert("请输入正确的密码");
+    openPopbox({
+      visible: true, title: '请输入正确的密码'
+    })
     return false;
   }
   if (params.newPassWord.length === 0) {
-    alert("再次输入密码不能为空");
+    openPopbox({
+      visible: true, title: '再次输入密码不能为空'
+    })
     return false;
   }
   if (params.passWord !== params.newPassWord) {
-    alert("两次输入密码不一致");
+    openPopbox({
+      visible: true, title: '两次输入密码不一致'
+    })
     return false;
   }
   let obj ={
@@ -143,7 +156,7 @@ const updatePsw = () => {
       localStorage.setItem('currentIndex', 1)
       // 打开弹出框
       openPopbox({
-        visible: true, title: '修改密码成功', text: '即将跳转到首页'
+        visible: true, title: '修改密码成功', text: '即将跳转到首页',type:true
       })
       timer && clearTimeout(timer)
       timer = setTimeout(() => {
@@ -171,7 +184,9 @@ const startCountdown = () => {
 
 const handleSms = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    openPopbox({
+      visible: true, title: '请输入正确的手机号'
+    })
     return false;
   }
 

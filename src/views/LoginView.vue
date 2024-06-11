@@ -31,6 +31,8 @@
       </div>
       <div class="account-agree"><input type="checkbox" v-model="agree" />同意<a>《用户协议》</a>和<a>《隐私协议》</a></div>
     </div>
+    <!--弹出框-->
+    <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" @hidePopbox="hidePopbox" />
   </div>
 </template>
 
@@ -39,6 +41,7 @@ import { ref, onUnmounted, onMounted,reactive } from 'vue'
 import PCHeader from '../components/PCHeader.vue'
 import { useRouter } from 'vue-router'
 import { useLoginStore } from "@/store/login";
+import DBMessage from '../components/DBMessage.vue';
 import { checkMobile, divisionTrim } from "@/utils/common";
 const agree = ref<boolean>(false)
 const moveLogin = ref<boolean>(false)
@@ -56,6 +59,30 @@ const params = reactive<RuleLogin>({
   passWord: "",
   verification: "",
 });
+
+// 弹出框配置
+const popAttr = reactive<RulePopbox>({
+  title: '', // 标题
+  text: '', // 内容
+  visible: false, // 显示隐藏
+});
+
+interface RulePopbox {
+  title: string;
+  text?: string;
+  visible: boolean;
+}
+
+const openPopbox = (payload: RulePopbox) => {
+  popAttr.visible = payload.visible;
+  popAttr.title = payload.title;
+  popAttr.text = payload.text ? payload.text : '';
+};
+
+// 关闭弹出框
+const hidePopbox = () => {
+  popAttr.visible = false;
+};
 
 const changePage = (index: number) => {
   localStorage.setItem('currentIndex', JSON.stringify(index))
@@ -81,16 +108,22 @@ const handleLoginM = () => {
 
 const handleAccountLogin = () => {
   if (!agree.value) {
-    alert("请勾选协议");
+    openPopbox({
+      visible: true, title: '请勾选协议'
+    })
     return false;
   }
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    openPopbox({
+      visible: true, title: '请输入正确的手机号'
+    })
     return false;
   }
 
   if (divisionTrim(params.passWord) === "") {
-    alert("请输入密码");
+    openPopbox({
+      visible: true, title: '请输入密码'
+    })
     return false;
   }
   useLogin.login(params).then((res) => {
@@ -112,16 +145,22 @@ const handleAccountLogin = () => {
 
 const handleYzmLogin = () => {
   if (!agree.value) {
-    alert("请勾选协议");
+    openPopbox({
+      visible: true, title: '请勾选协议'
+    })
     return false;
   }
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    openPopbox({
+      visible: true, title: '请输入正确的手机号'
+    })
     return false;
   }
 
   if (divisionTrim(params.verification) === "") {
-    alert("请输入验证码");
+    openPopbox({
+      visible: true, title: '请输入验证码'
+    })
     return false;
   }
   useLogin.smsLogin(params).then((res) => {
@@ -144,7 +183,9 @@ const handleYzmLogin = () => {
 
 const handleSms = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    openPopbox({
+      visible: true, title: '请输入正确的手机号'
+    })
     return false;
   }
   useLogin.sendSMSCode(params).then((res) => {

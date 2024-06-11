@@ -9,12 +9,12 @@
 
     <ul v-if="!type" class="news-ul-zp">
       <li v-for="(item,index) in list" :key="index" @click="showNewsPage(item.id)">
-        <div class="news-zp-title">
+        <div class="news-zp-title2">
           <div>
             <b class="tag-title"> {{ item.title }}</b>
             <span class="tag-jz">急招</span>
           </div>
-          <span>扬州丨运营类丨全职/兼职</span>
+          <!-- <span>扬州丨运营类丨全职/兼职</span> -->
         </div>
         <span>{{item.showDate}} 发布</span>
       </li>
@@ -182,6 +182,49 @@ const handleCurrentChange = (val:number) =>{
       span {
         margin-left: 0;
       }
+    }
+    .news-zp-title2{
+      box-sizing: border-box;
+      line-height: 0.15rem;
+      overflow: hidden;
+      &>div {
+        display: flex;
+        align-items: center;
+        height: auto;
+        line-height: 0.15rem;
+        font-size: 0.14rem;
+        margin-bottom: 0.05rem;
+
+        b {
+          display: block;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        span {
+          font-size: 0.1rem;
+          white-space: nowrap;
+
+          &.tag-jz,
+          &.tag-cq {
+            background-color: #C3BBEB;
+            color: #fff;
+            width: 0.27rem;
+            height: 0.16rem;
+            padding: 0 0.03rem;
+            text-align: center;
+            line-height: 0.16rem;
+            border-radius: 0.03rem;
+          }
+
+          &.tag-cq {
+            background-color: #86AEEA;
+          }
+        }
+      }
+
     }
 
     span {
