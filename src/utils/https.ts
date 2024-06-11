@@ -9,7 +9,8 @@ declare module "axios" {
   export function create(config?: AxiosRequestConfig): AxiosInstance;
 }
 
-const BASE_URL = "http://dev.dbgz.c8b.com.cn";
+// const BASE_URL = "http://dev.dbgz.c8b.com.cn";
+const BASE_URL = "https://mapi.dianboguzi.com"
 // const BASE_URL = "http://192.168.31.89:8085";
 //275
 
