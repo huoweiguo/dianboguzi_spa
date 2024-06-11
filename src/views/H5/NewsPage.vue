@@ -130,7 +130,15 @@
               :key="i.id"
               @click="showDetail(i.id)"
             >
-              <div class="title">{{ i.title }}</div>
+              <div class="title">
+                {{ i.title }}
+                <label v-if="i.tag === 'NewsZhaoPin_jizhao'" class="jz"
+                  >急招</label
+                >
+                <label v-if="i.tag === 'NewsZhaoPin_changqi'" class="cq"
+                  >长期</label
+                >
+              </div>
               <div class="time">{{ i.createTime }} 发布</div>
             </li>
           </ul>
@@ -377,6 +385,25 @@ onMounted(() => {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      label {
+        display: inline-block;
+        color: #fff;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        width: 30px;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 3px;
+
+        &.jz {
+          background-color: #948ce0;
+        }
+
+        &.cq {
+          background-color: #5dacf5;
+        }
+      }
     }
     .time {
       color: #898989;

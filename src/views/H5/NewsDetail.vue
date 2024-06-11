@@ -8,7 +8,7 @@
       <div class="time">发布时间：{{ newsDetail.showDate }}</div>
       <div class="content">
         <img src="@/assets/h5/banner-1.png" alt="" />
-        <p>{{ newsDetail.content }}</p>
+        <p v-html="newsDetail.content"></p>
       </div>
     </div>
   </div>
@@ -157,8 +157,8 @@ const close = () => {
     }
     p {
       margin: 0.5em 0;
-      white-space: pre-line;
-      // white-space: pre-wrap;
+      // white-space: pre-line;
+      white-space: pre-wrap;
     }
   }
 }
