@@ -1,13 +1,13 @@
 <template>
   <div class="db-header">
-    <div class="header-unlogin">
+    <div v-if="!name" class="header-unlogin">
       <img src="../images/logo.png" class="header-logo" v-show="props.isHome" />
       <a @click="router.push('/login')">注册/登录</a>
     </div>
-    <!-- <div class="header-nick">
-      <span>json.huo</span>
-      <a>退出</a>
-    </div> -->
+    <div v-else class="header-nick">
+      <span>{{ name }}</span>
+      <a @click="logout()">退出</a>
+    </div>
     <ul>
       <li v-for="(item, index) in  menuList " :key="item.name" :class="index == props.currentIndex ? 'active' : ''"
         @click="jump(index)">{{
@@ -17,8 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, defineProps, defineEmits } from 'vue'
+import { ref,reactive, defineProps, defineEmits,onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useLoginStore } from "@/store/login";
+const name = ref(localStorage.getItem("userName"));
+console.log(localStorage.getItem("userName"),'localStorage.getItem("userName")')
 const props = defineProps({
   currentIndex: {
     default: 0,
@@ -30,13 +33,17 @@ const props = defineProps({
     type: Boolean
   }
 })
-
-
 const emit = defineEmits(['changePage'])
 const router = useRouter()
 
 const jump = (index: number) => {
   emit('changePage', index)
+}
+const logout=()=>{
+  name.value = ''
+  localStorage.removeItem("token");
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("userName");
 }
 
 const menuList = reactive([

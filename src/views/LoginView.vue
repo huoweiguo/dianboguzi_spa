@@ -97,7 +97,13 @@ const handleAccountLogin = () => {
     if (res.data.code == "200") {
       useLogin.token = res.data.data.token;
       localStorage.setItem("token", useLogin.token);
-      router.push("/");
+      useLogin.getUserInfo().then((res)=>{
+        if(res.data.code === 200){
+          localStorage.setItem("userId", res.data.data.id);
+          localStorage.setItem("userName", res.data.data.nickname);
+          router.push("/");
+        }
+      });
     } else {
       alert(res.data.msg);
     }
@@ -122,7 +128,13 @@ const handleYzmLogin = () => {
     if (res.data.code == "200") {
       useLogin.token = res.data.data.token;
       localStorage.setItem("token", useLogin.token);
-      router.push("/");
+      useLogin.getUserInfo().then((res)=>{
+        if(res.data.code === 200){
+          localStorage.setItem("userId", res.data.data.id);
+          localStorage.setItem("userName", res.data.data.nickname);
+          router.push("/");
+        }
+      });
     } else {
       alert(res.data.msg);
     }

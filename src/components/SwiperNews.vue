@@ -3,15 +3,15 @@
     <Swiper :modules="[Autoplay, Pagination]" :slides-per-view="1" :autoplay="{
       delay: 3000,
     }" :pagination="{ clickable: true }">
-      <SwiperSlide v-for="(item, index) in silderList" :key="index" class="slider-img-outer">
-        <img :src="item" class="slider-img" />
+      <SwiperSlide v-for="(item, index) in list" :key="index" class="slider-img-outer">
+        <img :src="item.pic" class="slider-img" />
       </SwiperSlide>
     </Swiper>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref ,defineProps} from 'vue'
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/scss";
@@ -21,6 +21,12 @@ const silderList = ref([
   require('../images/slider-2.png'),
   require('../images/slider-3.png')
 ])
+const props = defineProps({
+  list:{
+    type: Array,
+    default: () => []
+  },
+})
 </script>
 
 <style lang="scss">

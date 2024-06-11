@@ -16,6 +16,11 @@ interface SendSMS {
   mobile: string;
 }
 
+interface SendCode {
+  code:string;
+  passWord: string;
+}
+
 interface PassWord {
   passWord: string;
 }
@@ -51,7 +56,7 @@ export const useLoginStore = defineStore(
       return http.post(`/api/web/login/getUserInfo`);
     };
 
-    const offlinecode = (data: SendSMS, config: any) => { //线下兑换码
+    const offlinecode = (data: SendCode, config: any) => { //线下兑换码
       return http.post(`/api/web/offlinecode/offlinecode`, { ...data }, config);
     };
 

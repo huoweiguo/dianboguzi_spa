@@ -1,45 +1,37 @@
 <template>
   <div class="news-height">
-    <SwiperNews />
+    <SwiperNews :list="slideList"/>
     <!-- <ul class="news-ul">
       <li><span>线下活动是什么能吃吗？线下活动是什么能吃吗？</span><i>2024/01/15</i></li>
       <li><span>cp30参展决定！活动详情展示。</span><i>2024/01/15</i></li>
       <li><span>cp30参展决定！活动详情展示。</span><i>2024/01/15</i></li>
     </ul> -->
 
-    <ul class="news-ul-zp">
-      <li @click="showNewsPage('1254')">
+    <ul v-if="!type" class="news-ul-zp">
+      <li v-for="(item,index) in list" :key="index" @click="showNewsPage(item.id)">
         <div class="news-zp-title">
           <div>
-            <b class="tag-title"> 二次元运营（线下）</b>
+            <b class="tag-title"> {{ item.title }}</b>
             <span class="tag-jz">急招</span>
           </div>
           <span>扬州丨运营类丨全职/兼职</span>
         </div>
-        <span>2024/04/25 发布</span>
-      </li>
-      <li>
-        <div class="news-zp-title">
-          <div>
-            <b class="tag-title"> 二次元运营（线下）</b>
-            <span class="tag-cq">长期</span>
-          </div>
-          <span>扬州丨运营类丨全职/兼职</span>
-        </div>
-        <span>2024/04/25 发布</span>
-      </li>
-      <li>
-        <div class="news-zp-title">
-          <div>
-            <b class="tag-title"> 二次元运营（线下）</b>
-            <span class="tag-jz">急招</span>
-          </div>
-          <span>扬州丨运营类丨全职/兼职</span>
-        </div>
-        <span>2024/04/25 发布</span>
+        <span>{{item.showDate}} 发布</span>
       </li>
     </ul>
-    <div class="pagination-box"><el-pagination layout="prev, pager, next" :page-size="3" :total="total" /></div>
+    <ul v-else class="news-ul-zp">
+      <li v-for="(item,index) in list" :key="index" @click="showNewsPage(item.id)">
+        <div class="news-zp-title">
+          <div>
+            <b class="tag-title"> {{ item.title }}</b>
+            <span class="tag-jz">急招</span>
+          </div>
+          <span>{{item.subTitle}}</span>
+        </div>
+        <span>{{item.createTime}} 发布</span>
+      </li>
+    </ul>
+    <div class="pagination-box"><el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :page-size="3" :total="total" /></div>
   </div>
 </template>
 
@@ -48,16 +40,31 @@ import SwiperNews from './SwiperNews.vue'
 import { ElPagination } from 'element-plus'
 import { defineProps, computed, defineEmits } from 'vue'
 const props = defineProps({
+  type:{
+    type: Boolean,
+    default: false
+  },
   total: {
     type: Number,
     default: 1
-  }
+  },
+  list:{
+    type: Array,
+    default: () => []
+  },
+  slideList:{
+    type: Array,
+    default: () => []
+  },
 })
-const emits = defineEmits(['showNewsInner'])
+const emits = defineEmits(['showNewsInner','handleCurrentChange'])
 const total = computed(() => props.total)
 
 const showNewsPage = (id: number) => {
   emits('showNewsInner', id)
+}
+const handleCurrentChange = (val:number) =>{
+  emits('handleCurrentChange', val)
 }
 
 </script>

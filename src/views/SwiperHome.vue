@@ -54,16 +54,16 @@
           <div class="conpect-content">
             <div class="conpect-content-inner" id="news-content">
               <div class="news-list">
-                <NewsComp :total="100" @showNewsInner="showNewsInner" />
+                <NewsComp :slideList="slideParams.list" :list="newsParams.list" :total="newsParams.total" @showNewsInner="showNewsInner" @handleCurrentChange="newsChange"/>
               </div>
               <div class="news-list">
-                <NewsComp />
+                <NewsComp :slideList="slideParams.list" :list="onlineNewsParams.list" :total="onlineNewsParams.total" @showNewsInner="showNewsInner" @handleCurrentChange="onlineNewsChange"/>
               </div>
               <div class="news-list">
-                <NewsComp />
+                <NewsComp :slideList="slideParams.list" :list="offlineNewsParams.list" :total="offlineNewsParams.total" @showNewsInner="showNewsInner" @handleCurrentChange="offlineNewsChange"/>
               </div>
               <div class="news-list">
-                <NewsComp />
+                <NewsComp :slideList="slideParams.list" :list="zhaoPinParams.list" :total="zhaoPinParams.total" @showNewsInner="showNewsInner2" type @handleCurrentChange="zhaoPinChange"/>
               </div>
             </div>
           </div>
@@ -72,16 +72,12 @@
           <div class="news-context" :class="showNews ? 'show-news' : ''">
             <a class="news-back" @click="closeNews"><img src="../images/back.png" /></a>
             <div class="news-context-box">
-              <b class="news-title">cp30参展决定！</b>
-              <span class="news-small-text">2024/01/15</span>
+              <b class="news-title">{{newsDetail.title}}</b>
+              <span class="news-small-text">{{newsDetail.createTime}}</span>
 
               <div class="news-inner-context">
                 <img src="../images/inner-text.png" />
-
-                <p>尊敬的电波谷子居民：</p>
-                <p>你好</p>
-                这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。这是一段新闻稿，是的，确实是一段新闻稿，看似说了很多，实际上啥也没说。
-                这里要能跳转链接：哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+                {{newsDetail.content}}
               </div>
             </div>
           </div>
@@ -93,9 +89,9 @@
         <div class="wrapper-conpect">
           <div class="wrapper-change-code">
             <b class="change-code-title">线下兑换码</b>
-            <div class="change-code-ipt"><label>谷子编号</label><input type="text" /></div>
-            <div class="change-code-ipt"><label>兑换码</label><input type="text" /></div>
-            <a><img src="../images/exchange.png" alt="兑换" /></a>
+            <div class="change-code-ipt"><label>谷子编号</label><input v-model="params.code" type="text" /></div>
+            <div class="change-code-ipt"><label>兑换码</label><input v-model="params.password" type="text" /></div>
+            <a @click="subForm()"><img src="../images/exchange.png" alt="兑换" /></a>
           </div>
         </div>
         <a class="next-page" @click="changePage(++index)"><img src="../images/down-arrow.png" /></a>
@@ -140,11 +136,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted,computed } from 'vue';
 import PCHeader from '../components/PCHeader.vue';
 import NewsComp from '../components/NewsComp.vue';
 import DBMessage from '../components/DBMessage.vue';
+import { useNewsStore } from "@/store/news";
 import { useLoginStore } from "@/store/login";
+import {  divisionTrim } from "@/utils/common";
 
 import isMobile from '@/utils/isMobile';
 isMobile();
@@ -161,6 +159,7 @@ interface RulePopbox {
   text?: string;
   visible: boolean;
 }
+const useNews = useNewsStore();
 const useLogin = useLoginStore();
 const index = ref<number>(0);
 const isScroll = ref(true);
@@ -173,6 +172,46 @@ let newsBox = null;
 const conpectIndex = ref<number>(0);
 const newsIndex = ref<number>(0);
 const showNews = ref<boolean>(false);
+// let userId = ref(localStorage.getItem("userId"))
+const userInfo = computed(() => useLogin.userInfo);
+const slideParams = reactive({
+  pageNum: 1,
+  pageSize: 10,
+  list:[]
+})
+const newsParams = reactive({
+  pageNum: 1,
+  pageSize: 3,
+  total:0,
+  list:[]
+})
+const onlineNewsParams = reactive({
+  pageNum: 1,
+  pageSize: 3,
+  total:0,
+  list:[]
+})
+const offlineNewsParams = reactive({
+  pageNum: 1,
+  pageSize: 3,
+  total:0,
+  list:[]
+})
+const zhaoPinParams = reactive({
+  pageNum: 1,
+  pageSize: 3,
+  total:0,
+  list:[]
+})
+const newsDetail = reactive({
+  title:'',
+  content:'',
+  createTime:''
+})
+const params = reactive({
+  code: "",
+  password: "",
+});
 const newsNav = ref([
   { title: '最新', id: 0 },
   { title: '线上活动', id: 1 },
@@ -238,7 +277,29 @@ const showNewsInner = (id: number) => {
 
   window.removeEventListener('mousewheel', wheelScroll, false);
   clearTimeout(timer.value);
-  console.log(id);
+  useNews.getNewsInfo({id}).then(res=>{
+    if(res.data.code === 200){
+      newsDetail.title = res.data.data.title
+      newsDetail.content = res.data.data.content
+      newsDetail.createTime = res.data.data.createTime
+    } 
+  })
+
+};
+
+const showNewsInner2 = (id: number) => {
+  showNews.value = true;
+
+  window.removeEventListener('mousewheel', wheelScroll, false);
+  clearTimeout(timer.value);
+  useNews.getZhaoPinInfo({id}).then(res=>{
+    if(res.data.code === 200){
+      newsDetail.title = res.data.data.title
+      newsDetail.content = res.data.data.content
+      newsDetail.createTime = res.data.data.createTime
+    } 
+  })
+
 };
 
 const closeNews = () => {
@@ -279,10 +340,128 @@ const wheelScroll = (e: any) => {
   }, 300);
 };
 
-onMounted(() => {
-  useLogin.getUserInfo().then((res)=>{
-    console.log(res)
+const newsChange = (val:number) =>{
+  newsParams.pageNum = val
+  getNewsList()
+}
+const onlineNewsChange = (val:number) =>{
+  onlineNewsParams.pageNum = val
+  getOnlineNewsList()
+}
+const offlineNewsChange = (val:number) =>{
+  offlineNewsParams.pageNum = val
+  getOfflineNewsList()
+}
+const zhaoPinChange = (val:number) =>{
+  zhaoPinParams.pageNum = val
+  getZhaoPinList()
+}
+
+const subForm = ()=>{
+  // if (!userInfo.value.id) {
+  //   alert("请先登录账号！");
+  //   return false;
+  // }
+  if (divisionTrim(params.code) === "") {
+    alert("请输入兑换码");
+    return false;
+  }
+
+  if (divisionTrim(params.password) === "") {
+    alert("请输入兑换密码");
+    return false;
+  }
+  useLogin.offlinecode(params).then((res) => {
+    if (res.data.code == "200") {
+      params.code = ''
+      params.password = ''
+      alert("兑换成功，请打开APP查看！");
+    } else {
+      alert(res.data.msg);
+    }
   });
+}
+
+const getNewsList = ()=>{
+  let obj = {
+    pageNum: newsParams.pageNum,
+    pageSize: newsParams.pageSize,
+  }
+  useNews.getRecentNewsList(obj).then(res=>{
+    if(res.data.code === 200){
+      newsParams.list = res.data.rows
+      newsParams.total = res.data.total
+    }else{
+      newsParams.list = []
+      newsParams.total = 0
+    }
+  })
+}
+
+const getOnlineNewsList = ()=>{
+  let obj = {
+    pageNum: onlineNewsParams.pageNum,
+    pageSize: onlineNewsParams.pageSize,
+  }
+  useNews.getOnlineNewsList(obj).then(res=>{
+    if(res.data.code === 200){
+      onlineNewsParams.list = res.data.rows
+      onlineNewsParams.total = res.data.total
+    }else{
+      onlineNewsParams.list = []
+      onlineNewsParams.total = 0
+    }
+  })
+}
+
+const getOfflineNewsList = ()=>{
+  let obj = {
+    pageNum: offlineNewsParams.pageNum,
+    pageSize: offlineNewsParams.pageSize,
+  }
+  useNews.getOfflineNewsList(obj).then(res=>{
+    if(res.data.code === 200){
+      offlineNewsParams.list = res.data.rows
+      offlineNewsParams.total = res.data.total
+    }else{
+      offlineNewsParams.list = []
+      offlineNewsParams.total = 0
+    }
+  })
+}
+
+const getSlideList = ()=>{
+  let obj = {
+    pageNum: slideParams.pageNum,
+    pageSize: slideParams.pageSize,
+  }
+  useNews.getSlideList(obj).then(res=>{
+    if(res.data.code === 200){
+      slideParams.list = res.data.data
+    }else{
+      slideParams.list = []
+    }
+  })
+}
+
+const getZhaoPinList = ()=>{
+  let obj = {
+    pageNum: zhaoPinParams.pageNum,
+    pageSize: zhaoPinParams.pageSize,
+  }
+  useNews.getZhaoPinList(obj).then(res=>{
+    if(res.data.code === 200){
+      zhaoPinParams.list = res.data.rows
+      zhaoPinParams.total = res.data.total
+    }else{
+      zhaoPinParams.list = []
+      zhaoPinParams.total = 0
+    }
+  })
+
+}
+
+onMounted(() => {
   timer.value = setTimeout(() => {
     move.value = true;
   }, 300);
@@ -302,6 +481,11 @@ onMounted(() => {
   // 设置html字体
   resetScreen();
   window.addEventListener('resize', resetScreen, false);
+  getNewsList()
+  getOnlineNewsList()
+  getOfflineNewsList()
+  getSlideList()
+  getZhaoPinList()
 });
 
 onUnmounted(() => {
