@@ -148,7 +148,7 @@ const updatePsw = () => {
   }
   let obj ={
     mobile:params.mobile,
-    passWord: params.passWord,
+    password: params.passWord,
     verification: params.verification
   }
   useLogin.findpass(obj).then((res) => {
