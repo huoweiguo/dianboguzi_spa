@@ -41,8 +41,8 @@
         @slideChange="onSlideChange"
         :spaceBetween="10"
       >
-        <swiper-slide class="slide" v-for="item in slideList" :key="item"
-          ><img :src="item"
+        <swiper-slide class="slide"
+          ><img src="@/assets/h5/img-1.png"
         /></swiper-slide>
         <swiper-slide class="slide"
           ><img src="@/assets/h5/img-2.png"
@@ -59,14 +59,12 @@
 </template>
 
 <script setup>
-import { reactive, ref, watch, onMounted } from "vue";
+import { reactive, ref, watch } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css";
 
-import { useNewsStore } from "@/store/news";
-const useNews = useNewsStore();
 const tabIndex = ref(0);
 const mySwiper = ref(null);
 const style = reactive({
@@ -74,7 +72,6 @@ const style = reactive({
   "--swiper-pagination-color": "#fff",
   "--swiper-navigation-size": "20px",
 });
-const slideList = ref([]);
 const setSwiper = (swiper) => {
   mySwiper.value = swiper;
 };
@@ -87,17 +84,6 @@ const slideTo = (index) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
 };
-
-onMounted(() => {
-  useNews.getSlideList().then((res) => {
-    if (res.data.code == "200") {
-      console.log(res.data);
-      slideList.value = res.data.data;
-    } else {
-      alert(res.data.msg);
-    }
-  });
-});
 </script>
 
 <style lang="scss" scoped>

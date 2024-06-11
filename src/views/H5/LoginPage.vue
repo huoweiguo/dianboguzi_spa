@@ -42,12 +42,20 @@
       </div>
     </div>
   </div>
+  <!-- 弹窗 -->
+  <DBMessage
+    :title="popAttr.title"
+    :text="popAttr.text"
+    :visible="popAttr.visible"
+    @hidePopbox="hidePopbox"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, defineProps } from "vue";
 import { useLoginStore } from "@/store/login";
 import { checkMobile, divisionTrim } from "@/utils/common";
+import DBMessage from "@/components/DBMessage.vue";
 const props = defineProps({ showLogin: Function });
 const useLogin = useLoginStore();
 const countdown = ref<number>(0);
@@ -64,10 +72,22 @@ const params = reactive<RuleLogin>({
   passWord: "",
   verification: "",
 });
+// 弹出框配置
+const popAttr = reactive({
+  title: "", // 标题
+  text: "", // 内容
+  visible: false, // 显示隐藏
+  type: false,
+});
+// 关闭弹出框
+const hidePopbox = () => {
+  popAttr.visible = false;
+};
 // 登录/注册
 const handleLoginM = () => {
   if (!agreeProtocol.value) {
-    alert("请勾选协议");
+    popAttr.title = "请勾选协议";
+    popAttr.visible = true;
   } else {
     if (status.value) {
       handleYzmLogin();
@@ -79,12 +99,14 @@ const handleLoginM = () => {
 // 账号密码登录
 const handleAccountLogin = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    popAttr.title = "请输入正确的手机号";
+    popAttr.visible = true;
     return false;
   }
 
   if (divisionTrim(params.passWord) === "") {
-    alert("请输入密码");
+    popAttr.title = "请输入密码";
+    popAttr.visible = true;
     return false;
   }
 
@@ -92,9 +114,16 @@ const handleAccountLogin = () => {
     if (res.data.code == "200") {
       useLogin.token = res.data.data.token;
       localStorage.setItem("token", useLogin.token);
+      useLogin.getUserInfo().then((res) => {
+        if (res.data.code == "200") {
+          useLogin.userInfo = { ...res.data.data };
+          localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+        }
+      });
       props.showLogin && props.showLogin();
     } else {
-      alert(res.data.msg);
+      popAttr.title = res.data.msg;
+      popAttr.visible = true;
     }
   });
 };
@@ -112,26 +141,30 @@ const startCountdown = () => {
 // 获取验证码
 const handleSms = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    popAttr.title = "请输入正确的手机号";
+    popAttr.visible = true;
     return false;
   }
   useLogin.sendSMSCode(params, {}).then((res) => {
     if (res.data.code == "200") {
       startCountdown();
     } else {
-      alert(res.data.msg);
+      popAttr.title = res.data.msg;
+      popAttr.visible = true;
     }
   });
 };
 // 验证码登录
 const handleYzmLogin = () => {
   if (!checkMobile(params.mobile)) {
-    alert("请输入正确的手机号");
+    popAttr.title = "请输入正确的手机号";
+    popAttr.visible = true;
     return false;
   }
 
   if (divisionTrim(params.verification) === "") {
-    alert("请输入验证码");
+    popAttr.title = "请输入验证码";
+    popAttr.visible = true;
     return false;
   }
 
@@ -141,7 +174,8 @@ const handleYzmLogin = () => {
       localStorage.setItem("token", useLogin.token);
       props.showLogin && props.showLogin();
     } else {
-      alert(res.data.msg);
+      popAttr.title = res.data.msg;
+      popAttr.visible = true;
     }
   });
 };

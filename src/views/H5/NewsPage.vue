@@ -23,7 +23,10 @@
         }"
         :modules="[EffectCoverflow, Pagination]"
       >
-        <swiper-slide class="slide"
+        <swiper-slide class="slide" v-for="item in slideList" :key="item.id"
+          ><img :src="item.pic" width="80%"
+        /></swiper-slide>
+        <!-- <swiper-slide class="slide"
           ><img src="@/assets/h5/banner-1.png" width="80%"
         /></swiper-slide>
         <swiper-slide class="slide"
@@ -34,7 +37,7 @@
         /></swiper-slide>
         <swiper-slide class="slide"
           ><img src="@/assets/h5/banner-2.png" width="80%"
-        /></swiper-slide>
+        /></swiper-slide> -->
       </swiper>
     </div>
     <div class="tabs-bar">
@@ -128,7 +131,7 @@
               @click="showDetail(i.id)"
             >
               <div class="title">{{ i.title }}</div>
-              <div class="time">{{ i.showDate }}</div>
+              <div class="time">{{ i.createTime }} 发布</div>
             </li>
           </ul>
         </swiper-slide>
@@ -143,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, defineEmits } from "vue";
+import { reactive, ref, watch, defineEmits, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import "swiper/css/effect-coverflow";
@@ -248,6 +251,19 @@ const slideTo = (index) => {
 const showDetail = (id) => {
   emits("showDetail", id);
 };
+const slideList = ref([]);
+
+onMounted(() => {
+  useNews.getSlideList().then((res) => {
+    if (res.data.code == "200") {
+      console.log(res.data);
+      slideList.value = res.data.data;
+    } else {
+      alert(res.data.msg);
+    }
+  });
+  slideTo(0);
+});
 </script>
 
 <style lang="scss" scoped>

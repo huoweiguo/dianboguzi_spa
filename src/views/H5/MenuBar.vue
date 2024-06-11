@@ -96,8 +96,16 @@
 </template>
 
 <script setup lang="ts">
+import * as _ from "lodash";
 import LoginPage from "./LoginPage.vue";
-import { ref, reactive, computed, defineProps, defineEmits } from "vue";
+import {
+  ref,
+  reactive,
+  computed,
+  defineProps,
+  defineEmits,
+  onMounted,
+} from "vue";
 import { useLoginStore } from "@/store/login";
 
 const useLogin = useLoginStore();
@@ -149,12 +157,17 @@ const goLogin = () => {
 };
 const logout = () => {
   islogin.value = false;
+  useLogin.removeAccount();
   localStorage.removeItem("token");
+  localStorage.removeItem("userInfo");
 };
 const changeLogin = () => {
   islogin.value = true;
   showLogin.value = !showLogin.value;
 };
+onMounted(() => {
+  islogin.value = userInfo.value.nickname ? true : false;
+});
 </script>
 
 <style lang="scss" scoped>

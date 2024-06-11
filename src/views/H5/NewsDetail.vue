@@ -4,7 +4,7 @@
       <span @click="close">返回</span>
     </div>
     <div class="container">
-      <div class="title">{{ newsDetail.title }}{{ props.id }}</div>
+      <div class="title">{{ newsDetail.title }}</div>
       <div class="time">发布时间：{{ newsDetail.showDate }}</div>
       <div class="content">
         <img src="@/assets/h5/banner-1.png" alt="" />
@@ -47,7 +47,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, defineProps, defineEmits, onUpdated, watch } from "vue";
+import {
+  ref,
+  reactive,
+  defineProps,
+  defineEmits,
+  onUpdated,
+  watch,
+  computed,
+} from "vue";
 const props = defineProps(["visible", "id"]);
 const emits = defineEmits(["update:visible"]);
 interface NewsType {
@@ -65,18 +73,27 @@ const newsDetail = ref<NewsType>({
   summary: "",
   content: "",
 });
+const once = ref<boolean>(false);
 onUpdated(() => {
-  useNews.getNewsInfo({ id: props.id }, {}).then((res) => {
-    if (res.data.code == "200") {
-      // 文章详情
-      newsDetail.value = res.data.data;
-    } else {
-      alert(res.data.msg);
-    }
-  });
-});
-watch(props.id, (n) => {
-  console.log(n, 5);
+  if (props.visible === false) {
+    once.value = false;
+  }
+  if (props.visible === true && once.value === false) {
+    once.value = true;
+    useNews.getNewsInfo({ id: props.id }, {}).then((res) => {
+      if (res.data.code == "200") {
+        // 文章详情
+        newsDetail.value = res.data?.data || {
+          title: "",
+          showDate: "",
+          summary: "",
+          content: "",
+        };
+      } else {
+        alert(res.data.msg);
+      }
+    });
+  }
 });
 // 关闭
 const close = () => {
