@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import Toast from "./Toast";
 
 declare module "axios" {
   interface AxiosResponse<T = any> {
@@ -10,7 +11,7 @@ declare module "axios" {
 }
 
 // const BASE_URL = "http://dev.dbgz.c8b.com.cn";
-const BASE_URL = "https://mapi.dianboguzi.com"
+const BASE_URL = "https://mapi.dianboguzi.com";
 // const BASE_URL = "http://192.168.31.89:8085";
 //275
 
@@ -28,6 +29,8 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.log(error, 222222);
+    Toast(error.message);
     return Promise.reject(error);
   }
 );
@@ -37,6 +40,8 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log(error, 11111111);
+    Toast(error.message);
     return Promise.reject(error);
   }
 );

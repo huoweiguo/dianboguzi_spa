@@ -50,16 +50,21 @@ const handleClick = () => {
     Toast("请输入兑换码");
     return false;
   }
-  useLogin.offlinecode(params, {}).then((res) => {
-    if (res.data.code == "200") {
-      params.data = {
-        code: "",
-        password: "",
-      };
-    } else {
-      Toast(res.data.msg);
-    }
-  });
+  useLogin
+    .offlinecode(params, {})
+    .then((res) => {
+      if (res.data.code == "200") {
+        params.data = {
+          code: "",
+          password: "",
+        };
+      } else {
+        Toast(res.data.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 </script>
 

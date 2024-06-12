@@ -9,7 +9,7 @@
           <label>手机号</label><input type="text" v-model="params.mobile" />
         </div>
         <div class="form-ipt">
-          <label>密码</label><input type="text" v-model="params.passWord" />
+          <label>密码</label><input type="password" v-model="params.passWord" />
         </div>
       </div>
       <div class="verify-login" v-else>
@@ -90,21 +90,26 @@ const handleAccountLogin = () => {
     return false;
   }
 
-  useLogin.login(params, {}).then((res) => {
-    if (res.data.code == "200") {
-      useLogin.token = res.data.data.token;
-      localStorage.setItem("token", useLogin.token);
-      useLogin.getUserInfo().then((res) => {
-        if (res.data.code == "200") {
-          useLogin.userInfo = { ...res.data.data };
-          localStorage.setItem("userInfo", JSON.stringify(res.data.data));
-        }
-      });
-      props.showLogin && props.showLogin();
-    } else {
-      Toast(res.data.msg);
-    }
-  });
+  useLogin
+    .login(params, {})
+    .then((res) => {
+      if (res.data.code == "200") {
+        useLogin.token = res.data.data.token;
+        localStorage.setItem("token", useLogin.token);
+        useLogin.getUserInfo().then((res) => {
+          if (res.data.code == "200") {
+            useLogin.userInfo = { ...res.data.data };
+            localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+          }
+        });
+        props.showLogin && props.showLogin();
+      } else {
+        Toast(res.data.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 // 倒数
 const startCountdown = () => {
@@ -123,13 +128,18 @@ const handleSms = () => {
     Toast("请输入正确的手机号");
     return false;
   }
-  useLogin.sendSMSCode(params, {}).then((res) => {
-    if (res.data.code == "200") {
-      startCountdown();
-    } else {
-      Toast(res.data.msg);
-    }
-  });
+  useLogin
+    .sendSMSCode(params, {})
+    .then((res) => {
+      if (res.data.code == "200") {
+        startCountdown();
+      } else {
+        Toast(res.data.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 // 验证码登录
 const handleYzmLogin = () => {
@@ -143,15 +153,20 @@ const handleYzmLogin = () => {
     return false;
   }
 
-  useLogin.smsLogin(params, {}).then((res) => {
-    if (res.data.code == "200") {
-      useLogin.token = res.data.data.token;
-      localStorage.setItem("token", useLogin.token);
-      props.showLogin && props.showLogin();
-    } else {
-      Toast(res.data.msg);
-    }
-  });
+  useLogin
+    .smsLogin(params, {})
+    .then((res) => {
+      if (res.data.code == "200") {
+        useLogin.token = res.data.data.token;
+        localStorage.setItem("token", useLogin.token);
+        props.showLogin && props.showLogin();
+      } else {
+        Toast(res.data.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 </script>
 

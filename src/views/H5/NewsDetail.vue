@@ -8,7 +8,7 @@
       <div class="time">发布时间：{{ newsDetail.showDate }}</div>
       <div class="content">
         <img src="@/assets/h5/banner-1.png" alt="" />
-        <p v-html="newsDetail.content" style="white-space:pre-wrap"></p>
+        <p v-html="newsDetail.content" style="white-space: pre-wrap"></p>
       </div>
     </div>
   </div>
@@ -50,40 +50,56 @@ onUpdated(() => {
   if (props.visible === true && once.value === false) {
     once.value = true;
     if (props.active === 3) {
-      useNews.getZhaoPinInfo({ id: props.id }, {}).then((res) => {
-        if (res.data.code == "200") {
-          // 招聘详情
-          const { title, summary, content } = res.data.data;
-          const showDate = res.data.data.createTime;
-          newsDetail.value = {
-            title,
-            showDate,
-            summary,
-            content,
-          };
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+      useNews
+        .getZhaoPinInfo({ id: props.id }, {})
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 招聘详情
+            const { title, summary, content } = res.data.data;
+            const showDate = res.data.data.createTime;
+            newsDetail.value = {
+              title,
+              showDate,
+              summary,
+              content,
+            };
+          } else {
+            Toast(res.data.msg);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
-      useNews.getNewsInfo({ id: props.id }, {}).then((res) => {
-        if (res.data.code == "200") {
-          // 文章详情
-          newsDetail.value = res.data?.data || {
-            title: "",
-            showDate: "",
-            summary: "",
-            content: "",
-          };
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+      useNews
+        .getNewsInfo({ id: props.id }, {})
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 文章详情
+            newsDetail.value = res.data?.data || {
+              title: "",
+              showDate: "",
+              summary: "",
+              content: "",
+            };
+          } else {
+            Toast(res.data.msg);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 });
 // 关闭
 const close = () => {
+  newsDetail.value = {
+    title: "",
+    showDate: "",
+    summary: "",
+    content: "",
+  };
   emits("update:visible", false);
 };
 </script>

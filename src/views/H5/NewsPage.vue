@@ -132,14 +132,16 @@
             >
               <div class="title">
                 {{ i.title }}
-                <label v-if="i.tag === 'NewsZhaoPin_jizhao'" class="jz"
+              </div>
+              <div class="time">
+                <span>{{ i.createTime }}</span
+                ><label v-if="i.tag === 'NewsZhaoPin_jizhao'" class="jz"
                   >急招</label
                 >
                 <label v-if="i.tag === 'NewsZhaoPin_changqi'" class="cq"
                   >长期</label
-                >
+                ><span class="sub">{{ i.subTitle }}</span>
               </div>
-              <div class="time">{{ i.createTime }} 发布</div>
             </li>
           </ul>
         </swiper-slide>
@@ -214,67 +216,87 @@ const slideTo = (index: number) => {
 const getList = (index: number) => {
   switch (index) {
     case 0:
-      useNews.getRecentNewsList(recentPage).then((res) => {
-        if (res.data.code == "200") {
-          // 最新文章
-          recentList.value.push(...res.data.rows);
-          console.log(recentList);
-          if (recentList.value.length >= res.data.total) {
-            ismore.value = false;
+      useNews
+        .getRecentNewsList(recentPage)
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 最新文章
+            recentList.value.push(...res.data.rows);
+            console.log(recentList);
+            if (recentList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
-            ismore.value = true;
+            Toast(res.data.msg);
           }
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       break;
     case 1:
-      useNews.getOfflineNewsList(offlinePage).then((res) => {
-        if (res.data.code == "200") {
-          // 线下文章
-          offlineList.value.push(...res.data.rows);
-          if (offlineList.value.length >= res.data.total) {
-            ismore.value = false;
+      useNews
+        .getOfflineNewsList(offlinePage)
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 线下文章
+            offlineList.value.push(...res.data.rows);
+            if (offlineList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
-            ismore.value = true;
+            Toast(res.data.msg);
           }
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       break;
 
     case 2:
-      useNews.getOnlineNewsList(onlinePage).then((res) => {
-        if (res.data.code == "200") {
-          // 线上文章
-          onlineList.value.push(...res.data.rows);
-          if (onlineList.value.length >= res.data.total) {
-            ismore.value = false;
+      useNews
+        .getOnlineNewsList(onlinePage)
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 线上文章
+            onlineList.value.push(...res.data.rows);
+            if (onlineList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
-            ismore.value = true;
+            Toast(res.data.msg);
           }
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       break;
 
     case 3:
-      useNews.getZhaoPinList(zhaopinPage).then((res) => {
-        if (res.data.code == "200") {
-          // 招聘文章
-          zhaopinList.value.push(...res.data.rows);
-          if (zhaopinList.value.length >= res.data.total) {
-            ismore.value = false;
+      useNews
+        .getZhaoPinList(zhaopinPage)
+        .then((res) => {
+          if (res.data.code == "200") {
+            // 招聘文章
+            zhaopinList.value.push(...res.data.rows);
+            if (zhaopinList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
-            ismore.value = true;
+            Toast(res.data.msg);
           }
-        } else {
-          Toast(res.data.msg);
-        }
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       break;
 
     default:
@@ -308,14 +330,18 @@ const showDetail = (id) => {
 const slideList = ref([]);
 
 onMounted(() => {
-  useNews.getSlideList().then((res) => {
-    if (res.data.code == "200") {
-      console.log(res.data);
-      slideList.value = res.data.data;
-    } else {
-      Toast(res.data.msg);
-    }
-  });
+  useNews
+    .getSlideListMobile()
+    .then((res) => {
+      if (res.data.code == "200") {
+        slideList.value = res.data.data;
+      } else {
+        Toast(res.data.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   getList(0);
   getList(1);
   getList(2);
@@ -385,6 +411,9 @@ onMounted(() => {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+    }
+    .time {
+      color: #898989;
       label {
         display: inline-block;
         color: #fff;
@@ -395,6 +424,7 @@ onMounted(() => {
         text-align: center;
         vertical-align: middle;
         border-radius: 3px;
+        margin: 0 4px;
 
         &.jz {
           background-color: #948ce0;
@@ -404,9 +434,9 @@ onMounted(() => {
           background-color: #5dacf5;
         }
       }
-    }
-    .time {
-      color: #898989;
+      .sub {
+        color: #424242;
+      }
     }
   }
 }
