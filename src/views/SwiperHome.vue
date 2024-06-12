@@ -10,7 +10,7 @@
           <div class="wrapper-box">
             <div class="wrapper-dl-content">
               <img src="../images/logo.png" class="logo-img" />
-              <img @click="toUrl('https://www.bilibili.com/read/cv35161616/?jump_opus=1')" src="../images/ios-dl.png" />
+              <img @click="toUrl('https://testflight.apple.com/join/XfCWV7AF')" src="../images/ios-dl.png" />
               <img @click="toUrl('https://down.ez6.com.cn/app.php/86')" src="../images/android-dl.png" />
               <div class="home-qr">
                 <div class="qr-block"></div>
@@ -356,17 +356,17 @@ const zhaoPinChange = (val:number) =>{
 }
 
 const subForm = ()=>{
-  // if (!userInfo.value.id) {
-  //   alert("请先登录账号！");
-  //   return false;
-  // }
+  if (!localStorage.getItem("userName")) {
+    openPopbox({ visible: true, title: '请先登录账号！' });
+    return false;
+  }
   if (divisionTrim(params.code) === "") {
-    alert("请输入兑换码");
+    openPopbox({ visible: true, title: '请输入兑换码' });
     return false;
   }
 
   if (divisionTrim(params.password) === "") {
-    alert("请输入兑换密码");
+    openPopbox({ visible: true, title: '请输入兑换密码' });
     return false;
   }
   useLogin.offlinecode(params).then((res) => {
@@ -375,7 +375,7 @@ const subForm = ()=>{
       params.password = ''
       alert("兑换成功，请打开APP查看！");
     } else {
-      alert(res.data.msg);
+      openPopbox({ visible: true, title: res.data.msg });
     }
   });
 }
