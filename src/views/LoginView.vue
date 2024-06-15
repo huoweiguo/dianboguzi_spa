@@ -6,8 +6,8 @@
       <div class="login-inner" :class="moveLogin ? 'move-verify' : ''">
         <!--账号密码登录-->
         <div class="account-login">
-          <div><label>账号</label><input type="text" v-model="params.mobile"/></div>
-          <div><label>密码</label><input type="password" v-model="params.passWord"/></div>
+          <div><label>账号</label><input :maxlength="20" type="text" v-model="params.mobile"/></div>
+          <div><label>密码</label><input :maxlength="20" type="password" v-model="params.passWord"/></div>
         </div>
         <!--验证码登录-->
         <div class="verify-login">
@@ -313,7 +313,7 @@ onUnmounted(() => {
               border-radius: 5px;
               text-align: center;
               width: 0.8rem;
-              font-size: 12px;
+              font-size: 0.112rem;
               cursor: pointer;
               border: none;
             }

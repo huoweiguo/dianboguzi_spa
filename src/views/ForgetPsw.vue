@@ -16,8 +16,8 @@
         <div>
           <div class="forget-inner" :class="active === 1 ? 'forget-active' : ''">
             <div class="forget-send-verify">
-              <div><label>手机号</label><input v-model="params.mobile" type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
-              <div><label>验证码</label><input v-model="params.verification" type="text" name="verifycode" autocomplete="off" class="sms-code"
+              <div><label>手机号</label><input :maxlength="20" v-model="params.mobile" type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
+              <div><label>验证码</label><input :maxlength="6" v-model="params.verification" type="text" name="verifycode" autocomplete="off" class="sms-code"
                   placeholder="请输入验证码" />
                 <!-- <a>发送验证码</a> -->
                 <button :disabled="countdown > 0" @click="handleSms">
@@ -27,10 +27,10 @@
               <a class="next-btn" @click="nextStep"><img src="../images/next.png" /></a>
             </div>
             <div class="forget-modify-psw">
-              <div><label>输入新密码</label><input v-model="params.passWord" type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
+              <div><label>输入新密码</label><input :number="20" v-model="params.passWord" type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
               </div>
               <div class="forget-promt">由大写字母，小写字母和特殊符号组成</div>
-              <div><label>再次输入密码</label><input v-model="params.newPassWord" type="password" name="again" autocomplete="off" placeholder="请输入密码" />
+              <div><label>再次输入密码</label><input :number="20" v-model="params.newPassWord" type="password" name="again" autocomplete="off" placeholder="请输入密码" />
               </div>
               <a class="next-btn" @click="updatePsw"><img src="../images/complete.png" /></a>
             </div>
@@ -130,7 +130,7 @@ const resetScreen = () => {
 const updatePsw = () => {
   if (!validatePassword(params.passWord)) {
     openPopbox({
-      visible: true, title: '请输入正确的密码'
+      visible: true, title: '请输⼊正确的密码组合形式，由⼤写字⺟，⼩写字⺟和特殊符号，最低6位数密码组成'
     })
     return false;
   }
