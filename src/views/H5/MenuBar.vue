@@ -105,6 +105,7 @@ import {
   defineProps,
   defineEmits,
   onMounted,
+  watch,
 } from "vue";
 import { useLoginStore } from "@/store/login";
 
@@ -165,8 +166,8 @@ const changeLogin = () => {
   islogin.value = true;
   showLogin.value = !showLogin.value;
 };
-onMounted(() => {
-  islogin.value = userInfo.value.nickname ? true : false;
+watch(userInfo, (nv) => {
+  islogin.value = nv.nickname ? true : false;
 });
 </script>
 

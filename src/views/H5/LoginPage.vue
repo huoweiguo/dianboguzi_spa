@@ -18,10 +18,16 @@
         </div>
         <div class="form-ipt">
           <label>验证码</label>
-          <input type="text" class="verify-ipt" v-model="params.verification" />
-          <button :disabled="countdown > 0" @click="handleSms">
-            {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
-          </button>
+          <div class="form-code">
+            <input
+              type="text"
+              class="verify-ipt"
+              v-model="params.verification"
+            />
+            <button :disabled="countdown > 0" @click="handleSms">
+              {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="form-btn" @click="handleLoginM">
@@ -206,6 +212,11 @@ const handleYzmLogin = () => {
       text-align: right;
       width: 70px;
       margin-right: 10px;
+      flex: 0 0 70px;
+    }
+    .form-code {
+      display: flex;
+      flex: 1;
     }
     input {
       flex: 1;
@@ -218,7 +229,7 @@ const handleYzmLogin = () => {
       margin-right: 20px;
     }
     .verify-ipt {
-      width: 130px;
+      width: 70px;
       margin-right: 5px;
     }
     span {
@@ -239,7 +250,7 @@ const handleYzmLogin = () => {
       line-height: 34px;
       border-radius: 5px;
       text-align: center;
-      width: 100px;
+      width: 110px;
       font-size: 12px;
       cursor: pointer;
       border: none;

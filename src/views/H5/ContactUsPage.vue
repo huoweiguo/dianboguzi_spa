@@ -1,7 +1,11 @@
 <template>
   <div class="page">
     <div class="t-center">
-      <img src="@/assets/h5/loading-img.png" width="40%" style="max-width: 200px" />
+      <img
+        src="@/assets/h5/loading-img.png"
+        width="40%"
+        style="max-width: 200px"
+      />
     </div>
     <div class="btn-box">
       <div class="btn">关注B站</div>
@@ -19,8 +23,21 @@
     </div>
     <div class="text-box stop-swiping">
       <div>电子邮箱：business@dianboguzi..com</div>
-      <div>网络备案号：苏公安网备32100102010183号</div>
-      <div>ICP备案号：<a href="##" target="_blank">苏ICP备2023053104号</a></div>
+      <div>
+        网络备案号：<a
+          class="beian"
+          href="https://beian.mps.gov.cn/#/query/webSearch"
+          target="_blank"
+          >苏公安网备32100102010183号</a
+        >
+      </div>
+      <div>
+        ICP备案号：<a
+          href="https://beian.miit.gov.cn/#/Integrated/index"
+          target="_blank"
+          >苏ICP备2023053104号</a
+        >
+      </div>
       <div>增值电信业务经营许可证：苏B2-20240128号</div>
       <div>运营单位：电波谷子（扬州）科技有限公司</div>
       <div><a href="##" target="_blank">营业执照</a></div>
@@ -30,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive } from "vue";
 </script>
 
 <style lang="scss" scoped>
@@ -79,7 +96,10 @@ import { ref, reactive } from 'vue';
   box-sizing: border-box;
   padding: 10px;
   line-height: 1.5;
-
+  .beian {
+    color: #303133;
+    text-decoration: none;
+  }
   a {
     color: #0f79f5;
   }
