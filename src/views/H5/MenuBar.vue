@@ -1,8 +1,8 @@
 <template>
   <div class="menu_box" :class="{ active: isShow }">
     <!-- back -->
-    <div class="menu_back" v-if="showLogin" @click="showLogin = false">
-      <span>返回</span>
+    <div class="menu_back" v-if="showLogin" @click="backHome">
+      <span>返回首页</span>
     </div>
 
     <!-- menu -->
@@ -59,7 +59,7 @@
     <img src="@/assets/h5/icon-next.png" />
   </div>
 
-  <template v-if="!showLogin">
+  <template v-if="showLogin == 0">
     <!-- logout_box -->
     <div class="logout_box" v-if="islogin">
       <div class="info">欢迎您，{{ userInfo.nickname }}</div>
@@ -70,12 +70,16 @@
     <div class="login_box" v-else>
       <div class="btn" @click="goLogin">登录</div>
       <i></i>
-      <div class="btn" @click="showLogin = true">注册</div>
+      <div class="btn" @click="showLogin = 1">注册</div>
     </div>
   </template>
-  <template v-else>
+  <template v-else-if="showLogin == 1">
     <!-- 登录页 -->
     <LoginPage :show-login="changeLogin" />
+  </template>
+  <template v-else>
+    <!-- 忘记密码 -->
+    <ForgetPage :show-login="changeLogin" />
   </template>
 
   <!-- logo -->
@@ -98,6 +102,7 @@
 <script setup lang="ts">
 import * as _ from "lodash";
 import LoginPage from "./LoginPage.vue";
+import ForgetPage from "./ForgetPage.vue";
 import {
   ref,
   reactive,
@@ -115,7 +120,8 @@ const emits = defineEmits(["topage"]);
 
 const isShow = ref(false);
 const islogin = ref(false);
-const showLogin = ref(false);
+// login 类型，0 未登录，1登录注册页面，2忘记密码页面
+const showLogin = ref(0);
 const userInfo = computed(() => useLogin.userInfo);
 
 const menuList = reactive([
@@ -154,7 +160,7 @@ const slideTo = (index: any) => {
 };
 const goLogin = () => {
   // islogin.value = true;
-  showLogin.value = !showLogin.value;
+  showLogin.value = 1;
 };
 const logout = () => {
   islogin.value = false;
@@ -162,13 +168,17 @@ const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userInfo");
 };
-const changeLogin = () => {
-  islogin.value = true;
-  showLogin.value = !showLogin.value;
+// 登录成功修改登录状态
+const changeLogin = (type: number, login: boolean) => {
+  islogin.value = login;
+  showLogin.value = type;
 };
 watch(userInfo, (nv) => {
   islogin.value = nv.nickname ? true : false;
 });
+const backHome = () => {
+  showLogin.value = 0;
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,21 +1,18 @@
 <template>
   <div class="page">
+    <div class="title">忘记密码</div>
     <div class="code-form stop-swiping">
       <p class="code-form-title">
         <img src="@/assets/h5/logo-mini.png" alt="" />
       </p>
-      <div class="verify-login" v-if="!status">
+      <div class="verify-login" v-if="status">
         <div class="form-ipt">
-          <label>手机号</label
-          ><input type="text" class="textIn" v-model="params.mobile" />
+          <label>输入新密码</label
+          ><input type="password" class="textIn" v-model="params.password" />
         </div>
         <div class="form-ipt">
-          <label>密码</label
-          ><input type="password" class="passIn" v-model="params.passWord" /><i
-            class="forget"
-            @click="forgetPassword"
-            >忘记密码？</i
-          >
+          <label>再次输入</label
+          ><input type="password" class="passIn" v-model="params.newPassWord" />
         </div>
       </div>
       <div class="verify-login" v-else>
@@ -36,21 +33,11 @@
           </div>
         </div>
       </div>
-      <div class="form-btn" @click="handleLoginM">
-        <span>登录/注册</span>
+      <div class="form-btn" @click="nextStep" v-if="!status">
+        <span>下一步 确认密码</span>
       </div>
-
-      <div class="links" @click="status = !status">
-        <a href="##">{{ status ? "账号密码登录" : "验证码登录" }}</a>
-      </div>
-
-      <div class="footer">
-        <input type="checkbox" v-model="agreeProtocol" />
-        <div>
-          同意 <a href="##">《电波谷子用户服务协议》</a>
-          <a href="##">《电波谷子居民使用手册》</a>
-          <a href="##">《电波谷子隐私权政策》协议</a>
-        </div>
+      <div class="form-btn" @click="changePassword" v-else>
+        <span>确认</span>
       </div>
     </div>
   </div>
@@ -59,62 +46,59 @@
 <script setup lang="ts">
 import { ref, reactive, defineProps } from "vue";
 import { useLoginStore } from "@/store/login";
-import { checkMobile, divisionTrim } from "@/utils/common";
+import { checkMobile, divisionTrim, validatePassword } from "@/utils/common";
 import Toast from "@/utils/Toast";
 const props = defineProps({ showLogin: Function });
 const useLogin = useLoginStore();
 const countdown = ref<number>(0);
 const status = ref<boolean>(false);
 
-const agreeProtocol = ref<boolean>(false);
 interface RuleLogin {
   mobile: string;
-  passWord: string;
+  password: string;
   verification: string;
+  newPassWord: string;
 }
 const params = reactive<RuleLogin>({
   mobile: "",
-  passWord: "",
+  password: "",
   verification: "",
+  newPassWord: "",
 });
 
-// 登录/注册
-const handleLoginM = () => {
-  if (!agreeProtocol.value) {
-    Toast("请勾选协议");
-  } else {
-    if (status.value) {
-      handleYzmLogin();
-    } else {
-      handleAccountLogin();
-    }
-  }
-};
-// 账号密码登录
-const handleAccountLogin = () => {
-  if (!checkMobile(params.mobile)) {
-    Toast("请输入正确的手机号");
+let timer: any = null;
+
+// 修改密码成功
+const changePassword = () => {
+  if (!validatePassword(params.password)) {
+    Toast(
+      "请输⼊正确的密码组合形式，由⼤写字⺟，⼩写字⺟和特殊符号，最低6位数密码组成"
+    );
     return false;
   }
-
-  if (divisionTrim(params.passWord) === "") {
-    Toast("请输入密码");
+  if (params.newPassWord.length === 0) {
+    Toast("再次输入密码不能为空");
     return false;
   }
-
+  if (params.password !== params.newPassWord) {
+    Toast("两次输入密码不一致");
+    return false;
+  }
+  let obj = {
+    mobile: params.mobile,
+    password: params.password,
+    verification: params.verification,
+  };
   useLogin
-    .login(params, {})
+    .findpass(obj, {})
     .then((res) => {
       if (res.data.code == "200") {
-        useLogin.token = res.data.data.token;
-        localStorage.setItem("token", useLogin.token);
-        useLogin.getUserInfo().then((res) => {
-          if (res.data.code == "200") {
-            useLogin.userInfo = { ...res.data.data };
-            localStorage.setItem("userInfo", JSON.stringify(res.data.data));
-          }
-        });
-        props.showLogin && props.showLogin(0, true);
+        // 打开弹出框
+        Toast("修改密码成功，即将跳转到首页");
+        timer && clearTimeout(timer);
+        timer = setTimeout(() => {
+          props.showLogin && props.showLogin(0, false);
+        }, 2000);
       } else {
         Toast(res.data.msg);
       }
@@ -141,7 +125,7 @@ const handleSms = () => {
     return false;
   }
   useLogin
-    .sendSMSCode(params, {})
+    .sendPWCode(params, {})
     .then((res) => {
       if (res.data.code == "200") {
         startCountdown();
@@ -153,8 +137,8 @@ const handleSms = () => {
       console.log(error);
     });
 };
-// 验证码登录
-const handleYzmLogin = () => {
+// 下一步，密码设置
+const nextStep = () => {
   if (!checkMobile(params.mobile)) {
     Toast("请输入正确的手机号");
     return false;
@@ -164,24 +148,7 @@ const handleYzmLogin = () => {
     Toast("请输入验证码");
     return false;
   }
-
-  useLogin
-    .smsLogin(params, {})
-    .then((res) => {
-      if (res.data.code == "200") {
-        useLogin.token = res.data.data.token;
-        localStorage.setItem("token", useLogin.token);
-        props.showLogin && props.showLogin(0, true);
-      } else {
-        Toast(res.data.msg);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-const forgetPassword = () => {
-  props.showLogin && props.showLogin(2, false);
+  status.value = !status.value;
 };
 </script>
 
@@ -195,9 +162,15 @@ const forgetPassword = () => {
   background: linear-gradient(to bottom, #b3d6fa, #f5d3f9);
   z-index: 100;
   overflow: hidden;
+  .title {
+    margin-top: 38%;
+    font-size: 20px;
+    color: #414141;
+    text-align: center;
+  }
 }
 .code-form {
-  margin: 50% 20px 20px;
+  margin: 40px 20px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   text-align: center;
@@ -219,9 +192,9 @@ const forgetPassword = () => {
     align-items: center;
     label {
       text-align: right;
-      width: 70px;
+      width: 90px;
       margin-right: 10px;
-      flex: 0 0 70px;
+      flex: 0 0 90px;
     }
     .form-code {
       display: flex;
@@ -265,19 +238,6 @@ const forgetPassword = () => {
       border: none;
       margin-right: 20px;
     }
-    .textIn {
-      margin-right: 80px;
-    }
-    .passIn {
-      margin-right: 5px;
-    }
-    .forget {
-      width: 50px;
-      flex: 0 0 55px;
-      font-size: 10px;
-      color: 646464;
-      margin-right: 20px;
-    }
   }
 }
 .form-btn {
@@ -297,21 +257,5 @@ const forgetPassword = () => {
     font-weight: 300;
     border-radius: 10px;
   }
-}
-a {
-  text-decoration: none;
-  color: #91a5ec;
-}
-.links {
-  margin: 20px 0;
-  font-size: 12px;
-}
-.footer {
-  font-size: 12px;
-  margin: 10px 20px;
-  display: flex;
-  align-items: flex-start;
-  text-align: left;
-  line-height: 1.5;
 }
 </style>
