@@ -92,14 +92,6 @@
               <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
-          <div class="pagination-box">
-            <el-pagination
-              @current-change="hasMore"
-              layout="prev, pager, next"
-              :page-size="10"
-              :total="recentTotal"
-            />
-          </div>
         </swiper-slide>
         <!-- 线下 -->
         <swiper-slide class="slide stop-swiping">
@@ -114,14 +106,6 @@
               <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
-          <div class="pagination-box">
-            <el-pagination
-              @current-change="hasMore"
-              layout="prev, pager, next"
-              :page-size="10"
-              :total="offlineTotal"
-            />
-          </div>
         </swiper-slide>
         <!-- 线上文章 -->
         <swiper-slide class="slide stop-swiping">
@@ -136,14 +120,6 @@
               <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
-          <div class="pagination-box">
-            <el-pagination
-              @current-change="hasMore"
-              layout="prev, pager, next"
-              :page-size="10"
-              :total="onlineTotal"
-            />
-          </div>
         </swiper-slide>
         <!-- 招聘 -->
         <swiper-slide class="slide stop-swiping">
@@ -168,60 +144,52 @@
               </div>
             </li>
           </ul>
-          <div class="pagination-box">
-            <el-pagination
-              @current-change="hasMore"
-              layout="prev, pager, next"
-              :page-size="10"
-              :total="zhaopinTotal"
-            />
-          </div>
         </swiper-slide>
       </swiper>
     </div>
-    <!-- <div class="footer-btn" v-if="ismore">
+    <div class="footer-btn" v-if="ismore">
       <div class="btn" @click="hasMore">
         更多<img src="@/assets/h5/icon-jt.svg" />
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, defineEmits, onMounted, nextTick } from "vue";
+import { reactive, ref, watch, defineEmits, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
-import { ElPagination } from "element-plus";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css";
 import { useNewsStore } from "@/store/news";
 import Toast from "@/utils/Toast";
 const useNews = useNewsStore();
+
 interface PageType {
   pageNum: number;
+  pageSize: number;
 }
-const pageNum = ref<number>(10);
 const recentPage = reactive<PageType>({
   pageNum: 1,
+  pageSize: 6,
 });
 const recentList = ref<any>([]);
-const recentTotal = ref<number>(0);
 const offlinePage = reactive<PageType>({
   pageNum: 1,
+  pageSize: 6,
 });
 const offlineList = ref<any>([]);
-const offlineTotal = ref<number>(0);
 const onlinePage = reactive<PageType>({
   pageNum: 1,
+  pageSize: 6,
 });
 const onlineList = ref<any>([]);
-const onlineTotal = ref<number>(0);
 const zhaopinPage = reactive<PageType>({
   pageNum: 1,
+  pageSize: 6,
 });
 const zhaopinList = ref<any>([]);
-const zhaopinTotal = ref<number>(0);
 const emits = defineEmits(["showDetail"]);
 const ismore = ref(false);
 const tabIndex = ref(0);
@@ -246,22 +214,20 @@ const slideTo = (index: number) => {
   active.value = index;
 };
 const getList = (index: number) => {
-  const pageSize = pageNum.value;
   switch (index) {
     case 0:
       useNews
-        .getRecentNewsList({ ...recentPage, pageSize })
+        .getRecentNewsList(recentPage)
         .then((res) => {
           if (res.data.code == "200") {
             // 最新文章
-            recentList.value = res.data.rows;
-            recentTotal.value = res.data.total;
-            // console.log(recentList);
-            // if (recentList.value.length >= res.data.total) {
-            //   ismore.value = false;
-            // } else {
-            //   ismore.value = true;
-            // }
+            recentList.value.push(...res.data.rows);
+            console.log(recentList);
+            if (recentList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
             Toast(res.data.msg);
           }
@@ -272,18 +238,16 @@ const getList = (index: number) => {
       break;
     case 1:
       useNews
-        .getOfflineNewsList({ ...offlinePage, pageSize })
+        .getOfflineNewsList(offlinePage)
         .then((res) => {
           if (res.data.code == "200") {
             // 线下文章
-            offlineList.value = res.data.rows;
-            offlineTotal.value = res.data.total;
-            // offlineList.value.push(...res.data.rows);
-            // if (offlineList.value.length >= res.data.total) {
-            //   ismore.value = false;
-            // } else {
-            //   ismore.value = true;
-            // }
+            offlineList.value.push(...res.data.rows);
+            if (offlineList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
             Toast(res.data.msg);
           }
@@ -295,18 +259,16 @@ const getList = (index: number) => {
 
     case 2:
       useNews
-        .getOnlineNewsList({ ...onlinePage, pageSize })
+        .getOnlineNewsList(onlinePage)
         .then((res) => {
           if (res.data.code == "200") {
             // 线上文章
-            onlineList.value = res.data.rows;
-            onlineTotal.value = res.data.total;
-            // onlineList.value.push(...res.data.rows);
-            // if (onlineList.value.length >= res.data.total) {
-            //   ismore.value = false;
-            // } else {
-            //   ismore.value = true;
-            // }
+            onlineList.value.push(...res.data.rows);
+            if (onlineList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
             Toast(res.data.msg);
           }
@@ -318,18 +280,16 @@ const getList = (index: number) => {
 
     case 3:
       useNews
-        .getZhaoPinList({ ...zhaopinPage, pageSize })
+        .getZhaoPinList(zhaopinPage)
         .then((res) => {
           if (res.data.code == "200") {
             // 招聘文章
-            zhaopinList.value = res.data.rows;
-            zhaopinTotal.value = res.data.total;
-            // zhaopinList.value.push(...res.data.rows);
-            // if (zhaopinList.value.length >= res.data.total) {
-            //   ismore.value = false;
-            // } else {
-            //   ismore.value = true;
-            // }
+            zhaopinList.value.push(...res.data.rows);
+            if (zhaopinList.value.length >= res.data.total) {
+              ismore.value = false;
+            } else {
+              ismore.value = true;
+            }
           } else {
             Toast(res.data.msg);
           }
@@ -382,46 +342,13 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
-  setTimeout(() => {
-    pageNum.value = Math.floor((mySwiper.value?.height - 42) / 73);
-    getList(0);
-    getList(1);
-    getList(2);
-    getList(3);
-  }, 1500);
-  // nextTick(() => {
-  //   console.log(
-  //     mySwiper.value?.height,
-  //     swiperHeight.value.clientHeight,
-  //     document.getElementById("swiperHeight")?.clientHeight,
-  //     888899999
-  //   );
-  // });
+  getList(0);
+  getList(1);
+  getList(2);
+  getList(3);
 });
 </script>
 
-<style lang="scss">
-.news-list .stop-swiping .pagination-box .el-pagination {
-  .btn-prev,
-  .btn-next {
-    width: 35px;
-    height: 35px;
-    .el-icon {
-      font-size: 20px;
-      color: #ffffff;
-    }
-  }
-  .el-pager {
-    padding: 5px;
-    border-radius: 10px;
-    li:hover,
-    li.is-active {
-      font-size: 14px;
-      margin: 0 5px;
-    }
-  }
-}
-</style>
 <style lang="scss" scoped>
 .page {
   display: flex;
