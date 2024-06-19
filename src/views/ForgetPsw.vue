@@ -27,10 +27,10 @@
               <a class="next-btn" @click="nextStep"><img src="../images/next.png" /></a>
             </div>
             <div class="forget-modify-psw">
-              <div><label>输入新密码</label><input :number="20" v-model="params.passWord" type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
+              <div><label>输入新密码</label><input :maxlength="20" v-model="params.passWord" type="password" name="newpsw" autocomplete="off" placeholder="请输入密码" />
               </div>
               <div class="forget-promt">由大写字母，小写字母和特殊符号组成</div>
-              <div><label>再次输入密码</label><input :number="20" v-model="params.newPassWord" type="password" name="again" autocomplete="off" placeholder="请输入密码" />
+              <div><label>再次输入密码</label><input :maxlength="20" v-model="params.newPassWord" type="password" name="again" autocomplete="off" placeholder="请输入密码" />
               </div>
               <a class="next-btn" @click="updatePsw"><img src="../images/complete.png" /></a>
             </div>
