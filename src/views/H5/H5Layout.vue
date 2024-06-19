@@ -33,7 +33,7 @@
         <swiper-slide class="slide"><ExchangeCodePage /></swiper-slide>
 
         <!-- 联系我们page -->
-        <swiper-slide class="slide"><ContactUsPage /></swiper-slide>
+        <swiper-slide class="slide"><ContactUsPage  @topage="slideTo" /></swiper-slide>
       </swiper>
     </div>
 
@@ -94,6 +94,7 @@ const showDetail = (id, active) => {
 <style lang="scss" scoped>
 .app-page {
   min-height: 100vh;
+  overflow: hidden;
   background: linear-gradient(to right, #b3d6fa, #f5d3f9);
 }
 

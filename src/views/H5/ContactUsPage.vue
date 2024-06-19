@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
     <div class="t-center">
       <img
         src="@/assets/h5/loading-img.png"
@@ -16,12 +16,12 @@
     </div>
     <div class="ewm-box">
       <div>
-        <img src="@/assets/h5/kf-1.png" class="stop-swiping" />
+        <img src="@/assets/h5/kf-1.png" />
         <div>微信客服</div>
       </div>
-      <div><img src="@/assets/h5/kf-2.png" class="stop-swiping" />QQ客服</div>
+      <div><img src="@/assets/h5/kf-2.png" />QQ客服</div>
     </div>
-    <div class="text-box stop-swiping">
+    <div class="text-box">
       <div>电子邮箱：business@dianboguzi..com</div>
       <div>
         网络备案号：<a
@@ -47,7 +47,49 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { defineEmits, reactive } from "vue";
+const emits = defineEmits(["showDetail","topage"]);
+const touchPosition = reactive({
+  startTime:0,
+  startX: 0,
+  startY: 0,
+  endTime:0,
+  endX: 0,
+  endY: 0
+});
+
+const handleTouchStart = (e) => {
+  touchPosition.startTime = e.timeStamp;
+  touchPosition.startX = e.touches[0].clientX;
+  touchPosition.startY = e.touches[0].clientY;
+}
+const handleTouchEnd = (e) => {
+  touchPosition.endTime = e.timeStamp;
+  touchPosition.endX = e.changedTouches[0].clientX;
+  touchPosition.endY = e.changedTouches[0].clientY;
+
+  const deltaX = touchPosition.endX - touchPosition.startX;
+  const deltaY = touchPosition.endY - touchPosition.startY;
+
+  // 判断滑动时间是否超过300ms
+  if (touchPosition.endTime - touchPosition.startTime > 300) return;
+
+  // 判断滑动方向
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0) {
+      // console.log('向右滑动');
+    } else {
+      // console.log('向左滑动');
+    }
+  } else {
+    if (deltaY > 0) {
+      // console.log('向下滑动');
+      emits("topage", 4);
+    } else {
+      // console.log('向上滑动');
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
