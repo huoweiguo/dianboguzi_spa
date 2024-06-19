@@ -92,28 +92,6 @@
               <div class="time">{{ i.showDate }}</div>
             </li>
           </ul>
-          <ul class="list">
-            <li
-              class="list-item"
-              v-for="i in recentList"
-              :key="i.id"
-              @click="showDetail(i.id)"
-            >
-              <div class="title">{{ i.title }}</div>
-              <div class="time">{{ i.showDate }}</div>
-            </li>
-          </ul>
-          <ul class="list">
-            <li
-              class="list-item"
-              v-for="i in recentList"
-              :key="i.id"
-              @click="showDetail(i.id)"
-            >
-              <div class="title">{{ i.title }}</div>
-              <div class="time">{{ i.showDate }}</div>
-            </li>
-          </ul>
         </swiper-slide>
         <!-- 线下 -->
         <swiper-slide class="slide stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
