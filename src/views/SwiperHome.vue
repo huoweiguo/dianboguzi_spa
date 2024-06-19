@@ -117,7 +117,9 @@
               网络备案号：<a href="https://beian.mps.gov.cn/#/query/webSearch" target="_blank">苏公安网备32100102010183号</a>
             </p>
             <p>增值电信业务经营许可证：苏B2-20240128号</p>
-            <p>营业执照</p>
+            <p class="business" @click="()=>{
+              router.push('/business')
+            }">营业执照</p>
             <p>运营单位：电波谷子（扬州）科技有限公司</p>
             <p>电波谷子（扬州）科技有限公司 版权所有</p>
             <p>电子邮箱：business@dianboguzi.com</p>
@@ -141,9 +143,12 @@ import DBMessage from '../components/DBMessage.vue';
 import { useNewsStore } from "@/store/news";
 import { useLoginStore } from "@/store/login";
 import {  divisionTrim } from "@/utils/common";
+import { useRouter } from 'vue-router'
 
 import isMobile from '@/utils/isMobile';
 isMobile();
+
+const router = useRouter()
 
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
@@ -893,7 +898,12 @@ onUnmounted(() => {
     padding: 0.21rem 0.55rem;
     box-sizing: border-box;
     border-top: 1px solid #000;
-
+    .business{
+      cursor: pointer;
+    }
+    .business:hover {
+      text-decoration: underline;
+    }
     .contact-logo {
       img {
         height: 0.6rem;

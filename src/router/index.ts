@@ -49,7 +49,22 @@ const routes: Array<RouteRecordRaw> = [
     path: '/forget',
     name: 'forget',
     component: () => import(/* webpackChunkName: "forgetpsw" */ '../views/ForgetPsw.vue')
-  }
+  },
+  {
+    path: '/agreement',
+    name: 'agreement',
+    component: () => import(/* webpackChunkName: "agreement" */ '../views/Agreement.vue')
+  },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import(/* webpackChunkName: "privacy" */ '../views/Privacy.vue')
+  },
+  {
+    path: '/business',
+    name: 'business',
+    component: () => import(/* webpackChunkName: "business" */ '../views/Business.vue')
+  },
 ]
 
 const router = createRouter({

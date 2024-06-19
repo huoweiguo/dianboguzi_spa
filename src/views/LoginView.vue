@@ -29,7 +29,7 @@
       <div class="login-account" @click="handleLoginM">
         <a><img src="../images/login-btn.png"></a>
       </div>
-      <div class="account-agree"><input type="checkbox" v-model="agree" />同意<a>《用户协议》</a>和<a>《隐私协议》</a></div>
+      <div class="account-agree"><input type="checkbox" v-model="agree" />同意<a @click="()=>toUrl('/agreement')">《用户协议》</a>和<a  @click="()=>toUrl('/privacy')">《隐私协议》</a></div>
     </div>
     <!--弹出框-->
     <DBMessage :title="popAttr.title" :text="popAttr.text" :visible="popAttr.visible" @hidePopbox="hidePopbox" />
@@ -105,6 +105,10 @@ const handleLoginM = () => {
     handleYzmLogin();
   }
 };
+
+const toUrl = (url:string) =>{
+  router.push(url);
+}
 
 const handleAccountLogin = () => {
   if (!agree.value) {
