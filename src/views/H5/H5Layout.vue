@@ -1,7 +1,7 @@
 <template>
   <div class="app-page">
     <!-- loading -->
-    <!-- <LoadingPop /> -->
+    <LoadingPop />
 
     <!-- menu_bar -->
     <MenuBar :swiper="mySwiper" @topage="slideTo" />
@@ -25,9 +25,9 @@
         <swiper-slide class="slide"><OverviewPage /></swiper-slide>
 
         <!-- 新闻page -->
-        <swiper-slide class="slide"
-          ><NewsPage @showDetail="showDetail"
-        /></swiper-slide>
+        <swiper-slide class="slide">
+          <NewsPage @showDetail="showDetail" @topage="slideTo"/>
+        </swiper-slide>
 
         <!-- 兑换码page -->
         <swiper-slide class="slide"><ExchangeCodePage /></swiper-slide>
