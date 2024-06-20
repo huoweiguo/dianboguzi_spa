@@ -16,7 +16,7 @@
         <div>
           <div class="forget-inner" :class="active === 1 ? 'forget-active' : ''">
             <div class="forget-send-verify">
-              <div><label>手机号</label><input :maxlength="20" v-model="params.mobile" type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
+              <div><label>手机号</label><input :maxlength="11" v-model="params.mobile" type="text" name="mobile" autocomplete="off" placeholder="请输入手机号" /></div>
               <div><label>验证码</label><input :maxlength="6" v-model="params.verification" type="text" name="verifycode" autocomplete="off" class="sms-code"
                   placeholder="请输入验证码" />
                 <!-- <a>发送验证码</a> -->

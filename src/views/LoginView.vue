@@ -11,10 +11,10 @@
         </div>
         <!--验证码登录-->
         <div class="verify-login">
-          <div><label>手机号</label><input type="text" v-model="params.mobile"/></div>
+          <div><label>手机号</label><input :maxlength="11" type="text" v-model="params.mobile"/></div>
           <div class="sms-code">
             <label>验证码</label>
-            <input type="text" v-model="params.verification"/> 
+            <input type="text" :maxlength="6" v-model="params.verification"/> 
             <button :disabled="countdown > 0" @click="handleSms">
               {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
             </button>
