@@ -26,14 +26,16 @@
 
         <!-- 新闻page -->
         <swiper-slide class="slide">
-          <NewsPage @showDetail="showDetail" @topage="slideTo"/>
+          <NewsPage @showDetail="showDetail" @topage="slideTo" />
         </swiper-slide>
 
         <!-- 兑换码page -->
         <swiper-slide class="slide"><ExchangeCodePage /></swiper-slide>
 
         <!-- 联系我们page -->
-        <swiper-slide class="slide"><ContactUsPage  @topage="slideTo" /></swiper-slide>
+        <swiper-slide class="slide"
+          ><ContactUsPage @topage="slideTo"
+        /></swiper-slide>
       </swiper>
     </div>
 
@@ -93,7 +95,9 @@ const showDetail = (id, active) => {
 
 <style lang="scss" scoped>
 .app-page {
-  min-height: 100vh;
+  position: absolute;
+  width: 100vw;
+  height: 100%;
   overflow: hidden;
   background: linear-gradient(to right, #b3d6fa, #f5d3f9);
 }

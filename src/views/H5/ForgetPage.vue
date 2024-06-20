@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="form-btn" @click="nextStep" v-if="!status">
-        <span>下一步 确认密码</span>
+        <span>下一步</span>
       </div>
       <div class="form-btn" @click="changePassword" v-else>
         <span>确认</span>
