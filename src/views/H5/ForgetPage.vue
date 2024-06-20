@@ -27,7 +27,8 @@
       </div>
       <div class="verify-login" v-else>
         <div class="form-ipt">
-          <label>手机号</label> <input type="text" v-model="params.mobile" />
+          <label>手机号</label>
+          <input :maxlength="11" type="text" v-model="params.mobile" />
         </div>
         <div class="form-ipt">
           <label>验证码</label>
