@@ -211,7 +211,6 @@ const handleTouchEnd = (e: any) => {
 
   // 判断滑动时间是否超过300ms
   if (touchPosition.endTime - touchPosition.startTime > 300) return;
-  alert(`${deltaX},${deltaY}`);
   // 判断滑动方向
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
     if (deltaX > 0) {
