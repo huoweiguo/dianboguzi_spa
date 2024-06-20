@@ -11,11 +11,12 @@
         </div>
         <div class="form-ipt">
           <label>密码</label
-          ><input type="password" class="passIn" v-model="params.passWord" /><i
-            class="forget"
-            @click="forgetPassword"
-            >忘记密码？</i
-          >
+          ><input
+            type="password"
+            :maxlength="20"
+            class="passIn"
+            v-model="params.passWord"
+          /><i class="forget" @click="forgetPassword">忘记密码？</i>
         </div>
       </div>
       <div class="verify-login" v-else>
@@ -28,6 +29,7 @@
             <input
               type="text"
               class="verify-ipt"
+              :maxlength="6"
               v-model="params.verification"
             />
             <button :disabled="countdown > 0" @click="handleSms">
@@ -281,9 +283,11 @@ const forgetPassword = () => {
       margin-right: 20px;
     }
     .textIn {
+      width: 150px;
       margin-right: 80px;
     }
     .passIn {
+      width: 150px;
       margin-right: 5px;
     }
     .forget {
@@ -334,9 +338,8 @@ a {
   top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 999;
-  height: 100%;
-  width: 100%;
   overflow: auto;
   background-image: linear-gradient(90deg, #b2d6fa 12%, #f8d3f8);
   padding-top: 40px;

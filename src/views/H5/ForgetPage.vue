@@ -8,11 +8,21 @@
       <div class="verify-login" v-if="status">
         <div class="form-ipt">
           <label>输入新密码</label
-          ><input type="password" class="textIn" v-model="params.password" />
+          ><input
+            type="password"
+            :maxlength="20"
+            class="textIn"
+            v-model="params.password"
+          />
         </div>
         <div class="form-ipt">
           <label>再次输入</label
-          ><input type="password" class="passIn" v-model="params.newPassWord" />
+          ><input
+            type="password"
+            :maxlength="20"
+            class="passIn"
+            v-model="params.newPassWord"
+          />
         </div>
       </div>
       <div class="verify-login" v-else>
@@ -26,6 +36,7 @@
               type="text"
               class="verify-ipt"
               v-model="params.verification"
+              :maxlength="6"
             />
             <button :disabled="countdown > 0" @click="handleSms">
               {{ countdown > 0 ? `${countdown}秒后重新获取` : "发送验证码" }}
