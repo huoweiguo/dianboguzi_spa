@@ -1,5 +1,9 @@
 <template>
-  <div class="page stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+  <div
+    class="page stop-swiping"
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd"
+  >
     <div class="t-center">
       <img
         src="@/assets/h5/loading-img.png"
@@ -40,7 +44,7 @@
       </div>
       <div>增值电信业务经营许可证：苏B2-20240128号</div>
       <div>运营单位：电波谷子（扬州）科技有限公司</div>
-      <div><a href="##" target="_blank">营业执照</a></div>
+      <div><a href="/business" target="_blank">营业执照</a></div>
       <div>电波谷子（扬州）科技有限公司版权所有</div>
     </div>
   </div>
@@ -48,21 +52,21 @@
 
 <script setup>
 import { defineEmits, reactive } from "vue";
-const emits = defineEmits(["showDetail","topage"]);
+const emits = defineEmits(["showDetail", "topage"]);
 const touchPosition = reactive({
-  startTime:0,
+  startTime: 0,
   startX: 0,
   startY: 0,
-  endTime:0,
+  endTime: 0,
   endX: 0,
-  endY: 0
+  endY: 0,
 });
 
 const handleTouchStart = (e) => {
   touchPosition.startTime = e.timeStamp;
   touchPosition.startX = e.touches[0].clientX;
   touchPosition.startY = e.touches[0].clientY;
-}
+};
 const handleTouchEnd = (e) => {
   touchPosition.endTime = e.timeStamp;
   touchPosition.endX = e.changedTouches[0].clientX;
@@ -89,7 +93,7 @@ const handleTouchEnd = (e) => {
       // console.log('向上滑动');
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -80,7 +80,11 @@
         @slideChange="onSlideChange"
       >
         <!-- 最新 -->
-        <swiper-slide class="slide stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+        <swiper-slide
+          class="slide stop-swiping"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
+        >
           <ul class="list">
             <li
               class="list-item"
@@ -94,7 +98,11 @@
           </ul>
         </swiper-slide>
         <!-- 线下 -->
-        <swiper-slide class="slide stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+        <swiper-slide
+          class="slide stop-swiping"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
+        >
           <ul class="list">
             <li
               class="list-item"
@@ -108,7 +116,11 @@
           </ul>
         </swiper-slide>
         <!-- 线上文章 -->
-        <swiper-slide class="slide stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+        <swiper-slide
+          class="slide stop-swiping"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
+        >
           <ul class="list">
             <li
               class="list-item"
@@ -122,7 +134,11 @@
           </ul>
         </swiper-slide>
         <!-- 招聘 -->
-        <swiper-slide class="slide stop-swiping" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+        <swiper-slide
+          class="slide stop-swiping"
+          @touchstart="handleTouchStart"
+          @touchend="handleTouchEnd"
+        >
           <ul class="list">
             <li
               class="list-item"
@@ -172,20 +188,20 @@ interface PageType {
 }
 
 const touchPosition = reactive({
-  startTime:0,
+  startTime: 0,
   startX: 0,
   startY: 0,
-  endTime:0,
+  endTime: 0,
   endX: 0,
-  endY: 0
+  endY: 0,
 });
 
 const handleTouchStart = (e: any) => {
   touchPosition.startTime = e.timeStamp;
   touchPosition.startX = e.touches[0].clientX;
   touchPosition.startY = e.touches[0].clientY;
-}
-const handleTouchEnd = (e:any) => {
+};
+const handleTouchEnd = (e: any) => {
   touchPosition.endTime = e.timeStamp;
   touchPosition.endX = e.changedTouches[0].clientX;
   touchPosition.endY = e.changedTouches[0].clientY;
@@ -195,7 +211,7 @@ const handleTouchEnd = (e:any) => {
 
   // 判断滑动时间是否超过300ms
   if (touchPosition.endTime - touchPosition.startTime > 300) return;
-
+  alert(`${deltaX},${deltaY}`);
   // 判断滑动方向
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
     if (deltaX > 0) {
@@ -207,13 +223,12 @@ const handleTouchEnd = (e:any) => {
     if (deltaY > 0) {
       // console.log('向下滑动');
       emits("topage", 2);
-    } else {
+    } else if (deltaY < 0) {
       // console.log('向上滑动');
       emits("topage", 4);
     }
   }
-}
-
+};
 
 const recentPage = reactive<PageType>({
   pageNum: 1,
@@ -235,7 +250,7 @@ const zhaopinPage = reactive<PageType>({
   pageSize: 6,
 });
 const zhaopinList = ref<any>([]);
-const emits = defineEmits(["showDetail","topage"]);
+const emits = defineEmits(["showDetail", "topage"]);
 const ismore = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);

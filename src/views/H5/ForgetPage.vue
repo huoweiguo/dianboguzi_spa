@@ -211,7 +211,7 @@ const nextStep = () => {
       margin-right: 20px;
     }
     .verify-ipt {
-      width: 70px;
+      width: 60px;
       margin-right: 5px;
     }
     span {
@@ -232,7 +232,7 @@ const nextStep = () => {
       line-height: 34px;
       border-radius: 5px;
       text-align: center;
-      width: 110px;
+      width: 120px;
       font-size: 12px;
       cursor: pointer;
       border: none;

@@ -47,25 +47,34 @@
       <div class="footer">
         <input type="checkbox" v-model="agreeProtocol" />
         <div>
-          同意 <a href="##">《电波谷子用户服务协议》</a>
-          <a href="##">《电波谷子居民使用手册》</a>
-          <a href="##">《电波谷子隐私权政策》协议</a>
+          同意 <a @click="toHref(1)">《用户协议》</a>
+          <a @click="toHref(2)">《隐私协议》</a>
         </div>
       </div>
     </div>
+  </div>
+  <div class="showProtocol" v-if="showProtocol != 0">
+    <!-- <img class="back" @click="goBack" src="@/assets/h5/prev.png" /> -->
+    <span class="back" @click="goBack">返回</span>
+    <Agreement v-if="showProtocol == 1" />
+    <Privacy v-else-if="showProtocol == 2" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, defineProps } from "vue";
+import { useRouter } from "vue-router";
 import { useLoginStore } from "@/store/login";
 import { checkMobile, divisionTrim } from "@/utils/common";
 import Toast from "@/utils/Toast";
+import Agreement from "../Agreement.vue";
+import Privacy from "../Privacy.vue";
 const props = defineProps({ showLogin: Function });
 const useLogin = useLoginStore();
+const router = useRouter();
 const countdown = ref<number>(0);
 const status = ref<boolean>(false);
-
+const showProtocol = ref<number>(0);
 const agreeProtocol = ref<boolean>(false);
 interface RuleLogin {
   mobile: string;
@@ -77,7 +86,13 @@ const params = reactive<RuleLogin>({
   passWord: "",
   verification: "",
 });
-
+// 协议跳转
+const toHref = (type: number) => {
+  showProtocol.value = type;
+};
+const goBack = () => {
+  showProtocol.value = 0;
+};
 // 登录/注册
 const handleLoginM = () => {
   if (!agreeProtocol.value) {
@@ -238,7 +253,7 @@ const forgetPassword = () => {
       margin-right: 20px;
     }
     .verify-ipt {
-      width: 70px;
+      width: 60px;
       margin-right: 5px;
     }
     span {
@@ -259,7 +274,7 @@ const forgetPassword = () => {
       line-height: 34px;
       border-radius: 5px;
       text-align: center;
-      width: 110px;
+      width: 120px;
       font-size: 12px;
       cursor: pointer;
       border: none;
@@ -313,5 +328,31 @@ a {
   align-items: flex-start;
   text-align: left;
   line-height: 1.5;
+}
+.showProtocol {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-image: linear-gradient(90deg, #b2d6fa 12%, #f8d3f8);
+  padding-top: 40px;
+  box-sizing: border-box;
+  .back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 13px 13px 13px 13px;
+    font-size: 12px;
+  }
 }
 </style>
