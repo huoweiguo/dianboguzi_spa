@@ -1,21 +1,29 @@
 <template>
   <div v-if="visible" class="loading-pop" :class="{ hide: hidepop }">
-    <img src="@/assets/h5/loading-img.png" @click="clickHide" />
+    <img src="@/assets/h5/loading-img.png" />
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from "vue";
 const visible = ref(true);
 const hidepop = ref(false);
 
 // 点击隐藏并删除dom
-const clickHide = () => {
-  hidepop.value = true;
+// const clickHide = () => {
+//   hidepop.value = true;
+//   setTimeout(() => {
+//     visible.value = false;
+//   }, 300);
+// };
+onMounted(() => {
   setTimeout(() => {
-    visible.value = false;
-  }, 300);
-};
+    hidepop.value = true;
+    setTimeout(() => {
+      visible.value = false;
+    }, 300);
+  }, 500);
+});
 </script>
 
 <style lang="scss" scoped>

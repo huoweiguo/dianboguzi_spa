@@ -74,7 +74,11 @@
       <swiper
         class="swiper"
         :style="style"
-        :navigation="true"
+        :navigation="{
+          enabled: true,
+          // nextEl: '.swiper-button-next',
+          // prevEl: tabIndex == 0 ? '.hide' : '.swiper-button-prev',
+        }"
         :modules="[Navigation]"
         @swiper="setSwiper"
         @slideChange="onSlideChange"
@@ -407,7 +411,11 @@ onMounted(() => {
   getList(3);
 });
 </script>
-
+<style lang="scss">
+.news-list .swiper-button-disabled {
+  display: none;
+}
+</style>
 <style lang="scss" scoped>
 .page {
   display: flex;
@@ -449,7 +457,6 @@ onMounted(() => {
     overflow: auto;
   }
 }
-
 .swiper {
   height: 100%;
   .list {
