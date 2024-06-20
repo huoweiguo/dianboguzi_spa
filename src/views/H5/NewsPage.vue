@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <div class="top-btn" v-if="ismore">
-      <div class="btn" @click="ismore = false">
+    <div class="top-btn" v-if="isNone">
+      <div class="btn" @click="hasNone">
         收起<img class="icon-down" src="@/assets/h5/icon-jt.svg" />
       </div>
     </div>
@@ -74,11 +74,7 @@
       <swiper
         class="swiper"
         :style="style"
-        :navigation="{
-          enabled: true,
-          // nextEl: '.swiper-button-next',
-          // prevEl: tabIndex == 0 ? '.hide' : '.swiper-button-prev',
-        }"
+        :navigation="true"
         :modules="[Navigation]"
         @swiper="setSwiper"
         @slideChange="onSlideChange"
@@ -89,6 +85,7 @@
           @touchstart="handleTouchStart"
           @touchend="handleTouchEnd"
         >
+          <!-- <swiper-slide class="slide stop-swiping"> -->
           <ul class="list">
             <li
               class="list-item"
@@ -107,6 +104,7 @@
           @touchstart="handleTouchStart"
           @touchend="handleTouchEnd"
         >
+          <!-- <swiper-slide class="slide stop-swiping"> -->
           <ul class="list">
             <li
               class="list-item"
@@ -125,6 +123,7 @@
           @touchstart="handleTouchStart"
           @touchend="handleTouchEnd"
         >
+          <!-- <swiper-slide class="slide stop-swiping"> -->
           <ul class="list">
             <li
               class="list-item"
@@ -143,6 +142,7 @@
           @touchstart="handleTouchStart"
           @touchend="handleTouchEnd"
         >
+          <!-- <swiper-slide class="slide stop-swiping"> -->
           <ul class="list">
             <li
               class="list-item"
@@ -176,7 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, defineEmits, onMounted } from "vue";
+import { reactive, ref, defineEmits, onMounted, nextTick } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import "swiper/css/effect-coverflow";
@@ -225,10 +225,10 @@ const handleTouchEnd = (e: any) => {
   } else {
     if (deltaY > 0) {
       // console.log('向下滑动');
-      emits("topage", 2);
+      !ismore.value && emits("topage", 2);
     } else if (deltaY < 0) {
       // console.log('向上滑动');
-      emits("topage", 4);
+      !ismore.value && emits("topage", 4);
     }
   }
 };
@@ -253,8 +253,9 @@ const zhaopinPage = reactive<PageType>({
   pageSize: 6,
 });
 const zhaopinList = ref<any>([]);
-const emits = defineEmits(["showDetail", "topage"]);
+const emits = defineEmits(["showDetail"]);
 const ismore = ref(false);
+const isNone = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);
 const style = reactive({
@@ -275,6 +276,13 @@ const slideTo = (index: number) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
   active.value = index;
+  isNone.value = false;
+  const pageNum =
+    Math.floor(
+      document.getElementsByClassName("news-list")[0].clientHeight / 74
+    ) || 6;
+  getNowList(pageNum);
+  getList(index);
 };
 const getList = (index: number) => {
   switch (index) {
@@ -284,8 +292,15 @@ const getList = (index: number) => {
         .then((res) => {
           if (res.data.code == "200") {
             // 最新文章
-            recentList.value.push(...res.data.rows);
-            console.log(recentList);
+            recentList.value = res.data.rows;
+            // recentList.value.push(
+            //   ...res.data.rows,
+            //   ...res.data.rows,
+            //   ...res.data.rows,
+            //   ...res.data.rows,
+            //   ...res.data.rows
+            // );
+            // if (recentList.value.length >= 1000) {
             if (recentList.value.length >= res.data.total) {
               ismore.value = false;
             } else {
@@ -305,7 +320,8 @@ const getList = (index: number) => {
         .then((res) => {
           if (res.data.code == "200") {
             // 线下文章
-            offlineList.value.push(...res.data.rows);
+            offlineList.value = res.data.rows;
+            // offlineList.value.push(...res.data.rows);
             if (offlineList.value.length >= res.data.total) {
               ismore.value = false;
             } else {
@@ -326,7 +342,8 @@ const getList = (index: number) => {
         .then((res) => {
           if (res.data.code == "200") {
             // 线上文章
-            onlineList.value.push(...res.data.rows);
+            onlineList.value = res.data.rows;
+            // onlineList.value.push(...res.data.rows);
             if (onlineList.value.length >= res.data.total) {
               ismore.value = false;
             } else {
@@ -347,7 +364,8 @@ const getList = (index: number) => {
         .then((res) => {
           if (res.data.code == "200") {
             // 招聘文章
-            zhaopinList.value.push(...res.data.rows);
+            zhaopinList.value = res.data.rows;
+            // zhaopinList.value.push(...res.data.rows);
             if (zhaopinList.value.length >= res.data.total) {
               ismore.value = false;
             } else {
@@ -366,26 +384,43 @@ const getList = (index: number) => {
       break;
   }
 };
-const hasMore = () => {
+
+const getNowList = (pageNum: number) => {
   switch (active.value) {
     case 0:
-      recentPage.pageNum++;
+      recentPage.pageSize = pageNum;
       break;
     case 1:
-      offlinePage.pageNum++;
+      offlinePage.pageSize = pageNum;
       break;
     case 2:
-      onlinePage.pageNum++;
+      onlinePage.pageSize = pageNum;
       break;
     case 3:
-      zhaopinPage.pageNum++;
+      zhaopinPage.pageSize = pageNum;
       break;
 
     default:
       break;
   }
+};
+const hasMore = () => {
+  // pageNum.value = Math.floor(mySwiper.value?.height / 74);
+  isNone.value = true;
+  getNowList(1000);
   getList(active.value);
-  ismore.value = true;
+};
+const hasNone = () => {
+  isNone.value = false;
+  nextTick(() => {
+    // const pageNum = Math.floor(mySwiper.value?.height / 74) || 6;
+    const pageNum =
+      Math.floor(
+        document.getElementsByClassName("news-list")[0].clientHeight / 74
+      ) || 6;
+    getNowList(pageNum);
+    getList(active.value);
+  });
 };
 const showDetail = (id) => {
   emits("showDetail", id, active.value);
@@ -405,10 +440,22 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
-  getList(0);
-  getList(1);
-  getList(2);
-  getList(3);
+  nextTick(() => {
+    const pageNum = Math.floor(mySwiper.value?.height / 74) || 6;
+    getNowList(pageNum);
+    getList(0);
+    // getList(1);
+    // getList(2);
+    // getList(3);
+  });
+  // nextTick(() => {
+  //   console.log(
+  //     mySwiper.value?.height,
+  //     swiperHeight.value.clientHeight,
+  //     document.getElementById("swiperHeight")?.clientHeight,
+  //     888899999
+  //   );
+  // });
 });
 </script>
 <style lang="scss">
@@ -457,6 +504,7 @@ onMounted(() => {
     overflow: auto;
   }
 }
+
 .swiper {
   height: 100%;
   .list {
