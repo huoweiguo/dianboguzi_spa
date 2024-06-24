@@ -223,12 +223,12 @@ const handleTouchEnd = (e: any) => {
       // console.log('向左滑动');
     }
   } else {
-    if (deltaY > 0) {
+    if (deltaY > 0 && !isNone.value) {
       // console.log('向下滑动');
-      !ismore.value && emits("topage", 2);
-    } else if (deltaY < 0) {
+      emits("topage", 2);
+    } else if (deltaY < 0 && !isNone.value) {
       // console.log('向上滑动');
-      !ismore.value && emits("topage", 4);
+      emits("topage", 4);
     }
   }
 };
@@ -253,7 +253,7 @@ const zhaopinPage = reactive<PageType>({
   pageSize: 6,
 });
 const zhaopinList = ref<any>([]);
-const emits = defineEmits(["showDetail"]);
+const emits = defineEmits(["showDetail", "topage"]);
 const ismore = ref(false);
 const isNone = ref(false);
 const tabIndex = ref(0);
@@ -279,7 +279,7 @@ const slideTo = (index: number) => {
   isNone.value = false;
   const pageNum =
     Math.floor(
-      document.getElementsByClassName("news-list")[0].clientHeight / 74
+      (document.getElementsByClassName("news-list")[0].clientHeight - 40) / 74
     ) || 6;
   getNowList(pageNum);
   getList(index);
@@ -405,7 +405,6 @@ const getNowList = (pageNum: number) => {
   }
 };
 const hasMore = () => {
-  // pageNum.value = Math.floor(mySwiper.value?.height / 74);
   isNone.value = true;
   getNowList(1000);
   getList(active.value);
@@ -416,7 +415,7 @@ const hasNone = () => {
     // const pageNum = Math.floor(mySwiper.value?.height / 74) || 6;
     const pageNum =
       Math.floor(
-        document.getElementsByClassName("news-list")[0].clientHeight / 74
+        (document.getElementsByClassName("news-list")[0].clientHeight - 40) / 74
       ) || 6;
     getNowList(pageNum);
     getList(active.value);
@@ -441,9 +440,15 @@ onMounted(() => {
       console.log(error);
     });
   nextTick(() => {
-    const pageNum = Math.floor(mySwiper.value?.height / 74) || 6;
-    getNowList(pageNum);
-    getList(0);
+    setTimeout(() => {
+      const pageNum =
+        Math.floor(
+          (document.getElementsByClassName("news-list")[0].clientHeight - 40) /
+            74
+        ) || 6;
+      getNowList(pageNum);
+      getList(0);
+    }, 2500);
     // getList(1);
     // getList(2);
     // getList(3);

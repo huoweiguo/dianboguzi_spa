@@ -16,7 +16,7 @@
       <div class="btn">关注微博</div>
     </div>
     <div class="t-center">
-      <img src="@/assets/h5/line-kf.png" alt="" />
+      <img src="@/assets/h5/line-kf.png" alt="" height="15px" />
     </div>
     <div class="ewm-box">
       <div>
