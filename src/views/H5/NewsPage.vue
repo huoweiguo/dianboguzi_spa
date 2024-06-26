@@ -167,7 +167,7 @@
         </swiper-slide>
       </swiper>
     </div>
-    <div class="footer-btn" v-if="ismore">
+    <div class="footer-btn">
       <div class="btn" @click="hasMore">
         更多<img src="@/assets/h5/icon-jt.svg" />
       </div>
@@ -276,12 +276,6 @@ const slideTo = (index: number) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
   active.value = index;
-  isNone.value = false;
-  const pageNum =
-    Math.floor(
-      (document.getElementsByClassName("news-list")[0].clientHeight - 40) / 74
-    ) || 6;
-  getNowList(pageNum);
   getList(index);
 };
 const getList = (index: number) => {
@@ -301,11 +295,11 @@ const getList = (index: number) => {
             //   ...res.data.rows
             // );
             // if (recentList.value.length >= 1000) {
-            if (recentList.value.length >= res.data.total) {
-              ismore.value = false;
-            } else {
-              ismore.value = true;
-            }
+            // if (recentList.value.length >= res.data.total) {
+            //   ismore.value = false;
+            // } else {
+            //   ismore.value = true;
+            // }
           } else {
             Toast(res.data.msg);
           }
@@ -322,11 +316,11 @@ const getList = (index: number) => {
             // 线下文章
             offlineList.value = res.data.rows;
             // offlineList.value.push(...res.data.rows);
-            if (offlineList.value.length >= res.data.total) {
-              ismore.value = false;
-            } else {
-              ismore.value = true;
-            }
+            // if (offlineList.value.length >= res.data.total) {
+            //   ismore.value = false;
+            // } else {
+            //   ismore.value = true;
+            // }
           } else {
             Toast(res.data.msg);
           }
@@ -344,11 +338,11 @@ const getList = (index: number) => {
             // 线上文章
             onlineList.value = res.data.rows;
             // onlineList.value.push(...res.data.rows);
-            if (onlineList.value.length >= res.data.total) {
-              ismore.value = false;
-            } else {
-              ismore.value = true;
-            }
+            // if (onlineList.value.length >= res.data.total) {
+            //   ismore.value = false;
+            // } else {
+            //   ismore.value = true;
+            // }
           } else {
             Toast(res.data.msg);
           }
@@ -365,12 +359,12 @@ const getList = (index: number) => {
           if (res.data.code == "200") {
             // 招聘文章
             zhaopinList.value = res.data.rows;
-            // zhaopinList.value.push(...res.data.rows);
-            if (zhaopinList.value.length >= res.data.total) {
-              ismore.value = false;
-            } else {
-              ismore.value = true;
-            }
+            // // zhaopinList.value.push(...res.data.rows);
+            // if (zhaopinList.value.length >= res.data.total) {
+            //   ismore.value = false;
+            // } else {
+            //   ismore.value = true;
+            // }
           } else {
             Toast(res.data.msg);
           }
@@ -386,23 +380,27 @@ const getList = (index: number) => {
 };
 
 const getNowList = (pageNum: number) => {
-  switch (active.value) {
-    case 0:
-      recentPage.pageSize = pageNum;
-      break;
-    case 1:
-      offlinePage.pageSize = pageNum;
-      break;
-    case 2:
-      onlinePage.pageSize = pageNum;
-      break;
-    case 3:
-      zhaopinPage.pageSize = pageNum;
-      break;
+  // switch (active.value) {
+  //   case 0:
+  //     recentPage.pageSize = pageNum;
+  //     break;
+  //   case 1:
+  //     offlinePage.pageSize = pageNum;
+  //     break;
+  //   case 2:
+  //     onlinePage.pageSize = pageNum;
+  //     break;
+  //   case 3:
+  //     zhaopinPage.pageSize = pageNum;
+  //     break;
 
-    default:
-      break;
-  }
+  //   default:
+  //     break;
+  // }
+  recentPage.pageSize = pageNum;
+  offlinePage.pageSize = pageNum;
+  onlinePage.pageSize = pageNum;
+  zhaopinPage.pageSize = pageNum;
 };
 const hasMore = () => {
   isNone.value = true;
