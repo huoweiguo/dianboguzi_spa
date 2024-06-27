@@ -276,7 +276,7 @@ const slideTo = (index: number) => {
   tabIndex.value = index;
   mySwiper.value.slideTo(index, 300);
   active.value = index;
-  getList(index);
+  // getList(index);
 };
 const getList = (index: number) => {
   switch (index) {
@@ -405,7 +405,10 @@ const getNowList = (pageNum: number) => {
 const hasMore = () => {
   isNone.value = true;
   getNowList(1000);
-  getList(active.value);
+  getList(0);
+  getList(1);
+  getList(2);
+  getList(3);
 };
 const hasNone = () => {
   isNone.value = false;
@@ -416,7 +419,10 @@ const hasNone = () => {
         (document.getElementsByClassName("news-list")[0].clientHeight - 40) / 74
       ) || 6;
     getNowList(pageNum);
-    getList(active.value);
+    getList(0);
+    getList(1);
+    getList(2);
+    getList(3);
   });
 };
 const showDetail = (id) => {
@@ -446,10 +452,10 @@ onMounted(() => {
         ) || 6;
       getNowList(pageNum);
       getList(0);
+      getList(1);
+      getList(2);
+      getList(3);
     }, 2500);
-    // getList(1);
-    // getList(2);
-    // getList(3);
   });
   // nextTick(() => {
   //   console.log(
