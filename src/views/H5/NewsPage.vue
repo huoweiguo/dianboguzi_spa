@@ -176,7 +176,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, defineEmits, onMounted, nextTick } from "vue";
+import {
+  reactive,
+  ref,
+  defineEmits,
+  onMounted,
+  nextTick,
+  onBeforeMount,
+} from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
 import "swiper/css/effect-coverflow";
@@ -413,10 +420,10 @@ const hasMore = () => {
 const hasNone = () => {
   isNone.value = false;
   nextTick(() => {
-    // const pageNum = Math.floor(mySwiper.value?.height / 74) || 6;
+    // const pageNum = Math.floor(mySwiper.value?.height / 73) || 6;
     const pageNum =
       Math.floor(
-        (document.getElementsByClassName("news-list")[0].clientHeight - 40) / 74
+        document.getElementsByClassName("news-list")[0].clientHeight / 73
       ) || 6;
     getNowList(pageNum);
     getList(0);
@@ -429,8 +436,7 @@ const showDetail = (id) => {
   emits("showDetail", id, active.value);
 };
 const slideList = ref([]);
-
-onMounted(() => {
+onBeforeMount(() => {
   useNews
     .getSlideListMobile()
     .then((res) => {
@@ -443,20 +449,22 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
-  nextTick(() => {
-    setTimeout(() => {
-      const pageNum =
-        Math.floor(
-          (document.getElementsByClassName("news-list")[0].clientHeight - 40) /
-            74
-        ) || 6;
-      getNowList(pageNum);
-      getList(0);
-      getList(1);
-      getList(2);
-      getList(3);
-    }, 2500);
-  });
+});
+onMounted(() => {
+  // nextTick(() => {
+  setTimeout(() => {
+    const pageNum =
+      Math.floor(
+        document.getElementsByClassName("news-list")[0].clientHeight / 73
+      ) || 6;
+    getNowList(pageNum);
+    getList(0);
+    getList(1);
+    getList(2);
+    getList(3);
+  }, 3000);
+  // });
+
   // nextTick(() => {
   //   console.log(
   //     mySwiper.value?.height,

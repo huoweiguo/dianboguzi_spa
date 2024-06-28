@@ -26,7 +26,7 @@
 
         <!-- 新闻page -->
         <swiper-slide class="slide">
-          <NewsPage @showDetail="showDetail" @topage="slideTo" />
+          <NewsPage v-if="isShow" @showDetail="showDetail" @topage="slideTo" />
         </swiper-slide>
 
         <!-- 兑换码page -->
@@ -87,10 +87,10 @@ const showDetail = (id, active) => {
   newsid.value = id;
   type.value = active;
 };
-
-// onMounted(() => {
-//   slideTo(3);
-// });
+const isShow = ref(false);
+onMounted(() => {
+  isShow.value = true;
+});
 </script>
 
 <style lang="scss" scoped>
