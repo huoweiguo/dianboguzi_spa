@@ -103,7 +103,13 @@ const close = () => {
   emits("update:visible", false);
 };
 </script>
-
+<style lang="scss">
+.content {
+  img {
+    max-width: 100%;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .page {
   position: fixed;
