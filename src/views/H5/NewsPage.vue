@@ -261,7 +261,7 @@ const zhaopinPage = reactive<PageType>({
 });
 const zhaopinList = ref<any>([]);
 const emits = defineEmits(["showDetail", "topage"]);
-const ismore = ref(false);
+const pageNum = ref(6);
 const isNone = ref(false);
 const tabIndex = ref(0);
 const mySwiper = ref(null);
@@ -421,11 +421,7 @@ const hasNone = () => {
   isNone.value = false;
   nextTick(() => {
     // const pageNum = Math.floor(mySwiper.value?.height / 73) || 6;
-    const pageNum =
-      Math.floor(
-        document.getElementsByClassName("news-list")[0].clientHeight / 73
-      ) || 6;
-    getNowList(pageNum);
+    getNowList(pageNum.value);
     getList(0);
     getList(1);
     getList(2);
@@ -453,16 +449,16 @@ onBeforeMount(() => {
 onMounted(() => {
   // nextTick(() => {
   setTimeout(() => {
-    const pageNum =
+    pageNum.value =
       Math.floor(
         document.getElementsByClassName("news-list")[0].clientHeight / 73
       ) || 6;
-    getNowList(pageNum);
+    getNowList(pageNum.value);
     getList(0);
     getList(1);
     getList(2);
     getList(3);
-  }, 3000);
+  }, 3500);
   // });
 
   // nextTick(() => {
