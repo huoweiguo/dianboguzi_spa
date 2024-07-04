@@ -71,7 +71,7 @@
           <!--新闻内容页面-->
           <div class="news-context" :class="showNews ? 'show-news' : ''">
             <a class="news-back" @click="closeNews"><img src="../images/back.png" /></a>
-            <div class="news-context-box">
+            <div class="news-context-box ql-editor">
               <b class="news-title">{{newsDetail.title}}</b>
               <span class="news-small-text">{{newsDetail.createTime}}</span>
 
