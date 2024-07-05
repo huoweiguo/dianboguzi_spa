@@ -3,7 +3,7 @@
     <div class="menu_back">
       <span @click="close">返回</span>
     </div>
-    <div class="container">
+    <div class="container ql-editor">
       <div class="title">{{ newsDetail.title }}</div>
       <div class="time">发布时间：{{ newsDetail.showDate }}</div>
       <div class="content">
@@ -25,6 +25,8 @@ import {
   computed,
 } from "vue";
 import Toast from "@/utils/Toast";
+import { ElLoading } from "element-plus";
+import { useNewsStore } from "@/store/news";
 const props = defineProps(["visible", "id", "active"]);
 const emits = defineEmits(["update:visible"]);
 interface NewsType {
@@ -34,7 +36,6 @@ interface NewsType {
   content: string;
 }
 
-import { useNewsStore } from "@/store/news";
 const useNews = useNewsStore();
 const newsDetail = ref<NewsType>({
   title: "",
@@ -43,12 +44,18 @@ const newsDetail = ref<NewsType>({
   content: "",
 });
 const once = ref<boolean>(false);
+
 onUpdated(() => {
   if (props.visible === false) {
     once.value = false;
   }
   if (props.visible === true && once.value === false) {
     once.value = true;
+    const loading = ElLoading.service({
+      lock: true,
+      text: "Loading",
+      background: "rgba(0, 0, 0, 0.3)",
+    });
     if (props.active === 3) {
       useNews
         .getZhaoPinInfo({ id: props.id }, {})
@@ -69,6 +76,9 @@ onUpdated(() => {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          loading.close();
         });
     } else {
       useNews
@@ -88,6 +98,9 @@ onUpdated(() => {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          loading.close();
         });
     }
   }
@@ -150,6 +163,7 @@ const close = () => {
   padding: 10px;
   margin: 80px 10px 10px;
   border-radius: 10px;
+  height: auto;
 
   .title {
     font-weight: 400;
@@ -168,15 +182,6 @@ const close = () => {
   }
 
   .content {
-    font-weight: 400;
-    font-size: 14px;
-    color: #707070;
-    line-height: 16px;
-    img {
-      display: block;
-      max-width: 100%;
-      margin: 1em auto;
-    }
     p {
       margin: 0.5em 0;
       // white-space: pre-line;
