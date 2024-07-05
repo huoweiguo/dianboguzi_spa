@@ -38,7 +38,7 @@ const params = reactive<RuleType>({
 });
 const userInfo = computed(() => useLogin.userInfo);
 const handleClick = () => {
-  if (!userInfo.value.id) {
+  if (!userInfo.value.account) {
     Toast("请先登录账号！");
     return false;
   }
@@ -54,10 +54,9 @@ const handleClick = () => {
     .offlinecode(params, {})
     .then((res) => {
       if (res.data.code == "200") {
-        params.data = {
-          code: "",
-          password: "",
-        };
+        params.code = "";
+        params.password = "";
+        Toast("兑换成功，请打开APP查看！");
       } else {
         Toast(res.data.msg);
       }
