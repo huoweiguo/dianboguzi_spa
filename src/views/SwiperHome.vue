@@ -378,7 +378,7 @@ const subForm = ()=>{
     if (res.data.code == "200") {
       params.code = ''
       params.password = ''
-      alert("兑换成功，请打开APP查看！");
+      openPopbox({ visible: true, title: '兑换成功，请打开APP查看！' });
     } else {
       openPopbox({ visible: true, title: res.data.msg });
     }
