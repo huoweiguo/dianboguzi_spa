@@ -155,11 +155,7 @@
               </div>
               <div class="time">
                 <span>{{ i.createTime }}</span
-                ><label v-if="i.tag === 'NewsZhaoPin_jizhao'" class="jz"
-                  >急招</label
-                >
-                <label v-if="i.tag === 'NewsZhaoPin_changqi'" class="cq"
-                  >长期</label
+                ><label class="jz" v-if="i.tag">{{ i.tag }}</label
                 ><span class="sub">{{ i.subTitle }}</span>
               </div>
             </li>
