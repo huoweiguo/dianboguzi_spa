@@ -24,8 +24,9 @@
         <div class="news-zp-title">
           <div>
             <b class="tag-title"> {{ item.title }}</b>
-            <span v-if="item.tag == 'NewsZhaoPin_jizhao'" class="tag-jz">急招</span>
-            <span v-if="item.tag == 'NewsZhaoPin_changqi'" class="tag-cq">长期</span>
+            <!-- <span v-if="item.tag == 'NewsZhaoPin_jizhao'" class="tag-jz">急招</span>
+            <span v-if="item.tag == 'NewsZhaoPin_changqi'" class="tag-cq">长期</span> -->
+            <span class="tag-jz" v-if="item.tag">{{ item.tag }}{{ item.tag }}</span>
           </div>
           <span>{{item.subTitle}}</span>
         </div>
@@ -164,7 +165,7 @@ const handleCurrentChange = (val:number) =>{
           &.tag-cq {
             background-color: #C3BBEB;
             color: #fff;
-            width: 0.27rem;
+            min-width: 0.27rem;
             height: 0.16rem;
             padding: 0 0.03rem;
             text-align: center;
