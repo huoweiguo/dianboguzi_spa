@@ -143,12 +143,13 @@ import DBMessage from '../components/DBMessage.vue';
 import { useNewsStore } from "@/store/news";
 import { useLoginStore } from "@/store/login";
 import {  divisionTrim } from "@/utils/common";
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 
 import isMobile from '@/utils/isMobile';
 isMobile();
 
 const router = useRouter()
+const route = useRoute();
 
 // 弹出框配置
 const popAttr = reactive<RulePopbox>({
@@ -489,6 +490,21 @@ onMounted(() => {
   getOfflineNewsList()
   getSlideList()
   getZhaoPinList()
+  if(route.query.newsId){
+    let id = Number(route.query.newsId)
+    changePage(2)
+    showNews.value = true;
+    window.removeEventListener('mousewheel', wheelScroll, false);
+    // clearTimeout(timer.value);
+    useNews.getNewsInfo({id}).then(res=>{
+      if(res.data.code === 200&&res.data.data){
+        newsDetail.title = res.data.data.title || ''
+        newsDetail.content = res.data.data.content || ''
+        newsDetail.createTime = res.data.data.createTime || ''
+      } 
+    })
+
+  }
 });
 
 onUnmounted(() => {
