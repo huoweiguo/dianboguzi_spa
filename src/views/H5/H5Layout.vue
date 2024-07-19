@@ -61,8 +61,9 @@ import ContactUsPage from "./ContactUsPage.vue";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const route = useRoute();
+const router = useRouter();
 
 const visible = ref(false);
 const newsid = ref(0);
@@ -95,6 +96,7 @@ onMounted(() => {
   if (route.query.newsId) {
     newsid.value = Number(route.query.newsId);
     visible.value = true;
+    router.replace("/h5");
   }
 });
 </script>

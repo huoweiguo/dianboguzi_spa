@@ -24,7 +24,9 @@
         :modules="[EffectCoverflow, Pagination]"
       >
         <swiper-slide class="slide" v-for="item in slideList" :key="item.id"
-          ><img :src="item.pic" width="80%"
+          ><a v-if="item.jumpId" :href="item.jumpId" target="_blank"
+            ><img :src="item.pic" width="80%" /></a
+          ><img v-else :src="item.pic" width="80%"
         /></swiper-slide>
         <!-- <swiper-slide class="slide"
           ><img src="@/assets/h5/banner-1.png" width="80%"
@@ -537,20 +539,31 @@ onMounted(() => {
     }
     .time {
       color: #898989;
+      height: 16px;
+      line-height: 16px;
+      span {
+        // display: inline-block;
+      }
       label {
-        display: inline-block;
+        // display: inline-block;
         color: #fff;
         font-size: 12px;
-        height: 16px;
-        line-height: 16px;
-        width: 30px;
+        // height: 16px;
+        // line-height: 16px;
+        // min-width: 30px;
         text-align: center;
         vertical-align: middle;
         border-radius: 3px;
         margin: 0 4px;
+        padding: 0 2px;
 
         &.jz {
           background-color: #948ce0;
+          display: inline-block;
+          min-width: 30px;
+          max-width: 120px;
+          height: 16px;
+          overflow: hidden;
         }
 
         &.cq {
