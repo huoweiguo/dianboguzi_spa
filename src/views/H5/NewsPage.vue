@@ -24,7 +24,7 @@
         :modules="[EffectCoverflow, Pagination]"
       >
         <swiper-slide class="slide" v-for="item in slideList" :key="item.id"
-          ><a v-if="item.jumpId" :href="item.jumpId" target="_blank"
+          ><a v-if="item.jumpId" :href="item.jumpId"
             ><img :src="item.pic" width="80%" /></a
           ><img v-else :src="item.pic" width="80%"
         /></swiper-slide>
@@ -430,7 +430,8 @@ const showDetail = (id) => {
   emits("showDetail", id, active.value);
 };
 const slideList = ref([]);
-onBeforeMount(() => {
+// onBeforeMount(() => {
+onMounted(() => {
   useNews
     .getSlideListMobile()
     .then((res) => {
@@ -442,21 +443,34 @@ onBeforeMount(() => {
     })
     .catch((error) => {
       console.log(error);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        pageNum.value =
+          Math.floor(
+            document.getElementsByClassName("news-list")[0].clientHeight / 73
+          ) || 6;
+        getNowList(pageNum.value);
+        getList(0);
+        getList(1);
+        getList(2);
+        getList(3);
+      }, 1000);
     });
-});
-onMounted(() => {
+  // });
+  // onMounted(() => {
   // nextTick(() => {
-  setTimeout(() => {
-    pageNum.value =
-      Math.floor(
-        document.getElementsByClassName("news-list")[0].clientHeight / 73
-      ) || 6;
-    getNowList(pageNum.value);
-    getList(0);
-    getList(1);
-    getList(2);
-    getList(3);
-  }, 3500);
+  // setTimeout(() => {
+  //   pageNum.value =
+  //     Math.floor(
+  //       document.getElementsByClassName("news-list")[0].clientHeight / 73
+  //     ) || 6;
+  //   getNowList(pageNum.value);
+  //   getList(0);
+  //   getList(1);
+  //   getList(2);
+  //   getList(3);
+  // }, 3500);
   // });
 
   // nextTick(() => {
