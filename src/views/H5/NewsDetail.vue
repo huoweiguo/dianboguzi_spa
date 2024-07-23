@@ -28,7 +28,7 @@ import Toast from "@/utils/Toast";
 import { ElLoading } from "element-plus";
 import { useNewsStore } from "@/store/news";
 const props = defineProps(["visible", "id", "active"]);
-const emits = defineEmits(["update:visible"]);
+const emits = defineEmits(["update:visible", "topage"]);
 interface NewsType {
   title: string;
   showDate: string;
@@ -113,6 +113,7 @@ const close = () => {
     summary: "",
     content: "",
   };
+  emits("topage", 3);
   emits("update:visible", false);
 };
 </script>

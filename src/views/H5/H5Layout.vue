@@ -40,7 +40,12 @@
     </div>
 
     <!-- 新闻详情 -->
-    <NewsDetail v-model:visible="visible" :id="newsid" :active="type" />
+    <NewsDetail
+      v-model:visible="visible"
+      @topage="slideTo"
+      :id="newsid"
+      :active="type"
+    />
   </div>
 </template>
 

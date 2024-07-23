@@ -24,7 +24,7 @@
         :modules="[EffectCoverflow, Pagination]"
       >
         <swiper-slide class="slide" v-for="item in slideList" :key="item.id"
-          ><a v-if="item.jumpId" :href="item.jumpId"
+          ><a v-if="item.jumpId" @click="openNewsDetail(item.jumpId)"
             ><img :src="item.pic" width="80%" /></a
           ><img v-else :src="item.pic" width="80%"
         /></swiper-slide>
@@ -430,6 +430,15 @@ const showDetail = (id) => {
   emits("showDetail", id, active.value);
 };
 const slideList = ref([]);
+const openNewsDetail = (url: string) => {
+  const urlParams = new URLSearchParams(url.split("?")[1]);
+  const id = urlParams.get("newsId");
+  if (id) {
+    emits("showDetail", id);
+  } else {
+    window.open(url);
+  }
+};
 // onBeforeMount(() => {
 onMounted(() => {
   useNews
@@ -455,7 +464,7 @@ onMounted(() => {
         getList(1);
         getList(2);
         getList(3);
-      }, 1000);
+      }, 1500);
     });
   // });
   // onMounted(() => {
