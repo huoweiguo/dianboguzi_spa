@@ -23,7 +23,7 @@
       <li v-for="(item,index) in list" :key="index" @click="showNewsPage(item.id)">
         <div class="news-zp-title">
           <div>
-            <b class="tag-title"> {{ item.title }}</b>
+            <b class="tag-title"> {{ item.title }}</b> 
             <!-- <span v-if="item.tag == 'NewsZhaoPin_jizhao'" class="tag-jz">急招</span>
             <span v-if="item.tag == 'NewsZhaoPin_changqi'" class="tag-cq">长期</span> -->
             <span class="tag-jz" v-if="item.tag">{{ item.tag }}</span>

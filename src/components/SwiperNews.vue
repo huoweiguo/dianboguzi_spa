@@ -3,7 +3,7 @@
     <Swiper :modules="[Autoplay, Pagination]" :slides-per-view="1" :autoplay="{
       delay: 3000,
     }" :pagination="{ clickable: true }">
-      <SwiperSlide v-for="(item, index) in list" :key="index" class="slider-img-outer">
+      <SwiperSlide v-for="(item, index) in list" @click="toUrl(item)" :key="index" class="slider-img-outer">
         <img :src="item.pic" class="slider-img" />
       </SwiperSlide>
     </Swiper>
@@ -27,6 +27,13 @@ const props = defineProps({
     default: () => []
   },
 })
+
+const toUrl = (item:any)=>{
+  console.log(item,'item')
+  if(item.jumpId&&item.jumpId.length){
+    window.location.href = item.jumpId;
+  }
+}
 </script>
 
 <style lang="scss">
