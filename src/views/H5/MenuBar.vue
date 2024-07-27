@@ -62,7 +62,7 @@
   <template v-if="showLogin == 0">
     <!-- logout_box -->
     <div class="logout_box" v-if="islogin">
-      <div class="info">欢迎您，{{ userInfo.nickname }}</div>
+      <div class="info">欢迎您，{{ userInfo.nickname || nickname }}</div>
       <div class="btn" @click="logout">退出登录</div>
     </div>
 
@@ -123,7 +123,7 @@ const islogin = ref(false);
 // login 类型，0 未登录，1登录注册页面，2忘记密码页面
 const showLogin = ref(0);
 const userInfo = computed(() => useLogin.userInfo);
-
+const nickname = ref();
 const menuList = reactive([
   { key: 1, title: "首页", intro: "DIANBO GOODS", desc: "" },
   { key: 2, title: "概念展示", intro: "CONCEPTS", desc: "谷子、谷模与谷美" },
@@ -172,6 +172,11 @@ const logout = () => {
 const changeLogin = (type: number, login: boolean) => {
   islogin.value = login;
   showLogin.value = type;
+  console.log(2222);
+  setTimeout(() => {
+    nickname.value = useLogin.userInfo?.nickname || "";
+    // console.log(nickname.value, useLogin);
+  }, 1000);
 };
 watch(userInfo, (nv) => {
   islogin.value = nv.nickname ? true : false;
