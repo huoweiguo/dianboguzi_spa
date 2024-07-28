@@ -139,12 +139,12 @@
           </ul>
         </swiper-slide>
         <!-- 招聘 -->
-        <swiper-slide
+        <!-- <swiper-slide
           class="slide stop-swiping"
           @touchstart="handleTouchStart"
           @touchend="handleTouchEnd"
-        >
-          <!-- <swiper-slide class="slide stop-swiping"> -->
+        > -->
+        <swiper-slide class="slide stop-swiping">
           <ul class="list">
             <li
               class="list-item"
