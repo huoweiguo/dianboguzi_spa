@@ -39,8 +39,10 @@ const params = reactive<RuleType>({
 const userInfo = computed(() => useLogin.userInfo);
 const handleClick = () => {
   if (!userInfo.value.account) {
-    Toast("请先登录账号！");
-    return false;
+    if (!localStorage.getItem("userInfo").account) {
+      Toast("请先登录账号！");
+      return false;
+    }
   }
   if (divisionTrim(params.code) === "") {
     Toast("请输入谷子编号");

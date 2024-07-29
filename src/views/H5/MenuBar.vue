@@ -172,10 +172,8 @@ const logout = () => {
 const changeLogin = (type: number, login: boolean) => {
   islogin.value = login;
   showLogin.value = type;
-  console.log(2222);
   setTimeout(() => {
-    nickname.value = useLogin.userInfo?.nickname || "";
-    // console.log(nickname.value, useLogin);
+    nickname.value = localStorage.getItem("userInfo").nickname || "";
   }, 1000);
 };
 watch(userInfo, (nv) => {
