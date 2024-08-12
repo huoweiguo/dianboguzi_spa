@@ -271,6 +271,7 @@ const goIndex = () => {
 // 滚动到指定的页面
 const changePage = (page: number) => {
   index.value = page;
+  showNews.value = false;
   window.removeEventListener('mousewheel', wheelScroll, false);
   window.addEventListener('mousewheel', wheelScroll, false);
   goIndex();

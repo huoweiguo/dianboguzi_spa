@@ -29,7 +29,6 @@ const props = defineProps({
 })
 
 const toUrl = (item:any)=>{
-  console.log(item,'item')
   if(item.jumpId&&item.jumpId.length){
     window.location.href = item.jumpId;
   }
