@@ -10,7 +10,7 @@
           <div class="wrapper-box">
             <div class="wrapper-dl-content">
               <img src="../images/logo.png" class="logo-img" />
-              <img @click="toUrl('https://testflight.apple.com/join/XfCWV7AF')" src="../images/ios-dl.png" />
+              <img @click="toUrl('https://apps.apple.com/cn/app/%E7%94%B5%E6%B3%A2%E8%B0%B7%E5%AD%90/id6499262084')" src="../images/ios-dl.png" />
               <img @click="toUrl('https://down.ez6.com.cn/app.php/86')" src="../images/android-dl.png" />
               <div class="home-qr">
                 <div class="qr-block"></div>

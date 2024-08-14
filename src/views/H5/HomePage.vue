@@ -2,7 +2,7 @@
   <div class="page">
     <img class="img" src="@/assets/h5/text2.png" alt="" />
     <div class="btn-link">
-      <a href="https://testflight.apple.com/join/XfCWV7AF" target="_blank"
+      <a href="https://apps.apple.com/cn/app/%E7%94%B5%E6%B3%A2%E8%B0%B7%E5%AD%90/id6499262084" target="_blank"
         ><img src="@/assets/h5/btn-i.png" alt=""
       /></a>
       <a href="https://down.ez6.com.cn/app.php/86" target="_blank"
