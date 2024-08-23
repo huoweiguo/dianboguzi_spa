@@ -38,8 +38,8 @@ const params = reactive<RuleType>({
 });
 const userInfo = computed(() => useLogin.userInfo);
 const handleClick = () => {
-  if (!userInfo.value.account) {
-    if (!localStorage.getItem("userInfo").account) {
+  if (!userInfo.value?.account) {
+    if (!localStorage.getItem("userInfo")?.account) {
       Toast("请先登录账号！");
       return false;
     }
