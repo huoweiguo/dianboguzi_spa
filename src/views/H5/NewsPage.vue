@@ -165,7 +165,7 @@
         </swiper-slide>
       </swiper>
     </div>
-    <div class="footer-btn">
+    <div class="footer-btn" v-if="!isNone">
       <div class="btn" @click="hasMore">
         更多<img src="@/assets/h5/icon-jt.svg" />
       </div>
@@ -457,7 +457,7 @@ onMounted(() => {
       setTimeout(() => {
         pageNum.value =
           Math.floor(
-            document.getElementsByClassName("news-list")[0].clientHeight / 73
+            document.getElementsByClassName("news-list")[0].clientHeight / 75
           ) || 6;
         getNowList(pageNum.value);
         getList(0);
